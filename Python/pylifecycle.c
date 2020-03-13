@@ -1,7 +1,6 @@
 /* Python interpreter top-level routines, including init/exit */
 
 #include "Python.h"
-
 #include "Python-ast.h"
 #undef Yield   /* undefine macro conflicting with <winbase.h> */
 #include "pycore_ceval.h"
@@ -45,6 +44,8 @@
 extern PyTypeObject PyWindowsConsoleIO_Type;
 #define PyWindowsConsoleIO_Check(op) (PyObject_TypeCheck((op), &PyWindowsConsoleIO_Type))
 #endif
+
+#include "bytecodecounter.h"
 
 _Py_IDENTIFIER(flush);
 _Py_IDENTIFIER(name);
@@ -1199,6 +1200,12 @@ Py_FinalizeEx(void)
     runtime->finalizing = tstate;
     runtime->initialized = 0;
     runtime->core_initialized = 0;
+
+    //TODO add a way to customize the type of output you want.
+    if(!Py_WriteByteCodes("C:\\Users\\Simon Dam Nielsen\\Desktop\\test.txt"))
+    {
+        printf("Unable to write to file");
+    }
 
     /* Flush sys.stdout and sys.stderr */
     if (flush_std_files() < 0) {

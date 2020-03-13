@@ -117,6 +117,7 @@
     <ClInclude Include="..\Include\boolobject.h" />
     <ClInclude Include="..\Include\bytes_methods.h" />
     <ClInclude Include="..\Include\bytearrayobject.h" />
+    <ClInclude Include="..\Include\bytecodecounter.h" />
     <ClInclude Include="..\Include\bytesobject.h" />
     <ClInclude Include="..\Include\cellobject.h" />
     <ClInclude Include="..\Include\ceval.h" />
@@ -417,6 +418,7 @@
     <ClCompile Include="..\Python\ast_opt.c" />
     <ClCompile Include="..\Python\ast_unparse.c" />
     <ClCompile Include="..\Python\bltinmodule.c" />
+    <ClCompile Include="..\Python\bytecodecounter.c" />
     <ClCompile Include="..\Python\bootstrap_hash.c" />
     <ClCompile Include="..\Python\ceval.c" />
     <ClCompile Include="..\Python\codecs.c" />

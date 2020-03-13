@@ -28,6 +28,8 @@
 
 #include <ctype.h>
 
+#include "bytecodecounter.h"
+
 #ifdef Py_DEBUG
 /* For debugging the interpreter: */
 #define LLTRACE  1      /* Low-level trace feature */
@@ -894,6 +896,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
 #define NEXTOPARG()  do { \
         _Py_CODEUNIT word = *next_instr; \
         opcode = _Py_OPCODE(word); \
+        bcc_arr[opcode]++; \
         oparg = _Py_OPARG(word); \
         next_instr++; \
     } while (0)
@@ -933,6 +936,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
     do{ \
         _Py_CODEUNIT word = *next_instr; \
         opcode = _Py_OPCODE(word); \
+        bcc_arr[opcode]++; \
         if (opcode == op){ \
             oparg = _Py_OPARG(word); \
             next_instr++; \
