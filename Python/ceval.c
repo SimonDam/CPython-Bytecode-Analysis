@@ -896,7 +896,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
 #define NEXTOPARG()  do { \
         _Py_CODEUNIT word = *next_instr; \
         opcode = _Py_OPCODE(word); \
-        bcc_arr[opcode]++; \
+        INC_OPCODE_ARR(opcode); \
         oparg = _Py_OPARG(word); \
         next_instr++; \
     } while (0)
@@ -936,7 +936,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
     do{ \
         _Py_CODEUNIT word = *next_instr; \
         opcode = _Py_OPCODE(word); \
-        bcc_arr[opcode]++; \
+        INC_OPCODE_ARR(opcode); \
         if (opcode == op){ \
             oparg = _Py_OPARG(word); \
             next_instr++; \

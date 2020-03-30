@@ -9,6 +9,7 @@ void Py_PrintByteCodes()
     {
         printf("%d:%llu\n", i, bcc_arr[i]);
     }
+    return 0;
 }
 
 int Py_WriteByteCodes(char *path_str)
@@ -17,7 +18,7 @@ int Py_WriteByteCodes(char *path_str)
     errno_t err = fopen_s(&fp, path_str, "w");
     if(err != 0)
     {
-        printf("Unable to open file at path: %s", path_str);
+        printf("Unable to open file at path: %s\n", path_str);
         return 0;
     }
 
@@ -29,5 +30,3 @@ int Py_WriteByteCodes(char *path_str)
     fclose(fp);
     return 1;
 }
-
-
