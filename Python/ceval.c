@@ -743,6 +743,10 @@ PyEval_EvalFrameEx(PyFrameObject *f, int throwflag)
     return interp->eval_frame(f, throwflag);
 }
 
+/* We declare our timers here globally, since they are used in multiple functions.
+   They are used by the INC_OPCODE_ARR macro in bytecodecounter.h.*/
+DECL_BCC_TIMERS; 
+
 PyObject* _Py_HOT_FUNCTION
 _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
 {
@@ -1187,7 +1191,9 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
        caller loses its exception */
     assert(!_PyErr_Occurred(tstate));
 #endif
-
+    /* We initialize the timer here, because we want to be able to time the
+       first bytecode. */
+    INIT_BCC_TIMERS;
 main_loop:
     for (;;) {
         assert(stack_pointer >= f->f_valuestack); /* else underflow */

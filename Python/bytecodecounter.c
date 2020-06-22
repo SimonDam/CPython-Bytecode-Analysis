@@ -1,15 +1,17 @@
 #include "bytecodecounter.h"
 #include "stdio.h"
+#include <windows.h>
 
 unsigned long long bcc_arr[BCC_ARR_SIZE];
+
+
 
 void Py_PrintByteCodes()
 {
     for(int i = 0; i < BCC_ARR_SIZE; i++)
     {
-        printf("%d:%llu\n", i, bcc_arr[i]);
+        printf("%d,%llu\n", i, bcc_arr[i]);
     }
-    return 0;
 }
 
 int Py_WriteByteCodes(char *path_str)
