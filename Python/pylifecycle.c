@@ -1202,7 +1202,7 @@ Py_FinalizeEx(void)
     runtime->core_initialized = 0;
 
     //TODO add a way to customize the type of output you want.
-    if(!Py_WriteByteCodes("C:\\Users\\Simon Dam Nielsen\\Desktop\\test.txt"))
+    if(!Py_WriteByteCodes())
     {
         printf("Unable to write to file");
     }

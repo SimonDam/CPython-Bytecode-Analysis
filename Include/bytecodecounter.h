@@ -28,6 +28,8 @@ unsigned long long bcc_arr[];
 
 void Py_PrintByteCodes();
 
-int Py_WriteByteCodes(char *path);
+int Py_WriteByteCodes();
+
+size_t Py_ReadBCCPath(char *path, size_t *len);
 
 #endif /* BYTE_CODE_COUNTER_H */
