@@ -10,7 +10,7 @@
     QueryPerformanceCounter(&bc_time_end); \
     QueryPerformanceFrequency(&frequency) \
 
-#define INC_OPCODE_ARR(index)  \
+#define INC_OPCODE_ARR(index) \
     QueryPerformanceCounter(&bc_time_end); \
     if(index > BCC_ARR_SIZE - 1 || index < 0){ \
         printf("Unable to increment opcode: %d", index); \
@@ -28,8 +28,10 @@ unsigned long long bcc_arr[];
 
 void Py_PrintByteCodes();
 
-int Py_WriteByteCodes();
+// char *Py_GetLine(FILE *fp); TODO Find out why this refuses to build when including it.
 
-size_t Py_ReadBCCPath(char *path, size_t *len);
+char *Py_ReadBCCPath();
+
+int Py_WriteByteCodes();
 
 #endif /* BYTE_CODE_COUNTER_H */

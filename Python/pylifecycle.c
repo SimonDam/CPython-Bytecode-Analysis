@@ -1204,7 +1204,7 @@ Py_FinalizeEx(void)
     //TODO add a way to customize the type of output you want.
     if(!Py_WriteByteCodes())
     {
-        printf("Unable to write to file");
+        printf("Unable to write bytecodes to file.");
     }
 
     /* Flush sys.stdout and sys.stderr */
