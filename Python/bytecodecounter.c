@@ -102,13 +102,13 @@ int Py_WriteByteCodes()
 
     FILE *fp; 
     errno_t err = fopen_s(&fp, path_str, "w");
-    free(path_str);
     if(err != 0)
     {
         printf("Unable to open file at path: %s\n", path_str);
+        free(path_str);
         return 0;
     }
-
+    free(path_str);
     // Write header to .csv file.
     fprintf(fp, "bytecode,count\n");
     for(int i = 0; i < BCC_ARR_SIZE; i++)

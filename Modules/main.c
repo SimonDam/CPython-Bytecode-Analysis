@@ -662,11 +662,6 @@ Py_RunMain(void)
 static int
 pymain_main(_PyArgv *args)
 {
-    printf("###### argc: %d\n", args->argc);
-    printf("###### use_bytes_argv: %d\n", args->use_bytes_argv);
-    printf("###### bytes_argv: %s\n", args->bytes_argv);
-    printf("###### wchar_argv: %ls\n", args->wchar_argv);
-
     PyStatus status = pymain_init(args);
     if (_PyStatus_IS_EXIT(status)) {
         pymain_free();
