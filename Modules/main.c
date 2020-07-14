@@ -658,10 +658,18 @@ Py_RunMain(void)
     return exitcode;
 }
 
+#include <locale.h>
 
 static int
 pymain_main(_PyArgv *args)
 {
+    setlocale(LC_ALL, "");
+    printf("Py_Main argc: %d\n", args->argc);
+    printf("Py_Main wchar_argv: %ls\n", *args->wchar_argv);
+    printf("Py_Main wchar_argv 0: %ls\n", *(args->wchar_argv));
+    printf("Py_Main wchar_argv 1: %ls\n", *(args->wchar_argv+1));
+    printf("Py_Main bytes_argv: %s\n", *args->bytes_argv);
+    
     PyStatus status = pymain_init(args);
     if (_PyStatus_IS_EXIT(status)) {
         pymain_free();
@@ -673,7 +681,6 @@ pymain_main(_PyArgv *args)
 
     return Py_RunMain();
 }
-
 
 int
 Py_Main(int argc, wchar_t **argv)
