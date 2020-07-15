@@ -24,14 +24,17 @@
 
 // TODO Find out how to include opcode.h and use it to determine the BCC arr size.
 #define BCC_ARR_SIZE 258//EXCEPT_HANDLER+1
+#define BCC_TXT_PATH_LEN 11
 unsigned long long bcc_arr[];
 
 void Py_PrintByteCodes();
 
-// char *Py_GetLine(FILE *fp); TODO Find out why this refuses to build when including it.
+//char *Py_GetLine(FILE); //TODO Why does this argument not build with "FILE*"
 
 char *Py_ReadBCCPath();
 
 int Py_WriteByteCodes();
+
+//void Py_SetFilename(wchar_t); //TODO Why does this argument not build with "wchar_t*"
 
 #endif /* BYTE_CODE_COUNTER_H */

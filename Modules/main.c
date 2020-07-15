@@ -5,6 +5,7 @@
 #include "pycore_pylifecycle.h"
 #include "pycore_pymem.h"
 #include "pycore_pystate.h"
+#include "bytecodecounter.h"
 
 #ifdef __FreeBSD__
 #  include <fenv.h>     /* fedisableexcept() */
@@ -137,6 +138,10 @@ static int
 pymain_get_importer(const wchar_t *filename, PyObject **importer_p, int *exitcode)
 {
     PyObject *sys_path0 = NULL, *importer;
+
+    // We set the filename we get in here. This is done 
+    // so we can name the bcc files properly when we are done.
+    Py_SetFilename(filename);
 
     sys_path0 = PyUnicode_FromWideChar(filename, wcslen(filename));
     if (sys_path0 == NULL) {
@@ -658,18 +663,9 @@ Py_RunMain(void)
     return exitcode;
 }
 
-#include <locale.h>
-
 static int
 pymain_main(_PyArgv *args)
 {
-    setlocale(LC_ALL, "");
-    printf("Py_Main argc: %d\n", args->argc);
-    printf("Py_Main wchar_argv: %ls\n", *args->wchar_argv);
-    printf("Py_Main wchar_argv 0: %ls\n", *(args->wchar_argv));
-    printf("Py_Main wchar_argv 1: %ls\n", *(args->wchar_argv+1));
-    printf("Py_Main bytes_argv: %s\n", *args->bytes_argv);
-    
     PyStatus status = pymain_init(args);
     if (_PyStatus_IS_EXIT(status)) {
         pymain_free();

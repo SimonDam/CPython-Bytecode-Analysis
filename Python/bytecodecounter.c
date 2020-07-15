@@ -1,9 +1,21 @@
 #include "bytecodecounter.h"
+#include "Python.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <windows.h>
+#include <wchar.h>
 
 unsigned long long bcc_arr[BCC_ARR_SIZE];
+
+static wchar_t *input_file_path;
+
+const char kPathSeparator =
+#ifdef _WIN32
+                            '\\';
+#else
+                            '/';
+#endif
 
 void Py_PrintByteCodes()
 {
@@ -60,18 +72,24 @@ char *Py_GetLine(FILE *fp)
 
 char *Py_GetBCCPath()
 {
+    char BCC_Txt_Path[BCC_TXT_PATH_LEN];
+    memcpy(BCC_Txt_Path, 0, sizeof(char)*BCC_TXT_PATH_LEN);
+    //strcat_s(BCC_Txt_Path, BCC_TXT_PATH_LEN * sizeof(char), ".");
+    //strcat_s(BCC_Txt_Path, BCC_TXT_PATH_LEN * sizeof(char), kPathSeparator);
+    //strcat_s(BCC_Txt_Path, BCC_TXT_PATH_LEN * sizeof(char), "bcc.txt");
+
     FILE *fp;
-    errno_t err = fopen_s(&fp, ".\\bcc.txt", "r");
+    errno_t err = fopen_s(&fp, BCC_Txt_Path, "r");
     if(err != 0)
     {
-        printf("Unable to bcc.txt at path: %s\n", ".\\bcc.txt");
+        printf("Unable to access bcc.txt at path: %s\n", BCC_Txt_Path);
         return NULL;
     }
 
     // This can be NULL. We don't check for that here.
-    char *BCCPath = Py_GetLine(fp);
+    char *BCC_Path = Py_GetLine(fp);
     fclose(fp);
-    return BCCPath;
+    return BCC_Path;
 }
 
 int Py_WriteByteCodes()
@@ -86,6 +104,7 @@ int Py_WriteByteCodes()
     }
 
     char *file_name = "test.csv"; //TODO Get the filename from the input arguments.
+    printf("WriteByteCodes %ls", input_file_path);
 
     // Calcualte the size of the full path and allocate space for the full path.
     size_t path_len = strlen(path_str) + strlen(file_name) + 1;
@@ -119,4 +138,9 @@ int Py_WriteByteCodes()
 
     fclose(fp);
     return 1;
+}
+
+void Py_SetFilename(const wchar_t *file_path)
+{
+    input_file_path = file_path;
 }
