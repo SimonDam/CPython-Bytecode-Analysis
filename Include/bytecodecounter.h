@@ -23,9 +23,9 @@
     QueryPerformanceCounter(&bc_time_start); \
 
 #ifdef _WIN32
-#define PATH_SEP "\\"
+    #define PATH_SEP "\\"
 #else
-#define PATH_SEP "/"
+    #define PATH_SEP "/"
 #endif
 
 /* TODO Find out how to include opcode.h and use it to determine the BCC arr size.*/

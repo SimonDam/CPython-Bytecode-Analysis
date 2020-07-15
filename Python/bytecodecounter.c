@@ -68,6 +68,7 @@ wchar_t *Py_GetLine(FILE *fp)
 
 void Py_SetFilename(const wchar_t *file_path)
 {
+    // TODO add conversion from wchar_t to char here.
     input_file_path = calloc(wcslen(file_path)+1, sizeof(wchar_t));
     wcscpy(input_file_path, file_path);
 }
@@ -133,7 +134,7 @@ int Py_WriteByteCodes(void)
     wcscat_s(path_str, path_len * sizeof(wchar_t), file_name);
 
     FILE *fp; 
-    errno_t err = fopen_s(&fp, path_str, "w, ccs=encoding");
+    errno_t err = _wfopen_s(&fp, path_str, "w, ccs=encoding");
     if(err != 0)
     {
         printf("Unable to open file at path: %ls\n", path_str);
