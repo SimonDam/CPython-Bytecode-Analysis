@@ -33,7 +33,7 @@
 #define BCC_ARR_SIZE 258//EXCEPT_HANDLER+1
 #define BCC_TXT_PATH_LEN 11
 
-unsigned long long bcc_arr[];
+unsigned long long bcc_arr[BCC_ARR_SIZE];
 
 void Py_PrintByteCodes(void);
 
