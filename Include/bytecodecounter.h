@@ -22,10 +22,17 @@
             long double difference = (long double)(bc_time_end.QuadPart - bc_time_start.QuadPart); \
             long double time = difference / frequency.QuadPart; \
         } \
-        QueryPerformanceCounter(&bc_time_start); \
+        QueryPerformanceCounter(&bc_time_start) \
 
     #define PATH_SEP "\\"
+
 #else
+    #define DECL_BCC_TIMERS \
+    
+    #define INIT_BCC_TIMERS \
+
+    #define INC_OPCODE_ARR(index) \
+    
     #define PATH_SEP "/"
 #endif
 
@@ -37,13 +44,13 @@ unsigned long long bcc_arr[BCC_ARR_SIZE];
 
 void Py_PrintByteCodes(void);
 
-//char *Py_GetLine(FILE *fp); //TODO Why does this argument not build with "FILE*"
+char *Py_GetLine(FILE *fp); //TODO Why does this argument not build with "FILE*"
 
 char *Py_ReadBCCPath(void);
 
 int Py_WriteByteCodes(void);
 
-//void Py_SetFilename(const wchar_t* file_path); //TODO Why does this argument not build with "wchar_t*"
+void Py_SetFilename(const wchar_t* file_path); //TODO Why does this argument not build with "wchar_t*"
 
 char *Py_GetFilename(void);
 
