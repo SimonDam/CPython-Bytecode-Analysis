@@ -3,9 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <windows.h>
 #include <wchar.h>
 #include <time.h>
+
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    // TODO Add Linux timer library here.
+#endif
 
 unsigned long long bcc_arr[BCC_ARR_SIZE];
 

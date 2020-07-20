@@ -1,28 +1,29 @@
 #ifndef BYTE_CODE_COUNTER_H
 #define BYTE_CODE_COUNTER_H
-#define DECL_BCC_TIMERS \
-    LARGE_INTEGER frequency; \
-    LARGE_INTEGER bc_time_start; \
-    LARGE_INTEGER bc_time_end \
-
-#define INIT_BCC_TIMERS \
-    QueryPerformanceCounter(&bc_time_start); \
-    QueryPerformanceCounter(&bc_time_end); \
-    QueryPerformanceFrequency(&frequency) \
-
-#define INC_OPCODE_ARR(index) \
-    QueryPerformanceCounter(&bc_time_end); \
-    if(index > BCC_ARR_SIZE - 1 || index < 0){ \
-        printf("Unable to increment opcode: %d", index); \
-    } \
-    else{ \
-        bcc_arr[index]++; \
-        long double difference = (long double)(bc_time_end.QuadPart - bc_time_start.QuadPart); \
-        long double time = difference / frequency.QuadPart; \
-    } \
-    QueryPerformanceCounter(&bc_time_start); \
 
 #ifdef _WIN32
+    #define DECL_BCC_TIMERS \
+        LARGE_INTEGER frequency; \
+        LARGE_INTEGER bc_time_start; \
+        LARGE_INTEGER bc_time_end \
+    
+    #define INIT_BCC_TIMERS \
+        QueryPerformanceCounter(&bc_time_start); \
+        QueryPerformanceCounter(&bc_time_end); \
+        QueryPerformanceFrequency(&frequency) \
+
+    #define INC_OPCODE_ARR(index) \
+        QueryPerformanceCounter(&bc_time_end); \
+        if(index > BCC_ARR_SIZE - 1 || index < 0){ \
+            printf("Unable to increment opcode: %d", index); \
+        } \
+        else{ \
+            bcc_arr[index]++; \
+            long double difference = (long double)(bc_time_end.QuadPart - bc_time_start.QuadPart); \
+            long double time = difference / frequency.QuadPart; \
+        } \
+        QueryPerformanceCounter(&bc_time_start); \
+
     #define PATH_SEP "\\"
 #else
     #define PATH_SEP "/"
