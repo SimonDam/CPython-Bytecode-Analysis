@@ -28,21 +28,22 @@
     #define PATH_SEP "/"
 #endif
 
-/* TODO Find out how to include opcode.h and use it to determine the BCC arr size.*/
+// TODO Find out how to include opcode.h and use it to determine BCC_ARR_SIZE.
 #define BCC_ARR_SIZE 258//EXCEPT_HANDLER+1
 #define BCC_TXT_PATH_LEN 11
+
 unsigned long long bcc_arr[];
 
 void Py_PrintByteCodes(void);
 
-/*wchar_t *Py_GetLine(FILE); //TODO Why does this argument not build with "FILE*"*/
+//char *Py_GetLine(FILE *fp); //TODO Why does this argument not build with "FILE*"
 
-//wchar_t *Py_ReadBCCPath(void);
+char *Py_ReadBCCPath(void);
 
 int Py_WriteByteCodes(void);
 
-/*void Py_SetFilename(wchar_t); //TODO Why does this argument not build with "wchar_t*"*/
+//void Py_SetFilename(const wchar_t* file_path); //TODO Why does this argument not build with "wchar_t*"
 
-//wchar_t *Py_GetFilename(void);
+char *Py_GetFilename(void);
 
 #endif /* BYTE_CODE_COUNTER_H */
