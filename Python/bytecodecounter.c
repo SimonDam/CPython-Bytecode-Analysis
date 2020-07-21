@@ -32,8 +32,8 @@ char *Py_GetLine(FILE *fp)
 {
     size_t current_len = 0;
     char *full_string = NULL;
+
     char temp[20];
-    
     while(fgets(temp, sizeof(temp), fp))
     {
         // Start by getting the length of the string.
@@ -140,7 +140,7 @@ int Py_WriteByteCodes(void)
     char *path_str = Py_GetBCCPath();
     if(path_str == NULL)
     {
-        printf("Please specify a directorypath in BCC.txt to write the BCC files to.\n");
+        printf("Please specify a directorypath in bcc.txt to write the BCC files to.\n");
         printf("No files where written, dumping BCC's to terminal:\n");
         Py_PrintByteCodes();
         return 0;

@@ -35,6 +35,12 @@
     #define INIT_BCC_TIMERS \
 
     #define INC_OPCODE_ARR(index) \
+        if(index > BCC_ARR_SIZE - 1 || index < 0){ \
+            printf("Unable to increment opcode: %d", index); \
+        } \
+        else{ \
+            bcc_arr[index]++; \
+        } \
     
     #define PATH_SEP "/"
 #endif
