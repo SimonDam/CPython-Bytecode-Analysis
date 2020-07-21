@@ -47,13 +47,13 @@ unsigned long long bcc_arr[BCC_ARR_SIZE];
 
 void Py_PrintByteCodes(void);
 
-char *Py_GetLine(FILE *fp); //TODO Why does this argument not build with "FILE*"
+char *Py_GetLine(FILE *fp);
 
 char *Py_ReadBCCPath(void);
 
 int Py_WriteByteCodes(void);
 
-void Py_SetFilename(const wchar_t* file_path); //TODO Why does this argument not build with "wchar_t*"
+void Py_SetFilename(const wchar_t* file_path);
 
 char *Py_GetFilename(void);
 
