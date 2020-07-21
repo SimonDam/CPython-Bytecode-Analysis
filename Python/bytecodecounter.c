@@ -1,5 +1,5 @@
-#include "bytecodecounter.h"
 #include "Python.h"
+#include "bytecodecounter.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -123,7 +123,7 @@ char *Py_GetBCCPath(void)
 {
     FILE *fp;
     fp = fopen(BCC_Txt_Path, "r");
-    if(fp != NULL)
+    if(fp == NULL)
     {
         printf("Unable to access bcc.txt at path: %s\n", BCC_Txt_Path);
         return NULL;
@@ -138,7 +138,7 @@ char *Py_GetBCCPath(void)
 int Py_WriteByteCodes(void)
 {
     char *path_str = Py_GetBCCPath();
-    if(*path_str == NULL)
+    if(path_str == NULL)
     {
         printf("Please specify a directorypath in BCC.txt to write the BCC files to.\n");
         printf("No files where written, dumping BCC's to terminal:\n");
@@ -164,7 +164,7 @@ int Py_WriteByteCodes(void)
 
     FILE *fp; 
     fp = fopen(path_str, "w");
-    if(fp != NULL)
+    if(fp == NULL)
     {
         printf("Unable to open file at path: %s\n", path_str);
         free(path_str);

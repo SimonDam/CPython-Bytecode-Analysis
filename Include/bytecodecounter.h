@@ -53,7 +53,7 @@ char *Py_ReadBCCPath(void);
 
 int Py_WriteByteCodes(void);
 
-void Py_SetFilename(const wchar_t* file_path);
+void Py_SetFilename(const wchar_t *file_path);
 
 char *Py_GetFilename(void);
 

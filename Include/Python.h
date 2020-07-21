@@ -93,6 +93,7 @@
 #include "pydebug.h"
 
 #include "bytearrayobject.h"
+#include "bytecodecounter.h"
 #include "bytesobject.h"
 #include "unicodeobject.h"
 #include "longobject.h"
