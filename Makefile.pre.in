@@ -321,6 +321,7 @@ PYTHON_OBJS=	\
 		Python/ast_opt.o \
 		Python/ast_unparse.o \
 		Python/bltinmodule.o \
+		Python/bytecodecounter.o \
 		Python/ceval.o \
 		Python/codecs.o \
 		Python/compile.o \
@@ -970,6 +971,7 @@ PYTHON_HEADERS= \
 		$(srcdir)/Include/bltinmodule.h \
 		$(srcdir)/Include/boolobject.h \
 		$(srcdir)/Include/bytearrayobject.h \
+		$(srcdir)/Include/bytecodecounter.h \
 		$(srcdir)/Include/bytes_methods.h \
 		$(srcdir)/Include/bytesobject.h \
 		$(srcdir)/Include/cellobject.h \

@@ -57,7 +57,7 @@ char *Py_GetLine(FILE *fp)
 
         full_string = test_alloc;
         // We copy the small string at the end of the larger one.
-        strcpy_s(full_string + current_len, temp_len + 1, temp);
+        strcpy(full_string + current_len, temp);
 
         if(temp[temp_len - 1] == '\n' || feof(fp))
         {
@@ -122,8 +122,8 @@ char *Py_GetFilename(void)
 char *Py_GetBCCPath(void)
 {
     FILE *fp;
-    errno_t err = fopen_s(&fp, BCC_Txt_Path, "r");
-    if(err != 0)
+    fp = fopen(BCC_Txt_Path, "r");
+    if(fp != NULL)
     {
         printf("Unable to access bcc.txt at path: %s\n", BCC_Txt_Path);
         return NULL;
@@ -159,12 +159,12 @@ int Py_WriteByteCodes(void)
     }
 
     // Concatenate the directory path, file name and ".csv".
-    strcat_s(path_str, path_len * sizeof(char), filename);
-    strcat_s(path_str, path_len * sizeof(char), ".csv");
+    strcat(path_str, filename);
+    strcat(path_str, ".csv");
 
     FILE *fp; 
-    errno_t err = fopen_s(&fp, path_str, "w");
-    if(err != 0)
+    fp = fopen(path_str, "w");
+    if(fp != NULL)
     {
         printf("Unable to open file at path: %s\n", path_str);
         free(path_str);

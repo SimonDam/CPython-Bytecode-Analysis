@@ -1,6 +1,9 @@
 #ifndef BYTE_CODE_COUNTER_H
 #define BYTE_CODE_COUNTER_H
 
+#include <stdio.h>
+#include <wchar.h>
+
 #ifdef _WIN32
     #define DECL_BCC_TIMERS \
         LARGE_INTEGER frequency; \
