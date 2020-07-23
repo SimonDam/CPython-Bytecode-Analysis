@@ -9,7 +9,7 @@
 #ifdef _WIN32
     #include <windows.h>
 #else
-    //#include <linux/hrtimer.h>
+    #include <time.h>
 #endif
 
 unsigned long long bcc_arr[BCC_ARR_SIZE];
