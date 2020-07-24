@@ -1,9 +1,54 @@
 #ifndef BYTE_CODE_COUNTER_H
 #define BYTE_CODE_COUNTER_H
 
+#include "Python.h"
 #include <stdio.h>
 #include <wchar.h>
 #include <time.h>
+
+// TODO Find out how to include opcode.h and use it to determine BCC_ARR_SIZE.
+#define BCC_ARR_SIZE 258 // EXCEPT_HANDLER+1
+#define BCC_TXT_PATH_LEN 11
+#define BCT_BUFFER_SIZE 1000000
+#define BILLION 1000000000
+
+typedef struct BC_timing_struct
+{
+    long nsec_dur;
+    int opcode;
+} BC_timing;
+
+typedef struct BC_timings_buffer_struct
+{
+    BC_timing buffer[BCT_BUFFER_SIZE];
+    size_t cur_size;
+    long frequency;
+} BC_timings_buffer;
+
+
+void Py_PrintByteCodes(void);
+
+char *Py_GetLine(FILE *fp, size_t *len);
+
+char *Py_GetBCPath(size_t *len);
+
+char *Py_GetBCFullPath(size_t *len);
+
+int Py_WriteByteCodes(void);
+
+void Py_SetFilename(const wchar_t *file_path);
+
+char *Py_GetFilename(size_t *len);
+
+int Py_SaveBytecodeTimings(BC_timing timing, BC_timings_buffer *BCT_buffer);
+
+int Py_WriteByteCodeTimings(BC_timings_buffer *buffer);
+
+int Py_Init_BCT(BC_timings_buffer *buffer);
+
+unsigned long long bcc_arr[BCC_ARR_SIZE];
+
+BC_timings_buffer *_internal_timings_buffer;
 
 #ifdef _WIN32
     #define DECL_BCC_TIMERS \
@@ -16,18 +61,9 @@
         QueryPerformanceCounter(&bc_time_end); \
         QueryPerformanceCounter(&bc_time_start); \
 
-    #define INC_OPCODE_ARR(index) \
+    #define INC_OPCODE_ARR(opcode) \
         QueryPerformanceCounter(&bc_time_end); \
-        if(index > BCC_ARR_SIZE - 1 || index < 0) \
-        { \
-            printf("Invalid opcode: %d", index); \
-        } \
-        else \
-        { \
-            bcc_arr[index]++; \
-            long double difference = (long double)(bc_time_end.QuadPart - bc_time_start.QuadPart); \
-            long double time = difference / frequency.QuadPart; \
-        } \
+
         QueryPerformanceCounter(&bc_time_start) \
 
     #define PATH_SEP "\\"
@@ -37,45 +73,28 @@
         struct timespec bc_time_start; \
         struct timespec bc_time_end; \
         clockid_t clk_id = CLOCK_PROCESS_CPUTIME_ID; \
-        int abemad;\
+        BC_timings_buffer BCT_buffer; \
     
     #define INIT_BCC_TIMERS \
+        struct timespec temp; \
+        clock_getres(clk_id, &temp); \
+        BCT_buffer.frequency = BILLION / temp.tv_nsec; \
+        BCT_buffer.cur_size = 0; \
+        Py_Init_BCT(&BCT_buffer); \
         clock_gettime(clk_id, &bc_time_end); \
         clock_gettime(clk_id, &bc_time_start); \
-        abemad = 0;\
 
     #define INC_OPCODE_ARR(opcode) \
         clock_gettime(clk_id, &bc_time_end); \
-        if(opcode > BCC_ARR_SIZE - 1 || opcode < 0) \
+        BC_timing timing = \
         { \
-            printf("Invalid opcode: %d", opcode); \
-        } \
-        else \
-        { \
-            bcc_arr[opcode]++; \
-            long difference = bc_time_end - bc_time_start;
-        } \
+            .nsec_dur = bc_time_end.tv_nsec - bc_time_start.tv_nsec, \
+            .opcode = opcode \
+        }; \
+        Py_SaveBytecodeTimings(timing, &BCT_buffer); \
         clock_gettime(clk_id, &bc_time_start); \
     
     #define PATH_SEP "/"
 #endif
-
-// TODO Find out how to include opcode.h and use it to determine BCC_ARR_SIZE.
-#define BCC_ARR_SIZE 258//EXCEPT_HANDLER+1
-#define BCC_TXT_PATH_LEN 11
-
-unsigned long long bcc_arr[BCC_ARR_SIZE];
-
-void Py_PrintByteCodes(void);
-
-char *Py_GetLine(FILE *fp);
-
-char *Py_ReadBCCPath(void);
-
-int Py_WriteByteCodes(void);
-
-void Py_SetFilename(const wchar_t *file_path);
-
-char *Py_GetFilename(void);
 
 #endif /* BYTE_CODE_COUNTER_H */

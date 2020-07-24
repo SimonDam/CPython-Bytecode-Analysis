@@ -1202,7 +1202,7 @@ Py_FinalizeEx(void)
     runtime->core_initialized = 0;
 
     //TODO add a way to customize the type of output you want.
-    if(!Py_WriteByteCodes())
+    if(Py_WriteByteCodeTimings(_internal_timings_buffer))
     {
         printf("Unable to write bytecodes to file.");
     }
