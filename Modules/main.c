@@ -141,8 +141,10 @@ pymain_get_importer(const wchar_t *filename, PyObject **importer_p, int *exitcod
 
     // We set the filename we get in here. This is done 
     // so we can name the bcc files properly when we are done.
-    Py_SetFilename(filename);
-
+    // TOOD, figure out a better place to call Py_Init_BCT
+    printf("BEFORE INIT");
+    Py_Init_BCT(filename);
+    
     sys_path0 = PyUnicode_FromWideChar(filename, wcslen(filename));
     if (sys_path0 == NULL) {
         goto error;
@@ -674,7 +676,6 @@ pymain_main(_PyArgv *args)
     if (_PyStatus_EXCEPTION(status)) {
         pymain_exit_error(status);
     }
-
     return Py_RunMain();
 }
 
