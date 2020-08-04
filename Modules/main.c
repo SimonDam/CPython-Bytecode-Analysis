@@ -138,13 +138,6 @@ static int
 pymain_get_importer(const wchar_t *filename, PyObject **importer_p, int *exitcode)
 {
     PyObject *sys_path0 = NULL, *importer;
-
-    // We set the filename we get in here. This is done 
-    // so we can name the bcc files properly when we are done.
-    // TOOD, figure out a better place to call Py_Init_BCT
-    printf("BEFORE INIT");
-    Py_Init_BCT(filename);
-    
     sys_path0 = PyUnicode_FromWideChar(filename, wcslen(filename));
     if (sys_path0 == NULL) {
         goto error;
@@ -521,6 +514,13 @@ pymain_run_python(int *exitcode)
     PyConfig *config = &interp->config;
 
     PyObject *main_importer_path = NULL;
+
+    // We set the filename here. This is done so we can name
+    // the bcc files properly when we are done.
+    // We handle NULL filenames in Py_Init_BCT, since this Py_Init_BCT
+    // needs to be called regardless (NULL filepath mostly occur during
+    // building).
+    Py_Init_BCT(config->run_filename);
     if (config->run_filename != NULL) {
         /* If filename is a package (ex: directory or ZIP file) which contains
            __main__.py, main_importer_path is set to filename and will be

@@ -22,7 +22,7 @@ typedef struct BC_timing_struct
 
 typedef struct BC_timings_buffer_struct
 {
-    BC_timing buffer[BCT_BUFFER_SIZE];
+    BC_timing *buffer;
     size_t cur_size;
     long frequency;
     int is_init;

@@ -13,7 +13,7 @@
 
 unsigned long long bcc_arr[BCC_ARR_SIZE];
 
-BC_timings_buffer BCT_buffer;
+static BC_timings_buffer BCT_buffer;
 
 static char *output_file_path;
 
@@ -78,9 +78,7 @@ char* Py_VerifyFilename(const wchar_t *file_path, size_t *len)
     *len = wcslen(file_path);
     // We allocate space for the global path.
     char *ch_file_path = (char*)calloc(*len + 1, sizeof(char));
-    printf("SET '%s' '%ls'\n", ch_file_path, file_path);
     ssize_t no_of_bytes = wcstombs(ch_file_path, file_path, sizeof(char) * (*len));
-    printf("SET '%s' '%ls' %zu %zu\n", ch_file_path, file_path, no_of_bytes, *len);
     // On Windows, wchar_t and char are different length.
     #ifdef _WIN32
     if(no_of_bytes == -1)
@@ -213,15 +211,10 @@ int Py_WriteByteCodes(void)
 
 int Py_SaveBytecodeTimings(BC_timing timing)
 {
-    printf("Before\n");
     if(!BCT_buffer.is_init)
     {
-        wchar_t *testo = L"a";
-        printf("After %ls\n", testo);
-        Py_Init_BCT(testo);
-        printf("Afte2r\n");
+        return 1;
     }
-    printf("OKOKOK\n");
     if(timing.opcode > BCC_ARR_SIZE - 1 || timing.opcode < 0)
     {
         printf("Invalid opcode: %d\n", timing.opcode);
@@ -231,16 +224,12 @@ int Py_SaveBytecodeTimings(BC_timing timing)
         BCT_buffer.cur_size++;
         if(BCT_buffer.cur_size > BCT_BUFFER_SIZE - 1)
         {
-            printf("SRSLY? %d\n", BCT_buffer.is_init);
             if(Py_WriteByteCodeTimings(BCT_buffer))
             {
-                printf("???\n");
                 BCT_buffer.cur_size = 0;
                 return 1;
             }
-            printf("PRE\n");
             BCT_buffer.cur_size = 0;
-            printf("POST\n");
         }
         BCT_buffer.buffer[BCT_buffer.cur_size] = timing;
         
@@ -277,9 +266,9 @@ char *Py_GetBCTPath(char *filename, size_t len)
 
 int Py_WriteByteCodeTimings(BC_timings_buffer BCT_buffer)
 {
-    printf("INSIDE\n");
     if(output_file_path == NULL)
     {
+        // TODO, fix this to make it work with Python in REPL mode.
         printf("Unable to get path for BCT file.\n");
         free(output_file_path);
         return 1;
@@ -287,7 +276,6 @@ int Py_WriteByteCodeTimings(BC_timings_buffer BCT_buffer)
 
     FILE *fp;
     fp = fopen(output_file_path, "a");
-    printf("%s", output_file_path);
     if(fp == NULL)
     {
         printf("Unable to open BCT file at path. \"%s\".\n", output_file_path);
@@ -310,30 +298,28 @@ int Py_WriteByteCodeTimings(BC_timings_buffer BCT_buffer)
 
 int Py_Init_BCT(const wchar_t *file_path)
 {
-    // TODO, why does it segfault on the call to this function???
-    printf("INIT\n");
     // TODO move this into a seperate function.
-    #ifdef _WIN32
-    #else
-        struct timespec temp;
-        clock_getres(BCT_CLOCK, &temp);
-        long frequency = BILLION / temp.tv_nsec;
-    #endif
+#ifdef _WIN32
+    // TODO add Windows specific code here
+#else
+    struct timespec temp;
+    clock_getres(BCT_CLOCK, &temp);
+    long frequency = BILLION / temp.tv_nsec;
+#endif
     BC_timings_buffer buffer = 
     {
         .frequency = frequency,
         .cur_size = 0,
         .is_init = 1
     };
-
     BCT_buffer = buffer;
-
     if(file_path == NULL)
     {
+        BCT_buffer.is_init = 0;
         return 1;
     }
+    BCT_buffer.buffer = calloc(BCT_BUFFER_SIZE, sizeof(BC_timing));
 
-    printf("IN INIT FILE PATH: %ls\n", file_path);
     size_t len;
     char *filename = Py_GetFilename(file_path, &len);
     output_file_path = Py_GetBCTPath(filename, len);
@@ -350,7 +336,7 @@ int Py_Init_BCT(const wchar_t *file_path)
         return 1;
     }
 
-    fprintf(fp, "Timing metric in ns:\n%ld\nBytecodetimings:\n", BCT_buffer.frequency);
+    fprintf(fp, "Timing resolution (units/sec):\n%ld\nBytecode timings (bytecode:time):\n", BCT_buffer.frequency);
     fclose(fp);
     return 0;
 }
@@ -360,7 +346,6 @@ int Py_Exit_BCT(void)
     // During building the project, we only want to write to file if 
     // Py_Init_BCT has been run.
     // If we do not test for this here, then building the project will fail.
-    // TOOD, figure out a better place to call Py_Init_BCT
     if(BCT_buffer.is_init)
     {
         return Py_WriteByteCodeTimings(BCT_buffer);
