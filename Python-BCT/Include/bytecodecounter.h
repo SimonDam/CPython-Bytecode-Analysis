@@ -51,6 +51,10 @@ int Py_WriteByteCodeTimings(BC_timings_buffer buffer);
 
 int Py_Init_BCT(const wchar_t *file_path);
 
+int Py_WriteInitBCT(BC_timing timing);
+
+
+
 char *Py_GetDate(size_t *len);
 
 int Py_Exit_BCT(void);

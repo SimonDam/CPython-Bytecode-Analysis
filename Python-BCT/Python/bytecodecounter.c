@@ -211,6 +211,7 @@ int Py_WriteByteCodes(void)
 
 int Py_SaveBytecodeTimings(BC_timing timing)
 {
+    static int first_call = 1;
     if(!BCT_buffer.is_init)
     {
         return 1;
@@ -221,7 +222,18 @@ int Py_SaveBytecodeTimings(BC_timing timing)
     }
     else
     {
-        BCT_buffer.cur_size++;
+        if(first_call)
+        {
+            if(!Py_WriteInitBCT(timing))
+            {
+                first_call = 0;
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
         if(BCT_buffer.cur_size > BCT_BUFFER_SIZE - 1)
         {
             if(Py_WriteByteCodeTimings(BCT_buffer))
@@ -232,6 +244,7 @@ int Py_SaveBytecodeTimings(BC_timing timing)
             BCT_buffer.cur_size = 0;
         }
         BCT_buffer.buffer[BCT_buffer.cur_size] = timing;
+        BCT_buffer.cur_size++;
         
     }
     return 0;
@@ -264,6 +277,31 @@ char *Py_GetBCTPath(char *filename, size_t len)
     }
 }
 
+int Py_WriteInitBCT(BC_timing timing)
+{
+    if(output_file_path == NULL)
+    {
+        // TODO, fix this to make it work with Python in REPL mode.
+        printf("Unable to get path for BCT file.\n");
+        free(output_file_path);
+        return 1;
+    }
+
+    FILE *fp;
+    fp = fopen(output_file_path, "a");
+    if(fp == NULL)
+    {
+        printf("Unable to open BCT file at path. \"%s\".\n", output_file_path);
+        free(output_file_path);
+        return 1;
+    }
+    int opcode = timing.opcode;
+    long nsec = timing.nsec_dur;
+    fprintf(fp, "\"%d %ld\"", opcode, nsec);
+    fclose(fp);
+    return 0;
+}
+
 int Py_WriteByteCodeTimings(BC_timings_buffer BCT_buffer)
 {
     if(output_file_path == NULL)
@@ -289,7 +327,7 @@ int Py_WriteByteCodeTimings(BC_timings_buffer BCT_buffer)
     {
         opcode = BCT_buffer.buffer[i].opcode;
         nsec = BCT_buffer.buffer[i].nsec_dur;
-        fprintf(fp, "%d:%ld\n", opcode, nsec);
+        fprintf(fp, ",\"%d %ld\"", opcode, nsec);
     }
 
     fclose(fp);
@@ -336,7 +374,7 @@ int Py_Init_BCT(const wchar_t *file_path)
         return 1;
     }
 
-    fprintf(fp, "Timing resolution (units/sec):\n%ld\nBytecode timings (bytecode:time):\n", BCT_buffer.frequency);
+    fprintf(fp, "{\"resolution\":%ld,\"timings\":[", BCT_buffer.frequency);
     fclose(fp);
     return 0;
 }
@@ -348,7 +386,17 @@ int Py_Exit_BCT(void)
     // If we do not test for this here, then building the project will fail.
     if(BCT_buffer.is_init)
     {
-        return Py_WriteByteCodeTimings(BCT_buffer);
+        FILE *fp;
+        fp = fopen(output_file_path, "a");
+        if(fp == NULL)
+        {
+            printf("Unable to open BCT file at path. \"%s\".\n", output_file_path);
+            return 1;
+        }
+        int status = Py_WriteByteCodeTimings(BCT_buffer);
+        fprintf(fp, "]}");
+        fclose(fp);
+        return status;
     }
     return 1;
 }
