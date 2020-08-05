@@ -1,0 +1,9 @@
+�p��b Python ���ϥάJ���� C library?
+�@�b��T��ާֳt�o�i������, �}�o�δ��ճn�骺�t�׬O���e������
+���D. ���[�ֶ}�o�δ��ժ��t��, �ڭ̫K�`�Ʊ��Q�Τ@�Ǥw�}�o�n��
+library, �æ��@�� fast prototyping �� programming language �i
+�Ѩϥ�. �ثe���\�\�h�h�� library �O�H C �g��, �� Python �O�@��
+fast prototyping �� programming language. �G�ڭ̧Ʊ��N�J����
+C library ���� Python �����Ҥ����դξ�X. �䤤�̥D�n�]�O�ڭ̩�
+�n�Q�ת����D�N�O:
+
