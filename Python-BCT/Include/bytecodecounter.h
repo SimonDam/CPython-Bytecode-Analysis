@@ -37,7 +37,7 @@ char *Py_GetBCPath(size_t *len);
 
 char *Py_GetBCFullPath(char *filename, size_t filename_len, size_t *out_len);
 
-char *Py_GetBCTPath(char *filename, size_t len);
+char *Py_AddFileExt(char *filename, size_t filename_len, char *file_ext, size_t file_ext_len);
 
 int Py_WriteByteCodes(void);
 
@@ -50,10 +50,6 @@ int Py_SaveBytecodeTimings(BC_timing timing);
 int Py_WriteByteCodeTimings(BC_timings_buffer buffer);
 
 int Py_Init_BCT(const wchar_t *file_path);
-
-int Py_WriteInitBCT(BC_timing timing);
-
-
 
 char *Py_GetDate(size_t *len);
 

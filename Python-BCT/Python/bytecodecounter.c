@@ -15,7 +15,7 @@ unsigned long long bcc_arr[BCC_ARR_SIZE];
 
 static BC_timings_buffer BCT_buffer;
 
-static char *output_file_path;
+static char *output_bct_path;
 
 static const char BCC_Txt_Path[BCC_TXT_PATH_LEN] = "."PATH_SEP"bcc.txt";
 
@@ -28,13 +28,13 @@ void Py_PrintByteCodes(void)
     }
 }
 
-char *Py_GetLine(FILE *fp, size_t *len)
+char *Py_GetLine(FILE *fp_json, size_t *len)
 {
     size_t current_len = 0;
     char *full_string = NULL;
 
     char temp[32];
-    while(fgets(temp, sizeof(temp), fp))
+    while(fgets(temp, sizeof(temp), fp_json))
     {
         // Start by getting the length of the string.
         size_t temp_len = strlen(temp);
@@ -59,7 +59,7 @@ char *Py_GetLine(FILE *fp, size_t *len)
         // We copy the small string at the end of the larger one.
         strcpy(full_string + current_len, temp);
         current_len += temp_len;
-        if(temp[temp_len - 1] == '\n' || feof(fp))
+        if(temp[temp_len - 1] == '\n' || feof(fp_json))
         {
             // Success! We encountererd either the newline or EOF.
             *len = current_len;
@@ -132,17 +132,17 @@ char *Py_GetFilename(const wchar_t *filename_path, size_t *len)
 
 char *Py_GetBCPath(size_t *len)
 {
-    FILE *fp;
-    fp = fopen(BCC_Txt_Path, "r");
-    if(fp == NULL)
+    FILE *fp_json;
+    fp_json = fopen(BCC_Txt_Path, "r");
+    if(fp_json == NULL)
     {
         printf("Unable to access bcc.txt at path: %s\n.", BCC_Txt_Path);
         return NULL;
     }
 
     // This can be NULL. We don't check for that here.
-    char *BCC_Path = Py_GetLine(fp, len);
-    fclose(fp);
+    char *BCC_Path = Py_GetLine(fp_json, len);
+    fclose(fp_json);
     return BCC_Path;
 }
 
@@ -177,8 +177,8 @@ char *Py_GetBCFullPath(char *filename, size_t filename_len, size_t *out_len)
 int Py_WriteByteCodes(void)
 {
     // We add four to accomodate the ".csv". This length already accomodates a '\0' terminator.
-    size_t path_str_len = strlen(output_file_path);
-    char *path_str = (char*)realloc(output_file_path, path_str_len + 4);
+    size_t path_str_len = strlen(output_bct_path);
+    char *path_str = (char*)realloc(output_bct_path, path_str_len + 4);
     if(path_str == NULL)
     {
         printf("Unable to allocate memory to create \".csv\" path string.\n");
@@ -187,9 +187,9 @@ int Py_WriteByteCodes(void)
     }
     strcat(path_str, ".csv");
 
-    FILE *fp; 
-    fp = fopen(path_str, "w");
-    if(fp == NULL)
+    FILE *fp_json; 
+    fp_json = fopen(path_str, "w");
+    if(fp_json == NULL)
     {
         printf("Unable to open file at path: %s\n", path_str);
         free(path_str);
@@ -198,20 +198,19 @@ int Py_WriteByteCodes(void)
     free(path_str);
 
     // Write header to .csv file.
-    fprintf(fp, "bytecode,count\n");
+    fprintf(fp_json, "bytecode,count\n");
     for(int i = 0; i < BCC_ARR_SIZE; i++)
     {
         // Write bytecode and counts to .csv file.
-        fprintf(fp, "%d,%llu\n", i, bcc_arr[i]);
+        fprintf(fp_json, "%d,%llu\n", i, bcc_arr[i]);
     }
 
-    fclose(fp);
+    fclose(fp_json);
     return 0;
 }
 
 int Py_SaveBytecodeTimings(BC_timing timing)
 {
-    static int first_call = 1;
     if(!BCT_buffer.is_init)
     {
         return 1;
@@ -222,18 +221,6 @@ int Py_SaveBytecodeTimings(BC_timing timing)
     }
     else
     {
-        if(first_call)
-        {
-            if(!Py_WriteInitBCT(timing))
-            {
-                first_call = 0;
-                return 0;
-            }
-            else
-            {
-                return 1;
-            }
-        }
         if(BCT_buffer.cur_size > BCT_BUFFER_SIZE - 1)
         {
             if(Py_WriteByteCodeTimings(BCT_buffer))
@@ -250,74 +237,49 @@ int Py_SaveBytecodeTimings(BC_timing timing)
     return 0;
 }
 
-char *Py_GetBCTPath(char *filename, size_t len)
+char *Py_AddFileExt(char *filename, size_t filename_len, char *file_ext, size_t file_ext_len)
 {
     size_t path_str_len;
-    char *path_str = Py_GetBCFullPath(filename, len, &path_str_len);
+    char *path_str = Py_GetBCFullPath(filename, filename_len, &path_str_len);
     if(path_str == NULL)
     {
-        len = 0;
+        filename_len = 0;
         return NULL;
     }
     else
     {
         // We add four to accomodate the ".BCT". This length already accomodates a '\0' terminator.
-        path_str_len += 4;
+        path_str_len += file_ext_len;
         char *new_path_str = (char*)realloc(path_str, (path_str_len * sizeof(char)) + 1);
         if(new_path_str == NULL)
         {
-            printf("Unable to allocate memory to create \".BCT\" path string.\n");
+            printf("Unable to allocate memory to create %s path string.\n", file_ext);
             free(path_str);
             return NULL;
         }
 
         path_str = new_path_str;
-        strcat(path_str, ".BCT");
+        strcat(path_str, file_ext);
         return path_str;
     }
 }
 
-int Py_WriteInitBCT(BC_timing timing)
-{
-    if(output_file_path == NULL)
-    {
-        // TODO, fix this to make it work with Python in REPL mode.
-        printf("Unable to get path for BCT file.\n");
-        free(output_file_path);
-        return 1;
-    }
-
-    FILE *fp;
-    fp = fopen(output_file_path, "a");
-    if(fp == NULL)
-    {
-        printf("Unable to open BCT file at path. \"%s\".\n", output_file_path);
-        free(output_file_path);
-        return 1;
-    }
-    int opcode = timing.opcode;
-    long nsec = timing.nsec_dur;
-    fprintf(fp, "\"%d %ld\"", opcode, nsec);
-    fclose(fp);
-    return 0;
-}
-
 int Py_WriteByteCodeTimings(BC_timings_buffer BCT_buffer)
 {
-    if(output_file_path == NULL)
+    if(output_bct_path == NULL)
     {
         // TODO, fix this to make it work with Python in REPL mode.
         printf("Unable to get path for BCT file.\n");
-        free(output_file_path);
+        free(output_bct_path);
         return 1;
     }
 
-    FILE *fp;
-    fp = fopen(output_file_path, "a");
-    if(fp == NULL)
+    FILE *fp_json;
+    fp_json = fopen(output_bct_path, "a");
+    if(fp_json == NULL)
     {
-        printf("Unable to open BCT file at path. \"%s\".\n", output_file_path);
-        free(output_file_path);
+        printf("Unable to open BCT file at path. \"%s\".\n", output_bct_path);
+        free(output_bct_path);
         return 1;
     }
 
@@ -327,10 +289,10 @@ int Py_WriteByteCodeTimings(BC_timings_buffer BCT_buffer)
     {
         opcode = BCT_buffer.buffer[i].opcode;
         nsec = BCT_buffer.buffer[i].nsec_dur;
-        fprintf(fp, ",\"%d %ld\"", opcode, nsec);
+        fprintf(fp_json, "%d,%ld\n", opcode, nsec);
     }
 
-    fclose(fp);
+    fclose(fp_json);
     return 0;
 }
 
@@ -360,22 +322,40 @@ int Py_Init_BCT(const wchar_t *file_path)
 
     size_t len;
     char *filename = Py_GetFilename(file_path, &len);
-    output_file_path = Py_GetBCTPath(filename, len);
-    if(output_file_path == NULL)
+    // We copy it since AddFileExt modifies the memory.
+    char *filename_copy = strcpy(malloc(len * sizeof(char) + 1), filename);
+    char *output_json_path = Py_AddFileExt(filename, len, ".json", sizeof(".json"));
+    output_bct_path = Py_AddFileExt(filename_copy, len, ".csv", sizeof(".csv"));
+
+    FILE *fp_json;
+    fp_json = fopen(output_json_path, "w");
+    if(fp_json == NULL)
+    {
+        printf("Unable to open BCT file at path. \"%s\".\n", output_bct_path);
+        return 1;
+    }
+
+    // Write the json meta data.
+    printf("OUTPUT %s", output_bct_path);
+    fprintf(fp_json, "{\"resolution\":%ld,\"bct_path\":\"%s\"}", BCT_buffer.frequency, output_bct_path);
+    fclose(fp_json);
+
+    if(output_bct_path == NULL)
     {
         return 1;
     }
     
-    FILE *fp;
-    fp = fopen(output_file_path, "w");
-    if(fp == NULL)
+    FILE *fp_csv;
+    fp_csv = fopen(output_bct_path, "w");
+    if(fp_csv == NULL)
     {
-        printf("Unable to open BCT file at path. \"%s\".\n", output_file_path);
+        printf("Unable to open BCT file at path. \"%s\".\n", output_bct_path);
         return 1;
     }
 
-    fprintf(fp, "{\"resolution\":%ld,\"timings\":[", BCT_buffer.frequency);
-    fclose(fp);
+    // Write the csv header.
+    fprintf(fp_csv, "bytecode,duration\n");
+    fclose(fp_csv);
     return 0;
 }
 
@@ -386,17 +366,7 @@ int Py_Exit_BCT(void)
     // If we do not test for this here, then building the project will fail.
     if(BCT_buffer.is_init)
     {
-        FILE *fp;
-        fp = fopen(output_file_path, "a");
-        if(fp == NULL)
-        {
-            printf("Unable to open BCT file at path. \"%s\".\n", output_file_path);
-            return 1;
-        }
-        int status = Py_WriteByteCodeTimings(BCT_buffer);
-        fprintf(fp, "]}");
-        fclose(fp);
-        return status;
+        return Py_WriteByteCodeTimings(BCT_buffer);
     }
     return 1;
 }

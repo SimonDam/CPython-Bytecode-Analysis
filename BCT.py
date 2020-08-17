@@ -38,7 +38,7 @@ def get_BCTs(python_path, filepath):
 
 def main():
     vanilla_path, bc_path = getPython_Paths()
-    filepath = "/home/simon/Desktop/thisis.py"
+    filepath = "/home/simon/Desktop/empty.py"
     time = time_Python_program(str(vanilla_path), filepath)
     BCT_json = get_BCTs(str(filepath), filepath)
 
