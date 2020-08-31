@@ -4,6 +4,7 @@ import time
 import os
 import json
 import pyRAPL
+import pandas as pd
 
 class BC_timing:
     def __init__(self, opcode, timing, f):
@@ -66,14 +67,16 @@ def getPython_Paths():
     else:
         return os.path.abspath("./Python/python"), os.path.abspath("./Python-BCT/python")
 
-def measure_program(python_path, filepath, iterations = 1, max_dur = float('+inf')):
-    name = filepath.split('/')[-1]
+def measure_program(python_path, filepath, iterations = 1, max_dur = float('+inf'), verbose = False):
+    name = filepath.split(os.sep)[-1]
     pyRAPL_measurement = pyRAPL.Measurement("name")
     measurement = Measurement(0.0, [0.0], [0.0], name = name)
-    dividend = 1
+    dividend = 0
     start = time.time()
     for i in range(iterations):
         dividend += 1
+        if verbose:
+            print(f"Running iteration {dividend} of {name}... ", end='')
         pyRAPL_measurement.begin()
         os.system(f"{python_path} {filepath}")
         pyRAPL_measurement.end()
@@ -81,30 +84,69 @@ def measure_program(python_path, filepath, iterations = 1, max_dur = float('+inf
                                    pyRAPL_measurement.result.pkg,
                                    pyRAPL_measurement.result.dram, 
                                    name = name)
+        if verbose:
+            print(measurement / dividend)
         if time.time() - start > max_dur:
+            if verbose:
+                print(f"Breaking at iteration {dividend} due to exceeding time limit.")
             break
     
     return measurement / dividend
 
+def validate_BCT_dir(BCT_path):
+    while True:
+        if not os.path.isdir(BCT_path):
+            answer = input("The directory specified in bcc.txt does not exist. Do you want to create it? (Y/N)").upper()
+            if answer in ("Y", "YES"):
+                try:
+                    os.makedirs(BCT_path)
+                except OSError:
+                    print(f"Creation of directory at {BCT_path} failed.")
+                else:
+                    return BCT_path
+        else:
+            return BCT_path
+        BCT_path = input("Please specify a folder to write bytecodes to: ")
+
+def get_BCT_path():
+    os.chdir(os.path.abspath("./Python-BCT"))
+    BCT_path = ""
+    if os.path.isfile("bcc.txt"):
+        with open("bcc.txt", 'r') as bcc_file:
+            BCT_path =  bcc_file.readline()
+            BCT_path = validate_BCT_dir(BCT_path)
+    else:
+        with open("bcc.txt", 'w') as bcc_file:
+            BCT_path = validate_BCT_dir(BCT_path)
+            bcc_file.write(BCT_path)
+    os.chdir(os.path.abspath(".."))
+    return BCT_path
+
 def get_BCTs(python_path, filepath):
     os.chdir(os.path.abspath("./Python-BCT"))
+    # Run the modified Python interpreter.
     os.system(f"{python_path} {filepath}")
-    with open(Path(f"bcc.txt")) as bcc_file:
-        BCT_path =  bcc_file.readline()
+    # This has generated the bytecode files.
+    os.chdir(os.path.abspath(".."))
+    
+    # We need to get that path here.
+    BCT_path = get_BCT_path()
 
     filename = filepath.split(os.sep)[-1]
     with open(f"{BCT_path}{filename}.json", 'r') as BCT_file:
-        json_str = BCT_file.readline()
-    os.chdir(os.path.abspath(".."))
-    return json.loads(json_str)
+        meta_data = json.load(BCT_file)
+
+    return pd.read_csv(meta_data['bct_path'])
 
 def main():
     pyRAPL.setup()
 
     vanilla_path, bc_path = getPython_Paths()
-    filepath = "/home/simon/Desktop/empty.py"
-    measurement = measure_program(str(vanilla_path), filepath, iterations = 10)
-    BCT_json = get_BCTs(str(bc_path), filepath)
+    filepath = "/home/simon/Desktop/forloop.py"
+    measurement = measure_program(vanilla_path, filepath, iterations = 100, verbose = True, max_dur=10)
+    
+    BCT_pd = get_BCTs(bc_path, filepath)
+    #print(BCT_pd)
 
 
 if __name__ == "__main__":

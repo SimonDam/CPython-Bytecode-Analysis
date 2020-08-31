@@ -336,7 +336,6 @@ int Py_Init_BCT(const wchar_t *file_path)
     }
 
     // Write the json meta data.
-    printf("OUTPUT %s", output_bct_path);
     fprintf(fp_json, "{\"resolution\":%ld,\"bct_path\":\"%s\"}", BCT_buffer.frequency, output_bct_path);
     fclose(fp_json);
 
