@@ -11,6 +11,7 @@ from warnings import warn
 from utils.printer import ow_print
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import numpy as np
 
 class Measurement:
     def __init__(self, duration, pkg, dram, name = None):
@@ -168,58 +169,57 @@ def setup():
         args.source_dir += os.sep
     return vanilla_path, bc_path, args, BCT_path
 
+def file_already_run(json_path):
+    try: # Catch if file does not exist, or if the json is invalid.
+        with open(json_path) as json_file:
+            metadata_dict = json.load(json_file)
+    except: # We don't care which error is it, we just rerun.
+        return False
+    else:
+        if 'is_measured' not in metadata_dict:
+            return False
+        elif not metadata_dict['is_measured']:
+            return False
+        else:
+            return True
+
 def main():
     vanilla_path, bc_path, args, BCT_path = setup()
     "/home/simon/Desktop/testfolder"
 
-    duration_lst = []
-    pkg_lst = []
-    dram_lst = []
-
+    measurement_lst = []
+    BCT_lst  = []
 
     for filename in os.listdir(args.source_dir):
         if filename.endswith(".py"):
-            do_run = False
             filepath = f"{args.source_dir}{filename}"
             json_path = f"{BCT_path}{filename}.json"
-            
-            if args.force:
-                do_run = True
-            elif not os.path.isfile(json_path):
-                do_run = True
-            else:
-                with open(json_path) as json_file:
-                    try: # In case of invalid json.
-                        metadata_dict = json.load(json_file)
-                    except:
-                        do_run = True
-                    else:
-                        if 'is_measured' not in metadata_dict and not metadata_dict['is_measured']:
-                            do_run = True
-
-            if do_run:
+            with open(json_path, 'r') as BCT_file:
+                metadata_dict = json.load(BCT_file)
+        
+            if args.force or not file_already_run(json_path):
                 measurement = measure_program(filepath, vanilla_path, bc_path, iterations = 100, verbose = args.verbose, time_limit=10)
-                with open(json_path, 'r') as BCT_file:
-                    metadata_dict = json.load(BCT_file)
-                BCT_pd = pd.read_csv(metadata_dict['bct_path'])
-                metadata_dict['duration'] = measurement.duration
-                duration_lst += [metadata_dict['duration']]
-
-                metadata_dict['pkg'] = measurement.pkg
-                pkg_lst += [sum(metadata_dict['pkg'])]
+                measurement_lst += [measurement]
                 
-
+                metadata_dict['duration'] = measurement.duration
+                metadata_dict['pkg'] = measurement.pkg
                 metadata_dict['dram'] = measurement.dram
-                dram_lst += [sum(metadata_dict['dram'])]
-
                 metadata_dict['is_measured'] = True
 
                 with open(json_path, 'w') as json_file:
                     json.dump(metadata_dict, json_file)
             elif args.verbose:
                 print(f"Skipping {filename} (already measured). See --help to override this.")
-    
-    
+
+            measurement_lst += [Measurement(metadata_dict['duration'], metadata_dict['pkg'], metadata_dict['dram'], name = filename)]
+            print("before")
+            BCT_lst += [pd.read_csv(metadata_dict['bct_path'])] # TODO consider only loading the data when it's needed, instead of all of it at once.
+            print("after", end="\n\n")
+                
+    for df in BCT_lst:
+        input(df)
+        for row in df.itertuples():
+            pass # TODO analyze bytecodes
     #pkg_fig, pkg_ax = plt.subplots() 
     #dram_fig, dram_ax = plt.subplots()
     #pkg_ax.scatter(duration_lst, pkg_lst)
