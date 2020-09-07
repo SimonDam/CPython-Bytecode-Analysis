@@ -12,6 +12,36 @@ from utils.printer import ow_print
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
+import jsonpickle
+
+class Bytecode_stat:
+    __valid_bytecodes = {1,2,3,4,5,6,9,10,11,12,15,16,17,19,20,22,23,24,25,26,27,28,29,50,51,52,53,54,55,56,57,59,60,61,62,63,64,
+                         65,66,67,68,69,70,71,72,73,75,76,77,78,79,81,82,83,84,85,86,87,88,89,90,90,91,92,93,94,95,96,97,98,100,101,
+                         102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,122,124,125,126,130,131,132,133,135,136,137,138,
+                         141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,160,161,162,163,257}
+    def __init__(self, bytecode, timing, count = 1):
+        if bytecode not in self.__valid_bytecodes:
+            raise ValueError(f"{bytecode} is not a valid value for bytecode.")
+        if timing < 0:
+            raise ValueError(f"Timing can not be less than 0, {timing}.")
+        if not isinstance(count, int):
+            raise TypeError(f"count must be of type int, {type(count)} given.")
+        if count < 1:
+            raise ValueError(f"count must be 1 or higher, {count} given.")
+        self.bytecode = bytecode
+        self.timing = timing
+        self.count = count
+    
+    def get_avg(self):
+        return self.timing / self.count
+    
+    def __add__(self, other):
+        if self.bytecode != other.bytecode:
+            raise ValueError(f"Bytecodes must be the same, {self.bytecode} and {other.bytecode}.")
+        return Bytecode_stat(self.bytecode, self.timing + other.timing, count = self.count + other.count)
+
+    def __str__(self):
+        return f"bytecode = {self.bytecode}, timing = {self.timing}, count = {self.count}"
 
 class Measurement:
     def __init__(self, duration, pkg, dram, name = None):
@@ -183,57 +213,111 @@ def file_already_run(json_path):
         else:
             return True
 
+def compute_bc_stats(csv_path):
+    bytecode_dict = {}
+    for chunk in pd.read_csv(csv_path, chunksize = 1000000):
+        for index, bytecode, timing in chunk.itertuples():
+            bytecode_stat = Bytecode_stat(bytecode, timing)
+            if bytecode in bytecode_dict:
+                bytecode_dict[bytecode] += bytecode_stat
+            else:
+                bytecode_dict[bytecode] = bytecode_stat
+    return bytecode_dict
+
+def read_meta_json_as_dict(json_path):
+    with open(json_path, 'r') as BCT_file:
+        results_dict = json.load(BCT_file)
+
+    if 'bc_stats' in results_dict:
+        bc_stats = {}
+        for key in results_dict['bc_stats']:
+            bc_stats[key] = jsonpickle.decode(results_dict['bc_stats'][key])
+        results_dict['bc_stats'] = bc_stats
+
+    return results_dict
+
+def write_meta_dict_as_json(results_dict, json_path):
+    bc_stats = {}
+    results_copy = results_dict.copy()
+    for key in results_copy['bc_stats']:
+        bc_stats[key] = jsonpickle.encode(results_copy['bc_stats'][key])
+
+    results_copy['bc_stats'] = bc_stats
+
+    with open(json_path, 'w') as json_file:
+        json.dump(results_copy, json_file)
+
 def main():
     vanilla_path, bc_path, args, BCT_path = setup()
     "/home/simon/Desktop/testfolder"
 
     measurement_lst = []
-    BCT_lst  = []
+    results_lst  = []
 
     for filename in os.listdir(args.source_dir):
         if filename.endswith(".py"):
             filepath = f"{args.source_dir}{filename}"
             json_path = f"{BCT_path}{filename}.json"
-            with open(json_path, 'r') as BCT_file:
-                metadata_dict = json.load(BCT_file)
         
             if args.force or not file_already_run(json_path):
                 measurement = measure_program(filepath, vanilla_path, bc_path, iterations = 100, verbose = args.verbose, time_limit=10)
                 measurement_lst += [measurement]
                 
-                metadata_dict['duration'] = measurement.duration
-                metadata_dict['pkg'] = measurement.pkg
-                metadata_dict['dram'] = measurement.dram
-                metadata_dict['is_measured'] = True
+                results_dict = read_meta_json_as_dict(json_path)
+                results_dict['duration'] = measurement.duration
+                results_dict['pkg'] = measurement.pkg
+                results_dict['dram'] = measurement.dram
+                results_dict['is_measured'] = True
+                results_dict['bc_stats'] = compute_bc_stats(results_dict['bct_path'])
+                
+                write_meta_dict_as_json(results_dict, json_path)
 
-                with open(json_path, 'w') as json_file:
-                    json.dump(metadata_dict, json_file)
             elif args.verbose:
                 print(f"Skipping {filename} (already measured). See --help to override this.")
+                results_dict = read_meta_json_as_dict(json_path)
 
-            measurement_lst += [Measurement(metadata_dict['duration'], metadata_dict['pkg'], metadata_dict['dram'], name = filename)]
-            BCT_lst += [(filename, pd.read_csv(metadata_dict['bct_path'], chunksize = 1000000))]
+            measurement_lst += [Measurement(results_dict['duration'], results_dict['pkg'], results_dict['dram'], name = filename)]
+            results_lst += [results_dict]
+
+    duration_lst = [x.duration for x in measurement_lst]
+    pkg_lst = [sum(x.pkg) for x in measurement_lst]
+    dram_lst = [sum(x.dram) for x in measurement_lst]
     
-    bytecodes = {}
-    for i in range(258):
-        bytecodes[str(i)] = {'sum' : 0, 'count' : 0}
-    for name, df in BCT_lst:
-        for chunk in df:
-            print(chunk)
-            for index, bytecode, timing in chunk.itertuples():
-                bytecodes[str(bytecode)]['count'] += 1
-                bytecodes[str(bytecode)]['sum'] += timing
-    
-    for bc in bytecodes:
-        print(bc, ":", bytecodes[bc])
-    #pkg_fig, pkg_ax = plt.subplots() 
-    #dram_fig, dram_ax = plt.subplots()
-    #pkg_ax.scatter(duration_lst, pkg_lst)
-    #dram_ax.scatter(duration_lst, dram_lst)
-    #pkg_fig.show()
-    #input()
-    #dram_fig.show()
-    #input()
+    pkg_fig, pkg_ax = plt.subplots()
+    pkg_ax.set_title("Run-time vs. CPU energy consumption.")
+    pkg_ax.set_xlabel("Time [µs]")
+    pkg_ax.set_ylabel("Energy [µJ]")
+    pkg_ax.scatter(duration_lst, pkg_lst)
+    pkg_fig.savefig(f"{BCT_path}cpu.pdf")
+    pkg_fig.show()
+
+    dram_fig, dram_ax = plt.subplots()
+    pkg_ax.set_title("Run-time vs. RAM energy consumption.")
+    pkg_ax.set_xlabel("Time [µs]")
+    pkg_ax.set_ylabel("Energy [µJ]")
+    dram_ax.scatter(duration_lst, dram_lst)
+    dram_fig.savefig(f"{BCT_path}ram.pdf")
+    dram_fig.show()
+
+    sum_results = {}
+    for results in results_lst:
+        for key in results['bc_stats']:
+            if key in sum_results:
+                sum_results[key] += results['bc_stats'][key]
+            else:
+                sum_results[key] = results['bc_stats'][key]
+
+    duration_lst = []
+    for results in results_lst:
+        duration = 0
+        for key in results['bc_stats']:
+            avg = sum_results[key].get_avg()
+            count = results['bc_stats'][key].count
+            duration +=  avg * count
+        duration_lst.append((results['bct_path'], duration, results['duration'], duration / results['duration'])) # TODO find better way to calculate run-time
+
+    for i in duration_lst:
+        print(i)
 
 if __name__ == "__main__":
     main()
