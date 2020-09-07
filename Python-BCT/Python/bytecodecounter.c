@@ -274,9 +274,9 @@ int Py_WriteByteCodeTimings(BC_timings_buffer BCT_buffer)
         return 1;
     }
 
-    FILE *fp_json;
-    fp_json = fopen(output_bct_path, "a");
-    if(fp_json == NULL)
+    FILE *fp;
+    fp = fopen(output_bct_path, "a");
+    if(fp == NULL)
     {
         printf("Unable to open BCT file at path. \"%s\".\n", output_bct_path);
         free(output_bct_path);
@@ -289,10 +289,10 @@ int Py_WriteByteCodeTimings(BC_timings_buffer BCT_buffer)
     {
         opcode = BCT_buffer.buffer[i].opcode;
         nsec = BCT_buffer.buffer[i].nsec_dur;
-        fprintf(fp_json, "%d,%ld\n", opcode, nsec);
+        fprintf(fp, "%d,%ld\n", opcode, nsec);
     }
 
-    fclose(fp_json);
+    fclose(fp);
     return 0;
 }
 

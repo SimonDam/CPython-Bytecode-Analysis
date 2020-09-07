@@ -212,14 +212,20 @@ def main():
                 print(f"Skipping {filename} (already measured). See --help to override this.")
 
             measurement_lst += [Measurement(metadata_dict['duration'], metadata_dict['pkg'], metadata_dict['dram'], name = filename)]
-            print("before")
-            BCT_lst += [pd.read_csv(metadata_dict['bct_path'])] # TODO consider only loading the data when it's needed, instead of all of it at once.
-            print("after", end="\n\n")
-                
-    for df in BCT_lst:
-        input(df)
-        for row in df.itertuples():
-            pass # TODO analyze bytecodes
+            BCT_lst += [(filename, pd.read_csv(metadata_dict['bct_path'], chunksize = 1000000))]
+    
+    bytecodes = {}
+    for i in range(258):
+        bytecodes[str(i)] = {'sum' : 0, 'count' : 0}
+    for name, df in BCT_lst:
+        for chunk in df:
+            print(chunk)
+            for index, bytecode, timing in chunk.itertuples():
+                bytecodes[str(bytecode)]['count'] += 1
+                bytecodes[str(bytecode)]['sum'] += timing
+    
+    for bc in bytecodes:
+        print(bc, ":", bytecodes[bc])
     #pkg_fig, pkg_ax = plt.subplots() 
     #dram_fig, dram_ax = plt.subplots()
     #pkg_ax.scatter(duration_lst, pkg_lst)

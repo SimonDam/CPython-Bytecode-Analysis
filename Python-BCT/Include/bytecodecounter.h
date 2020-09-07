@@ -89,9 +89,18 @@ BC_timings_buffer *_internal_timings_buffer;
 
     #define INC_OPCODE_ARR(opcode) \
         clock_gettime(clk_id, &bc_time_end); \
+        long diff = 0; \
+        if(bc_time_end.tv_nsec >= bc_time_start.tv_nsec) \
+        { \
+            diff = bc_time_end.tv_nsec - bc_time_start.tv_nsec; \
+        } \
+        else /* Handle the case where bc_time_end overflows. */ \
+        { \
+            diff = (bc_time_end.tv_nsec + 1000000000L) - bc_time_start.tv_nsec; \
+        } \
         BC_timing timing = \
         { \
-            .nsec_dur = bc_time_end.tv_nsec - bc_time_start.tv_nsec, \
+            .nsec_dur = diff, \
             .opcode = opcode \
         }; \
         Py_SaveBytecodeTimings(timing); \
