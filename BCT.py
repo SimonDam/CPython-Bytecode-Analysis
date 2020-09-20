@@ -272,12 +272,13 @@ def main():
                 
                 write_meta_dict_as_json(results_dict, json_path)
 
-            elif args.verbose:
-                print(f"Skipping {filename} (already measured). See --help to override this.")
+            else:
+                if args.verbose:
+                    print(f"Skipping {filename} (already measured). See --help to override this.")
                 results_dict = read_meta_json_as_dict(json_path)
 
-            measurement_lst += [Measurement(results_dict['duration'], results_dict['pkg'], results_dict['dram'], name = filename)]
-            results_lst += [results_dict]
+            measurement_lst.append(Measurement(results_dict['duration'], results_dict['pkg'], results_dict['dram'], name = filename))
+            results_lst.append(results_dict)
 
     duration_lst = [x.duration for x in measurement_lst]
     pkg_lst = [sum(x.pkg) for x in measurement_lst]
@@ -292,9 +293,9 @@ def main():
     pkg_fig.show()
 
     dram_fig, dram_ax = plt.subplots()
-    pkg_ax.set_title("Run-time vs. RAM energy consumption.")
-    pkg_ax.set_xlabel("Time [µs]")
-    pkg_ax.set_ylabel("Energy [µJ]")
+    dram_ax.set_title("Run-time vs. RAM energy consumption.")
+    dram_ax.set_xlabel("Time [µs]")
+    dram_ax.set_ylabel("Energy [µJ]")
     dram_ax.scatter(duration_lst, dram_lst)
     dram_fig.savefig(f"{BCT_path}ram.pdf")
     dram_fig.show()
@@ -307,17 +308,26 @@ def main():
             else:
                 sum_results[key] = results['bc_stats'][key]
 
-    duration_lst = []
-    for results in results_lst:
-        duration = 0
-        for key in results['bc_stats']:
-            avg = sum_results[key].get_avg()
-            count = results['bc_stats'][key].count
-            duration +=  avg * count
-        duration_lst.append((results['bct_path'], duration, results['duration'], duration / results['duration'])) # TODO find better way to calculate run-time
+    # Calculate duration from the average timing of a bytecode, multiplied by the amount of times it has been seen.
+    #duration_lst = []
+    #for results in results_lst:
+    #    duration = 0
+    #    for key in results['bc_stats']:
+    #        avg = sum_results[key].get_avg()
+    #        count = results['bc_stats'][key].count
+    #        duration +=  avg * count
+    #    duration_lst.append((results['bct_path'], duration, results['duration'], duration / results['duration']))
 
-    for i in duration_lst:
-        print(i)
+    sum_dur = 0
+    for key in sum_results:
+        sum_dur += sum_results[key].timing
+
+    percentage_dict = {}
+    for key in sum_results:
+        percentage_dict[key] = sum_results[key].timing / sum_dur
+
+    #TODO Calculate the average energy consumption of each bytecode based on the amount of time it takes to execute it, compared to the total time.
+    #     Use this to calculate the total energy consumption by simply multiplying the energy consumption of each bytecode with the amount of times it has been executed.
 
 if __name__ == "__main__":
     main()
