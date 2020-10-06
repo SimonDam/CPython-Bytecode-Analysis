@@ -284,12 +284,12 @@ int Py_WriteByteCodeTimings(BC_timings_buffer BCT_buffer)
     }
 
     int opcode;
-    long nsec;
+    long delta;
     for(size_t i = 0; i < BCT_buffer.cur_size; i++)
     {
         opcode = BCT_buffer.buffer[i].opcode;
-        nsec = BCT_buffer.buffer[i].nsec_dur;
-        fprintf(fp, "%d,%ld\n", opcode, nsec);
+        delta = BCT_buffer.buffer[i].delta;
+        fprintf(fp, "%d,"DELTA_STR_FORMATTER"\n", opcode, delta);
     }
 
     fclose(fp);
@@ -299,12 +299,17 @@ int Py_WriteByteCodeTimings(BC_timings_buffer BCT_buffer)
 int Py_Init_BCT(const wchar_t *file_path)
 {
     // TODO move this into a seperate function.
-#ifdef _WIN32
-    // TODO add Windows specific code here
-#else
-    struct timespec temp;
-    clock_getres(BCT_CLOCK, &temp);
-    long frequency = BILLION / temp.tv_nsec;
+
+#if defined(BCT_TIMING)
+    #ifdef _WIN32
+        // TODO add Windows specific code here
+    #else
+        struct timespec temp;
+        clock_getres(BCT_CLOCK, &temp);
+        long frequency = BILLION / temp.tv_nsec;
+    #endif
+#elif defined(BCT_RDTSC)
+    long frequency = -1;
 #endif
     BC_timings_buffer buffer = 
     {

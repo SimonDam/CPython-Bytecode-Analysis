@@ -14,9 +14,18 @@
 
 #define BCT_CLOCK CLOCK_PROCESS_CPUTIME_ID 
 
+#define BCT_RDTSC
+#if defined(BCT_TIMING)
+    #define DELTA_TYPE long
+    #define DELTA_STR_FORMATTER "%ld"
+#elif defined(BCT_RDTSC)
+    #define DELTA_TYPE unsigned long long
+    #define DELTA_STR_FORMATTER "%llu"
+#endif
+
 typedef struct BC_timing_struct
 {
-    long nsec_dur;
+    long delta;
     int opcode;
 } BC_timing;
 
@@ -59,52 +68,92 @@ unsigned long long bcc_arr[BCC_ARR_SIZE];
 
 BC_timings_buffer *_internal_timings_buffer;
 
-#ifdef _WIN32
+#if defined(BCT_TIMING)
+    #ifdef _WIN32
+        #define DECL_BCC_TIMERS \
+            LARGE_INTEGER frequency; \
+            LARGE_INTEGER bc_time_start; \
+            LARGE_INTEGER bc_time_end \
+
+        #define INIT_BCC_TIMERS \
+            QueryPerformanceFrequency(&frequency) \
+            QueryPerformanceCounter(&bc_time_end); \
+            QueryPerformanceCounter(&bc_time_start); \
+
+        #define INC_OPCODE_ARR(opcode) \
+            QueryPerformanceCounter(&bc_time_end); \
+
+            QueryPerformanceCounter(&bc_time_start) \
+
+        #define PATH_SEP "\\"
+
+    #else
+        #define DECL_BCC_TIMERS \
+            struct timespec bc_time_start; \
+            struct timespec bc_time_end; \
+            clockid_t clk_id = BCT_CLOCK; \
+
+        #define INIT_BCC_TIMERS \
+            clock_gettime(clk_id, &bc_time_end); \
+            clock_gettime(clk_id, &bc_time_start); \
+
+        #define INC_OPCODE_ARR(opcode) \
+            clock_gettime(clk_id, &bc_time_end); \
+            long diff = 0; \
+            if(bc_time_end.tv_nsec >= bc_time_start.tv_nsec) \
+            { \
+                diff = bc_time_end.tv_nsec - bc_time_start.tv_nsec; \
+            } \
+            else /* Handle the case where bc_time_end overflows. */ \
+            { \
+                diff = (bc_time_end.tv_nsec + 1000000000L) - bc_time_start.tv_nsec; \
+            } \
+            BC_timing timing = \
+            { \
+                .delta = diff, \
+                .opcode = opcode \
+            }; \
+            Py_SaveBytecodeTimings(timing); \
+            clock_gettime(clk_id, &bc_time_start); \
+
+        #define PATH_SEP "/"
+    #endif
+#elif defined(BCT_RDTSC)
+    #if defined(__i386__)
+        static __inline__ unsigned long long rdtsc(void)
+        {
+            unsigned long long int x;,
+            __asm__ volatile (".byte 0x0f, 0x31" : "=A" (x));
+            return x;
+        }
+
+    #elif defined(__x86_64__)
+        static __inline__ unsigned long long rdtsc(void)
+        {
+            unsigned hi, lo;
+            __asm__ __volatile__ ("rdtsc" : "=a"(lo), "=d"(hi));
+            return ( (unsigned long long)lo)|( ((unsigned long long)hi)<<32 );
+        }
+    #endif
+
     #define DECL_BCC_TIMERS \
-        LARGE_INTEGER frequency; \
-        LARGE_INTEGER bc_time_start; \
-        LARGE_INTEGER bc_time_end \
-    
+        unsigned long long rdtsc_start; \
+        unsigned long long rdtsc_end; \
+
     #define INIT_BCC_TIMERS \
-        QueryPerformanceFrequency(&frequency) \
-        QueryPerformanceCounter(&bc_time_end); \
-        QueryPerformanceCounter(&bc_time_start); \
+        rdtsc_end = rdtsc(); \
+        rdtsc_start = rdtsc(); \
 
     #define INC_OPCODE_ARR(opcode) \
-        QueryPerformanceCounter(&bc_time_end); \
-
-        QueryPerformanceCounter(&bc_time_start) \
-
-    #define PATH_SEP "\\"
-
-#else
-    #define DECL_BCC_TIMERS \
-        struct timespec bc_time_start; \
-        struct timespec bc_time_end; \
-        clockid_t clk_id = BCT_CLOCK; \
-    
-    #define INIT_BCC_TIMERS \
-        clock_gettime(clk_id, &bc_time_end); \
-        clock_gettime(clk_id, &bc_time_start); \
-
-    #define INC_OPCODE_ARR(opcode) \
-        clock_gettime(clk_id, &bc_time_end); \
-        long diff = 0; \
-        if(bc_time_end.tv_nsec >= bc_time_start.tv_nsec) \
-        { \
-            diff = bc_time_end.tv_nsec - bc_time_start.tv_nsec; \
-        } \
-        else /* Handle the case where bc_time_end overflows. */ \
-        { \
-            diff = (bc_time_end.tv_nsec + 1000000000L) - bc_time_start.tv_nsec; \
-        } \
+        rdtsc_end = rdtsc(); \
+        unsigned long long diff = rdtsc_end - rdtsc_start; \
         BC_timing timing = \
         { \
-            .nsec_dur = diff, \
+            .delta = diff, \
             .opcode = opcode \
         }; \
         Py_SaveBytecodeTimings(timing); \
-        clock_gettime(clk_id, &bc_time_start); \
+        rdtsc_start = rdtsc(); \
     
     #define PATH_SEP "/"
 #endif
