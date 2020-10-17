@@ -9,7 +9,6 @@ verify_ssl = true
 pyrapl = "*"
 pandas = "*"
 matplotlib = "*"
-jsonpickle = "*"
 
 [requires]
 python_version = "3.8"

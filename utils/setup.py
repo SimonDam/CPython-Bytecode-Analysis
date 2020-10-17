@@ -19,7 +19,6 @@ def ensure_BCT_dir(BCT_path):
             return BCT_path
         BCT_path = input("Please specify a folder to write bytecodes to: ")
 
-
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("source_dir",
@@ -53,7 +52,6 @@ def getPython_Paths():
         return os.path.abspath("./Python/python.bat"), os.path.abspath("./Python-BCT/Python.bat")
     else:
         return os.path.abspath("./Python/python"), os.path.abspath("./Python-BCT/python")
-
 
 def setup():
     pyRAPL.setup()
