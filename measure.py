@@ -114,8 +114,6 @@ def file_already_run(json_path):
             return True
 
 def measure_programs(programs_dir, vanilla_path, bc_path, BCT_path, force = False, verbose = False):
-    measurement_lst = []
-
     for filename in os.listdir(programs_dir):
         if filename.endswith(".py"):
             filepath = f"{programs_dir}{filename}"
@@ -123,7 +121,6 @@ def measure_programs(programs_dir, vanilla_path, bc_path, BCT_path, force = Fals
         
             if force or not file_already_run(json_path):
                 measurement = measure_program(filepath, vanilla_path, bc_path, iterations = 100, verbose = verbose, time_limit=10)
-                measurement_lst.append(measurement)
                 with open(json_path, 'r') as BCT_file:
                     results_dict = json.load(BCT_file)
                     results_dict['duration'] = measurement.duration
@@ -132,13 +129,6 @@ def measure_programs(programs_dir, vanilla_path, bc_path, BCT_path, force = Fals
                     results_dict['is_measured'] = True
                 with open(json_path, 'w') as json_file:
                     json.dump(results_dict, json_file)
-
-
             else:
                 if verbose:
                     print(f"Skipping {filename} (already measured). See --help to override this.")
-                with open(json_path, 'r') as BCT_file:
-                    results_dict = json.load(BCT_file)
-
-            measurement_lst.append(Measurement(results_dict['duration'], results_dict['pkg'], results_dict['dram'], name = filename))
-    return measurement_lst
