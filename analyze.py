@@ -1,6 +1,8 @@
 import utils.dataloader as dataloader
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import pandas as pd
+import json
 class Bytecode_stat:
     __valid_bytecodes = {1,2,3,4,5,6,9,10,11,12,15,16,17,19,20,22,23,24,25,26,27,28,29,50,51,52,53,54,55,56,57,59,60,61,62,63,64,
                          65,66,67,68,69,70,71,72,73,75,76,77,78,79,81,82,83,84,85,86,87,88,89,90,90,91,92,93,94,95,96,97,98,100,101,
@@ -80,9 +82,52 @@ def analysis(measurement_lst, BCT_path, results_lst):
     #TODO Calculate the average energy consumption of each bytecode based on the amount of time it takes to execute it, compared to the total time.
     #     Use this to calculate the total energy consumption by simply multiplying the energy consumption of each bytecode with the amount of times it has been executed.
 
+def calculate_average_of_every_bytecode(data_lst):
+    avg_bytecodes_dict = {}
+    count = 0
+    for data_df in data_lst:
+        print(count, '/', len(data_lst))
+        count+=1
+        for chunk in data_df:
+            for _, bytecode, value in chunk.itertuples():
+                if bytecode not in avg_bytecodes_dict:
+                    avg_bytecodes_dict[bytecode] = {"sum":value, "count":1}
+                else:
+                    avg_bytecodes_dict[bytecode]["sum"] += value
+                    avg_bytecodes_dict[bytecode]["count"] += 1
+            
+    for key in avg_bytecodes_dict:
+        avg = avg_bytecodes_dict[key]["sum"] / avg_bytecodes_dict[key]["count"]
+        avg_bytecodes_dict[key] = avg
+    
+    return avg_bytecodes_dict
+
+def calculate_energy_consumption_by_avg_bytecode(data_lst, measurement_lst):
+    with open("avg.json", 'r') as file:
+        avg_dict = json.load(file)
+    sum_lst = []
+    count = 0
+    for data_df in data_lst:
+        sum_of_values = 0
+        print(count, "/", len(data_lst))
+        for chunk in data_df:
+            for _, bytecode, _ in chunk.itertuples():
+                sum_of_values += avg_dict[str(bytecode)]
+        sum_lst.append(sum_of_values)
+    
+    for measurement, sum_value in zip(measurement_lst, sum_lst):
+        energy = sum(measurement.pkg) + sum(measurement.dram)
+        print(f"energy: {energy}, sum_value: {sum_value}")
+
 def main():
-    json_lst = dataloader.read_jsons("/home/simon/Desktop/bcc")
-    csv_paths = [x["bct_path"] for x in json_lst]
+    measurement_lst = dataloader.read_jsons("/home/simon/Desktop/bcc")
+    csv_paths = [x.path_to_data for x in measurement_lst]
+    
+    data_lst = []
+    for path in csv_paths:
+        data_lst.append(pd.read_csv(path, engine = 'c', sep = ',', chunksize = 10**9))
+    
+    print(calculate_energy_consumption_by_avg_bytecode(data_lst, measurement_lst))
 
 if __name__ == "__main__":
     main()
