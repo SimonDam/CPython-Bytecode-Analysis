@@ -1,8 +1,10 @@
 import utils.dataloader as dataloader
+from utils.csv_line_parser import csv_line_parser
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import pandas as pd
 import json
+import os
 class Bytecode_stat:
     __valid_bytecodes = {1,2,3,4,5,6,9,10,11,12,15,16,17,19,20,22,23,24,25,26,27,28,29,50,51,52,53,54,55,56,57,59,60,61,62,63,64,
                          65,66,67,68,69,70,71,72,73,75,76,77,78,79,81,82,83,84,85,86,87,88,89,90,90,91,92,93,94,95,96,97,98,100,101,
@@ -82,14 +84,21 @@ def analysis(measurement_lst, BCT_path, results_lst):
     #TODO Calculate the average energy consumption of each bytecode based on the amount of time it takes to execute it, compared to the total time.
     #     Use this to calculate the total energy consumption by simply multiplying the energy consumption of each bytecode with the amount of times it has been executed.
 
-def calculate_average_of_every_bytecode(data_lst):
+def calculate_average_of_every_bytecode(csv_paths):
     avg_bytecodes_dict = {}
     count = 0
-    for data_df in data_lst:
-        print(count, '/', len(data_lst))
+    for path in csv_paths:
+        print(count, '/', len(csv_paths), path)
         count+=1
-        for chunk in data_df:
-            for _, bytecode, value in chunk.itertuples():
+        with open(path) as file:
+            for line in file:
+                line = csv_line_parser(line)
+                bytecode, value = tuple(line.split(','))
+                if bytecode == 'bytecode' and value == 'duration':
+                    continue
+                
+                bytecode = int(bytecode)
+                value = int(value)
                 if bytecode not in avg_bytecodes_dict:
                     avg_bytecodes_dict[bytecode] = {"sum":value, "count":1}
                 else:
@@ -102,32 +111,47 @@ def calculate_average_of_every_bytecode(data_lst):
     
     return avg_bytecodes_dict
 
-def calculate_energy_consumption_by_avg_bytecode(data_lst, measurement_lst):
+def calculate_energy_consumption_by_avg_bytecode(csv_paths, measurement_lst, overhead = 0):
     with open("avg.json", 'r') as file:
         avg_dict = json.load(file)
     sum_lst = []
     count = 0
-    for data_df in data_lst:
+    for path in csv_paths:
         sum_of_values = 0
-        print(count, "/", len(data_lst))
-        for chunk in data_df:
-            for _, bytecode, _ in chunk.itertuples():
-                sum_of_values += avg_dict[str(bytecode)]
+        print(count, "/", len(csv_paths), path)
+        count += 1
+        with open(path) as file:
+            for line in file:
+                line = csv_line_parser(line)
+                bytecode, value = tuple(line.split(','))
+                if bytecode == 'bytecode' and value == 'duration':
+                    continue
+
+                sum_of_values += avg_dict[str(bytecode)] - overhead
         sum_lst.append(sum_of_values)
-    
+
+    result_str = ""
     for measurement, sum_value in zip(measurement_lst, sum_lst):
         energy = sum(measurement.pkg) + sum(measurement.dram)
-        print(f"energy: {energy}, sum_value: {sum_value}")
+        result_str += f"{energy},{sum_value}\n"
+    return result_str
 
 def main():
-    measurement_lst = dataloader.read_jsons("/home/simon/Desktop/bcc")
+    measurement_lst = dataloader.read_jsons("G:\\bcc")
     csv_paths = [x.path_to_data for x in measurement_lst]
+
+    if not os.path.isfile("avg.json"):
+        print("Calculating average bytecode value.")
+        avg_dict = calculate_average_of_every_bytecode(csv_paths)
+        with open("avg.json", 'w') as file:
+            json.dump(avg_dict, file)
     
-    data_lst = []
-    for path in csv_paths:
-        data_lst.append(pd.read_csv(path, engine = 'c', sep = ',', chunksize = 10**9))
-    
-    print(calculate_energy_consumption_by_avg_bytecode(data_lst, measurement_lst))
+    with open('avg.json', 'r') as file:
+        avg_dict = json.load(file)
+    print("Calculating energy consumption:")
+    result_str = calculate_energy_consumption_by_avg_bytecode(csv_paths, measurement_lst, overhead = 24.143901008216858)
+    with open("result.csv", 'w') as file:
+        file.write(result_str)
 
 if __name__ == "__main__":
     main()

@@ -10,6 +10,7 @@ def read_jsons(path):
         if filename.endswith(".json"):
             with open(Path(f"{path}/{filename}")) as file:
                 data_dict = json.load(file)
+                print(data_dict, filename)
                 duration = data_dict["duration"]
                 pkg = data_dict["pkg"]
                 dram = data_dict["dram"]
