@@ -1,5 +1,6 @@
+from Python.Lib.pathlib import Path
 import utils.dataloader as dataloader
-from utils.csv_line_parser import csv_line_parser
+from utils.csv_parser import csv_get_values
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -84,74 +85,106 @@ def analysis(measurement_lst, BCT_path, results_lst):
     #TODO Calculate the average energy consumption of each bytecode based on the amount of time it takes to execute it, compared to the total time.
     #     Use this to calculate the total energy consumption by simply multiplying the energy consumption of each bytecode with the amount of times it has been executed.
 
-def calculate_average_of_every_bytecode(csv_paths):
-    avg_bytecodes_dict = {}
-    count = 0
-    for path in csv_paths:
-        print(count, '/', len(csv_paths), path)
-        count+=1
-        with open(path) as file:
-            for line in file:
-                line = csv_line_parser(line)
-                bytecode, value = tuple(line.split(','))
-                if bytecode == 'bytecode' and value == 'duration':
-                    continue
-                
-                bytecode = int(bytecode)
-                value = int(value)
-                if bytecode not in avg_bytecodes_dict:
-                    avg_bytecodes_dict[bytecode] = {"sum":value, "count":1}
-                else:
-                    avg_bytecodes_dict[bytecode]["sum"] += value
-                    avg_bytecodes_dict[bytecode]["count"] += 1
-            
-    for key in avg_bytecodes_dict:
-        avg = avg_bytecodes_dict[key]["sum"] / avg_bytecodes_dict[key]["count"]
-        avg_bytecodes_dict[key] = avg
+def total_average_of_every_bytecode(bytecode_stat_lst):
+    total_dict = {}
+    for _, count_sum_dict in bytecode_stat_lst:
+        for bytecode in count_sum_dict:
+            if bytecode in total_dict:
+                total_dict[bytecode]['count'] += count_sum_dict[bytecode]['count']
+                total_dict[bytecode]['sum'] += count_sum_dict[bytecode]['sum']
+            else:
+                total_dict[bytecode] = {'count': count_sum_dict[bytecode]['count'],
+                                        'sum': count_sum_dict[bytecode]['sum']}
     
+    avg_bytecodes_dict = {}
+    for bytecode in total_dict:
+        avg_bytecodes_dict[bytecode] = total_dict[bytecode]['sum'] / total_dict[bytecode]['count']
+
     return avg_bytecodes_dict
 
-def calculate_energy_consumption_by_avg_bytecode(csv_paths, measurement_lst, overhead = 0):
-    with open("avg.json", 'r') as file:
-        avg_dict = json.load(file)
-    sum_lst = []
+def total_count_and_RDTSC_of_bytecodes(count_sum_dict):
     count = 0
-    for path in csv_paths:
-        sum_of_values = 0
-        print(count, "/", len(csv_paths), path)
-        count += 1
+    RDTSC = 0
+    for bytecode in count_sum_dict:
+        count += count_sum_dict[bytecode]['count']
+        RDTSC += count_sum_dict[bytecode]['sum']
+    return count, RDTSC
+
+def total_energy_and_bytecode_count(bytecode_stat_lst):
+    total_energy = 0
+    total_count = 0
+    total_RDTSC = 0
+    for measurement, count_sum_dict in bytecode_stat_lst:
+        total_energy += sum(measurement.pkg) + sum(measurement.dram)
+        count, RDTSC = total_count_and_RDTSC_of_bytecodes(count_sum_dict)
+        total_count += count
+        total_RDTSC += RDTSC
+        
+    return total_energy, total_count, total_RDTSC
+
+def calculate_energy_consumption_by_avg_bytecode(bytecode_stat_lst, avg_dict, overhead = 0):
+    result_lst = []
+    total_energy, total_count, total_RDTSC = total_energy_and_bytecode_count(bytecode_stat_lst)
+    for measurement, count_sum_dict in bytecode_stat_lst:
+        estimated_RDTSC = 0
+        for bytecode in count_sum_dict:
+            count = count_sum_dict[bytecode]['count']
+            avg_bytecode_RDTSC = avg_dict[bytecode] - overhead
+            estimated_RDTSC += avg_bytecode_RDTSC * count
+        
+        estimated_energy = total_energy * (estimated_RDTSC / total_RDTSC)
+        actual_energy = sum(measurement.pkg) + sum(measurement.dram)
+        result_lst.append((measurement.path_to_data, estimated_energy, actual_energy))
+
+    return result_lst
+
+def get_count_and_sums_for_files_h(file):
+    res_dict = {}
+    for line in file:
+        bytecode, value = csv_get_values(line)
+        if bytecode == 'bytecode' and value == 'duration':
+            continue
+        value = int(value)
+        bytecode = int(bytecode)
+        if bytecode in res_dict:
+            res_dict[bytecode]['count'] += 1
+            res_dict[bytecode]['sum'] += value
+        else:
+            res_dict[bytecode] = {'count': 1,'sum': value}
+    return res_dict
+
+def get_count_and_sums_for_files(measurement_lst, verbose = False):
+    bytecode_stat_lst = []
+    file_nr = 1
+    for measurement in measurement_lst:
+        path = measurement.path_to_data
+        if verbose: print(file_nr, "/", len(measurement_lst), path)
+        file_nr += 1
         with open(path) as file:
-            for line in file:
-                line = csv_line_parser(line)
-                bytecode, value = tuple(line.split(','))
-                if bytecode == 'bytecode' and value == 'duration':
-                    continue
+            count_sum_dict = get_count_and_sums_for_files_h(file)
+            bytecode_stat_lst.append((measurement, count_sum_dict))
+    return bytecode_stat_lst
 
-                sum_of_values += avg_dict[str(bytecode)] - overhead
-        sum_lst.append(sum_of_values)
+def dump_count_sum_lst_to_json(bytecode_stat_lst, dest):
+    for measurement, d in bytecode_stat_lst:
+        filename = measurement.path_to_data.split(os.sep)[-1]
+        with open(Path(f"{dest}/{filename}"), 'w') as file:
+            json.dump(d, file)
 
-    result_str = ""
-    for measurement, sum_value in zip(measurement_lst, sum_lst):
-        energy = sum(measurement.pkg) + sum(measurement.dram)
-        result_str += f"{energy},{sum_value}\n"
-    return result_str
-
+#overhead: 24.143901008216858
 def main():
     measurement_lst = dataloader.read_jsons("G:\\bcc")
-    csv_paths = [x.path_to_data for x in measurement_lst]
 
-    if not os.path.isfile("avg.json"):
-        print("Calculating average bytecode value.")
-        avg_dict = calculate_average_of_every_bytecode(csv_paths)
-        with open("avg.json", 'w') as file:
-            json.dump(avg_dict, file)
+    bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, verbose = True)
+    dump_count_sum_lst_to_json(bytecode_stat_lst, os.path.abspath(".\\count_sum"))
+    avg_dict = total_average_of_every_bytecode(bytecode_stat_lst)
+
+    result_lst = calculate_energy_consumption_by_avg_bytecode(bytecode_stat_lst, avg_dict, overhead = 24.143901008216858)
     
-    with open('avg.json', 'r') as file:
-        avg_dict = json.load(file)
-    print("Calculating energy consumption:")
-    result_str = calculate_energy_consumption_by_avg_bytecode(csv_paths, measurement_lst, overhead = 24.143901008216858)
     with open("result.csv", 'w') as file:
-        file.write(result_str)
+        file.write("path,estimated_energy,actual_energy\n")
+        for path, estimated_energy, actual_energy in result_lst:
+            file.write(f"\"{path}\",{estimated_energy},{actual_energy}\n")
 
 if __name__ == "__main__":
     main()
