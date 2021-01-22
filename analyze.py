@@ -176,7 +176,7 @@ def main():
     measurement_lst = dataloader.read_jsons("G:\\bcc")
 
     bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, verbose = True)
-    dump_count_sum_lst_to_json(bytecode_stat_lst, os.path.abspath(".\\count_sum"))
+    dump_count_sum_lst_to_json(bytecode_stat_lst, os.path.abspath("./count_sum"))
     avg_dict = total_average_of_every_bytecode(bytecode_stat_lst)
 
     result_lst = calculate_energy_consumption_by_avg_bytecode(bytecode_stat_lst, avg_dict, overhead = 24.143901008216858)
