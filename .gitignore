@@ -1,5 +1,5 @@
 .vscode/
-count_sum/
+cache/
 *.csv
 *.json
 
