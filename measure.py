@@ -11,7 +11,7 @@ def run_BCTs(python_path, filepath, verbose = False):
         print(f"Timing bytecodes of {filename}...", end = ' ', flush = True)
     os.chdir(os.path.abspath("./Python-BCT"))
     # Run the modified Python interpreter.
-    os.system(f"{python_path} {filepath}")
+    os.system(f"{python_path} {filepath}") # TODO Add CPU affinity for this benchmark.
     # This has generated the bytecode files.
     os.chdir(os.path.abspath(".."))
     if verbose:
@@ -26,7 +26,7 @@ def get_time_and_power(python_path, filepath, iterations = 1, time_limit = float
     for i in range(iterations):
         dividend = i + 1
         pyRAPL_measurement.begin()
-        os.system(f"{python_path} {filepath}")
+        os.system(f"{python_path} {filepath}") # TODO Add CPU affinity for this benchmark.
         pyRAPL_measurement.end()
         measurement += Measurement(pyRAPL_measurement.result.duration,
                                    pyRAPL_measurement.result.pkg,
