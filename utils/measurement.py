@@ -20,8 +20,22 @@ class Measurement:
         self.dram = dram
         self.name = name
         self.path_to_data = path_to_data
-
+    
     def __add__(self, other):
+        add_func = lambda x, y: x+y
+        return self.__binary_operator(other, add_func)
+
+    def __sub__(self, other):
+        add_func = lambda x, y: x-y
+        return self.__binary_operator(other, add_func)
+
+    def __truediv__(self, dividend):
+        duration = self.duration / dividend
+        pkg = [x / dividend for x in self.pkg]
+        dram = [x / dividend for x in self.dram]
+        return Measurement(duration, pkg, dram, name = self.name, path_to_data = self.path_to_data)
+
+    def __binary_operator(self, other, func):
         name = None
         if self.name is not None: 
             name = self.name
@@ -35,16 +49,10 @@ class Measurement:
             path_to_data = other.path_to_data
 
         self.__validate_other(other)
-        duration = self.duration + other.duration
-        pkg = [x + y for x, y in zip(self.pkg, other.pkg)]
-        dram = [x + y for x, y in zip(self.dram, other.dram)]
+        duration = func(self.duration, other.duration)
+        pkg = [func(x, y) for x, y in zip(self.pkg, other.pkg)]
+        dram = [func(x, y) for x, y in zip(self.dram, other.dram)]
         return Measurement(duration, pkg, dram, name = name, path_to_data = path_to_data)
-
-    def __truediv__(self, dividend):
-        duration = self.duration / dividend
-        pkg = [x / dividend for x in self.pkg]
-        dram = [x / dividend for x in self.dram]
-        return Measurement(duration, pkg, dram, name = self.name, path_to_data = self.path_to_data)
 
     def __validate_other(self, other):
         if len(self.pkg) != len(other.pkg):
@@ -59,3 +67,11 @@ class Measurement:
         if self.path_to_data is not None:
             as_str += f" path to data: {self.path_to_data}"
         return as_str
+
+def measurement_from_dict(measurement_dict):
+    if type(measurement_dict) != dict:
+        raise TypeError(f"measurement_dict must be of type dict not: ({type(measurement_dict)})")
+    if "duration" in measurement_dict and "pkg" in measurement_dict and "dram" in measurement_dict:
+        return Measurement(**measurement_dict)
+    else:
+        raise KeyError(f"""measurement_dict must at least "duration", "pkg" and "dram" keys.""")

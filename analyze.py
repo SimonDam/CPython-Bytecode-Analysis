@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import json
 import os
+import baselines.baselines as baselines
+from utils.setup import getPython_Paths
 class Bytecode_stat:
     __valid_bytecodes = {1,2,3,4,5,6,9,10,11,12,15,16,17,19,20,22,23,24,25,26,27,28,29,50,51,52,53,54,55,56,57,59,60,61,62,63,64,
                          65,66,67,68,69,70,71,72,73,75,76,77,78,79,81,82,83,84,85,86,87,88,89,90,90,91,92,93,94,95,96,97,98,100,101,
@@ -122,17 +124,17 @@ def total_energy_and_bytecode_count(bytecode_stat_lst):
         
     return total_energy, total_count, total_RDTSC
 
-def calculate_energy_consumption_by_avg_bytecode(bytecode_stat_lst, avg_dict, overhead = 0):
+def calculate_energy_consumption_by_avg_bytecode(bytecode_stat_lst, avg_dict, RDTSC_overhead = 0, energy_overhead = 0):
     result_lst = []
     total_energy, total_count, total_RDTSC = total_energy_and_bytecode_count(bytecode_stat_lst)
     for measurement, count_sum_dict in bytecode_stat_lst:
         estimated_RDTSC = 0
         for bytecode in count_sum_dict:
             count = count_sum_dict[bytecode]['count']
-            avg_bytecode_RDTSC = avg_dict[bytecode] - overhead
+            avg_bytecode_RDTSC = avg_dict[bytecode] - RDTSC_overhead
             estimated_RDTSC += avg_bytecode_RDTSC * count
         
-        estimated_energy = total_energy * (estimated_RDTSC / total_RDTSC)
+        estimated_energy = (total_energy * (estimated_RDTSC / total_RDTSC)) - energy_overhead
         actual_energy = sum(measurement.pkg) + sum(measurement.dram)
         result_lst.append((measurement.path_to_data, estimated_energy, actual_energy))
 
@@ -143,13 +145,14 @@ def get_count_and_sums_for_files_h(file):
     for line in file:
         bytecode, value = csv_get_values(line)
         if bytecode == 'bytecode' and value == 'duration':
-            continue
+            continue # skip the header
         value = int(value)
         bytecode = int(bytecode)
         if bytecode in res_dict:
             res_dict[bytecode]['count'] += 1
             res_dict[bytecode]['sum'] += value
         else:
+            # create the entry first time we encounter that bytecode
             res_dict[bytecode] = {'count': 1,'sum': value}
     return res_dict
 
@@ -171,15 +174,19 @@ def dump_count_sum_lst_to_json(bytecode_stat_lst, dest):
         with open(Path(f"{dest}/{filename}"), 'w') as file:
             json.dump(d, file)
 
-#overhead: 24.143901008216858
 def main():
+    vanilla_path, _ = getPython_Paths()
+
     measurement_lst = dataloader.read_jsons("G:\\bcc")
 
     bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, verbose = True)
     dump_count_sum_lst_to_json(bytecode_stat_lst, os.path.abspath("./count_sum"))
     avg_dict = total_average_of_every_bytecode(bytecode_stat_lst)
 
-    result_lst = calculate_energy_consumption_by_avg_bytecode(bytecode_stat_lst, avg_dict, overhead = 24.143901008216858)
+    RDTSC_baseline = baselines.get_RDTSC()
+    empty_baseline = baselines.empty(vanilla_path)
+
+    result_lst = calculate_energy_consumption_by_avg_bytecode(bytecode_stat_lst, avg_dict, RDTSC_overhead = RDTSC_baseline, energy_overhead=empty_baseline)
     
     with open("result.csv", 'w') as file:
         file.write("path,estimated_energy,actual_energy\n")
