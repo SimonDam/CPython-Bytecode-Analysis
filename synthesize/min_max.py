@@ -131,7 +131,7 @@ def find_max(source_code_func, timeout, target_min, target_max, min_n):
     
     return valid_n
 
-def generate_min_max(folder, target, timeout=None, error = 0.05):
+def generate_min_max(folder, target, timeout=None, error = 0.05, force = True):
     _verify_args(target, timeout, error)
     if timeout is None:
         timeout = (target * 2) + 1
@@ -150,6 +150,20 @@ def generate_min_max(folder, target, timeout=None, error = 0.05):
             module = import_module_by_path(program_path)
             source_code_func = module.source_code
 
+            try:
+                # Check if they have been calculated
+                module.n
+                module.min_n
+            except AttributeError:
+                # If we get an error, that just means we want to calculate the n and min_n.
+                pass
+            else:
+                # Otherwise 
+                if not force:
+                    # Only skip if we don't want force recalculation.
+                    continue
+
+
             num_of_params = len(inspect.getfullargspec(source_code_func).args)
             if num_of_params == 0:
                 # In this case, there is nothing to benchmark, therefore we just skip this file.
@@ -161,26 +175,25 @@ def generate_min_max(folder, target, timeout=None, error = 0.05):
             n = find_max(source_code_func, timeout, target_min, target_max, min_n)
             
             print(f"Found {n} and min {min_n}", flush=True)
-            text = ""
+            new_text = ""
             try:
+                after_ns = False
                 with open(program_path, 'r', encoding="utf8") as file:
                     text = file.read()
+                    # We read the file and if the min_n and/or n is already set, we need to update them.
+                    # Due to this, we simply find the beginning of the function and then only use the text after that.
+                    for line in text.splitlines(keepends = True):
+                        if "def source_code(n):" in line:
+                            after_ns = True
+                        if after_ns:
+                            new_text += line
             except Exception as e:
                 print(f"Ecountered exception {e}, did not update file.")
             else:
                 with open(program_path, 'w', encoding="utf8") as file:
-                    text = f"n = {n}\nmin_n = {min_n}\n" + text
-                    file.write(text)
+                    file.write(f"n = {n}\nmin_n = {min_n}\n" + new_text)
         _temp_folder_cleanup(temp_folder)
-    # TODO look at this at some point
-    ## Ensure that os.remove has run and the folder is empty.
-    #while True:
-    #    try:
-    #        os.removedirs(temp_folder)
-    #    except:
-    #        pass
-    #    else:
-    #        break
+    
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -191,7 +204,9 @@ if __name__ == "__main__":
     parser.add_argument("--timeout", type=float,
                         help="the maximum run-time in seconds before timing out the program.")
     parser.add_argument("--error", type=float, default=0.05,
-                        help="the error from the target run-time that is considered acceptable. Default is 0.1 (10%)")
+                        help=f"the error from the target run-time that is considered acceptable. Default is 0.05.")
+    parser.add_argument("-f", "--force", action="store_false",
+                        help="Whether to force recalculate n and min_n for files that are already run. Set True by default.")
     
     args = parser.parse_args()
     
