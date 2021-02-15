@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Dutch_national_flag_problem#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Dutch_national_flag_problem#Python
 
 import random
 random.seed(387408934580973458023465637485873456)
@@ -37,7 +38,8 @@ def main(n):
     print("Sorted Ball Order:", sorted_balls)
     assert dutch_flag_check(sorted_balls), 'Whoops. Not sorted!'
 
-n = 4500000
+n = {n}
 if __name__ == '__main__':
     main(n)
 
+"""

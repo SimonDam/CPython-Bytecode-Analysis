@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Fibonacci_word#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Fibonacci_word#Python
 
 import math
 from collections import Counter
@@ -21,6 +22,7 @@ def fibword(nmax=37):
 def print(*args, **kwargs):
     pass
 
-n = 37
+n = {n}
 fibword(n)
 
+"""

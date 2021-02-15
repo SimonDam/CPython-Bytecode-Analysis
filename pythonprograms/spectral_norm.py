@@ -1,4 +1,5 @@
-# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/spectralnorm-python3-6.html
+def source_code(n):	
+    return f"""# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/spectralnorm-python3-6.html
 
 # The Computer Language Benchmarks Game
 # https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
@@ -64,7 +65,8 @@ def main(n):
 def print(*args, **kwargs):
     pass
 
-n = 500
+n = {n}
 
 main(n)
 
+"""

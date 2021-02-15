@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Subtractive_generator#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Subtractive_generator#Python
 
 import collections
  
@@ -23,8 +24,9 @@ class Subtractive_generator():
 def print(*args, **kwargs):
     pass
 
-n = 10000000
+n = {n}
 if __name__ == '__main__':
     srand = Subtractive_generator()
     print([srand() for i in range(n)])
 
+"""

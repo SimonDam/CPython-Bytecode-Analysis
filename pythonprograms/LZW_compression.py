@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/LZW_compression#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/LZW_compression#Python
 
 def compress(uncompressed):
     '''Compress a string to a list of output symbols.'''
@@ -6,7 +7,7 @@ def compress(uncompressed):
     # Build the dictionary.
     dict_size = 256
     dictionary = dict((chr(i), i) for i in range(dict_size))
-    # in Python 3: dictionary = {chr(i): i for i in range(dict_size)}
+    # in Python 3: dictionary = {{chr(i): i for i in range(dict_size)}}
  
     w = ""
     result = []
@@ -34,7 +35,7 @@ def decompress(compressed):
     # Build the dictionary.
     dict_size = 256
     dictionary = dict((i, chr(i)) for i in range(dict_size))
-    # in Python 3: dictionary = {i: chr(i) for i in range(dict_size)}
+    # in Python 3: dictionary = {{i: chr(i) for i in range(dict_size)}}
  
     # use StringIO, otherwise this becomes O(N^2)
     # due to string concatenation in a loop
@@ -69,8 +70,9 @@ print (decompressed)
 import random
 random.seed(9328475948)
 import string
-n = 5000000
+n = {n}
 compressed = compress(''.join(random.choice(string.ascii_letters)) for _ in range(n))
 decompressed = decompress(compressed)
 
 
+"""

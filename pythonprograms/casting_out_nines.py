@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Casting_out_nines#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Casting_out_nines#Python
 
 # Casting out Nines
 #
@@ -19,7 +20,8 @@ def CastOut(Base=10, Start=1, End=999999):
 def print(*args, **kwargs):
     pass
 
-n = 50000000
+n = {n}
 for V in CastOut(Base=16,Start=1,End=n):
   print(V, end=' ')
 
+"""

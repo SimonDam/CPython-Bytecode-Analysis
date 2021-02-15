@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sequence:_nth_number_with_exactly_n_divisors#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sequence:_nth_number_with_exactly_n_divisors#Python
 
 def divisors(n):
     divs = [1]
@@ -62,9 +63,10 @@ def sequence(max_n=None):
 def print(*args, **kwargs):
     pass
 
-n = 24
+n = {n}
 
 if __name__ == '__main__':
     for item in sequence(n):
         print(item)
 
+"""

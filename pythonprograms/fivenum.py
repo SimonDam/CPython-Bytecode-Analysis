@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Fivenum#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Fivenum#Python
 
 from __future__ import division
 import math
@@ -27,8 +28,9 @@ def print(*args, **kwargs):
     pass
 
 random.seed(8734656424687684)
-n = 10000000
+n = {n}
 x = [(random.random()*2)-1 for _ in range(n)]
 y = fivenum(x)
 print(y)
 
+"""

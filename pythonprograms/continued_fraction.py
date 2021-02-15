@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Continued_fraction#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Continued_fraction#Python
 
 from fractions import Fraction
 import itertools
@@ -35,7 +36,7 @@ def sqrt2_b():
  
 def print(*args, **kwargs):
     pass
-n = 3200
+n = {n}
  
 cf = CF(sqrt2_a(), sqrt2_b(), n)
 print(pRes(cf, 200))
@@ -71,3 +72,4 @@ cf = CF(Pi_a(), Pi_b(), n)
 print(pRes(cf, 10))
 #3.1415926532
 
+"""

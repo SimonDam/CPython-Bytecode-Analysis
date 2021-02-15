@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Egyptian_division#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Egyptian_division#Python
 
 from itertools import product
  
@@ -18,7 +19,7 @@ def egyptian_divmod(dividend, divisor):
 def print(*args, **kwargs):
     pass
 
-n = 18000
+n = {n}
 if __name__ == "__main__":
     # Test it gives the same results as the divmod built-in
     for i, j in product(range(13), range(1, 13)):
@@ -27,5 +28,6 @@ if __name__ == "__main__":
     
     # Mandated result
     i, j = 1574**n, 874**n
-    print(f'{i} divided by {j} using the Egyption method is %i remainder %i' % egyptian_divmod(i, j))
+    print(f'{{i}} divided by {{j}} using the Egyption method is %i remainder %i' % egyptian_divmod(i, j))
 
+"""

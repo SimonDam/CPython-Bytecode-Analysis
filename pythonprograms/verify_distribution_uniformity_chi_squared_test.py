@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Verify_distribution_uniformity/Chi-squared_test#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Verify_distribution_uniformity/Chi-squared_test#Python
 
 import math
 import random
@@ -60,7 +61,7 @@ def print(*args, **kwarg):
     pass
 
 random.seed(98237508934258097342580792346587)
-n = 200
+n = {n}
 
 dset1 = [ 199809, 200665, 199607, 200270, 199649 ]
 dset2 = [ 522573, 244456, 139979,  71531,  21461 ]
@@ -75,3 +76,4 @@ for ds in (dset1, dset2, dset3):
     print("probability: %.4f"%prob, end = " ")
     print("uniform? ", "Yes"if chi2IsUniform(ds,0.05) else "No")
 
+"""

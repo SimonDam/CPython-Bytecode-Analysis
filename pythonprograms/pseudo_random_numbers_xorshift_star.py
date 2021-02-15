@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Pseudo-random_numbers/Xorshift_star#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Pseudo-random_numbers/Xorshift_star#Python
 
 mask64 = (1 << 64) - 1
 mask32 = (1 << 32) - 1
@@ -31,7 +32,7 @@ class Xorshift_star():
 def print(*args, **kwargs):
     pass
 
-n = 2500000
+n = {n}
  
 if __name__ == '__main__':
     random_gen = Xorshift_star()
@@ -40,8 +41,9 @@ if __name__ == '__main__':
         print(random_gen.next_int())
  
     random_gen.seed(987654321)
-    hist = {i:0 for i in range(5)}
+    hist = {{i:0 for i in range(5)}}
     for i in range(n):
         hist[int(random_gen.next_float() *5)] += 1
     print(hist)
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Draw_a_sphere#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Draw_a_sphere#Python
 
 import math
 
@@ -34,7 +35,8 @@ def draw_sphere(r, k, ambient, light):
 
 light = normalize((30,30,-50))
 
-n = 600
+n = {n}
 draw_sphere(n,1,0.1, light)
 
 
+"""

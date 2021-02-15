@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Quickselect_algorithm#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Quickselect_algorithm#Python
 
 import random
  
@@ -28,7 +29,7 @@ def _select(vector, left, right, k):
             left = pivotNewIndex + 1
  
 def select(vector, k, left=None, right=None):
-    '''\
+    '''\\
     Returns the k-th smallest, (k >= 0), element of vector within vector[left:right+1].
     left, right default to (0, len(vector) - 1) if omitted
     '''
@@ -45,8 +46,9 @@ def select(vector, k, left=None, right=None):
 def print(*args, **kwargs):
     pass
 
-n = 3000
+n = {n}
 if __name__ == '__main__':
     v = [random.randint(1,n) for _ in range(n)]
     print([select(v, i) for i in range(n)])
 
+"""

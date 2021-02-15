@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Kronecker_product#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Kronecker_product#Python
 
 from itertools import (chain)
  
@@ -34,7 +35,7 @@ random.seed(983245798347659843769842369824756879425568972)
 def print(*args, **kwargs):
     pass
 
-n = 80
+n = {n}
 if __name__ == '__main__':
     # Sample 1
     r = [[1, 2, 3], [3, 4]]
@@ -53,3 +54,4 @@ if __name__ == '__main__':
     for row in kronecker(t, u):
         print(row)
 
+"""

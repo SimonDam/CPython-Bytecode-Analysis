@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Fibonacci_sequence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Fibonacci_sequence#Python
 
 def fib(n,x=[0,1]):
    for i in range(abs(n)-1): x=[x[1],sum(x)]
@@ -7,6 +8,7 @@ def fib(n,x=[0,1]):
 def print(*args, **kwargs):
     pass
 
-n = 3000
+n = {n}
 for i in range(-n,n+1): print(fib(i))
 
+"""

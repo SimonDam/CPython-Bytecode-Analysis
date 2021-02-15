@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Generate_random_chess_position#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Generate_random_chess_position#Python
 
 import random
  
@@ -44,7 +45,7 @@ def fen_from_board(brd):
 		if n != 0:
 			fen += str(n)
 		fen += "/" if fen.count("/") < 7 else ""
-	fen += " w - - 0 1\n"
+	fen += " w - - 0 1\\n"
 	return fen
  
 def pawn_on_promotion_square(pc, pr):
@@ -69,8 +70,9 @@ random.seed(65542445365446587685)
 def print(*args, **kwargs):
     pass
 
-n = 50000
+n = {n}
 for _ in range(n):
     board = [[" " for x in range(8)] for y in range(8)]
     start()
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Radix_sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Radix_sort#Python
 
 #python3.7 <
 def flatten(some_list):
@@ -74,7 +75,7 @@ def radix(some_list, idex=None, size=None):
  
     return flattened_result
  
-n = 1300000
+n = {n}
 
 import random
 random.seed(5865643479864567986988576896978756)
@@ -82,3 +83,4 @@ random.seed(5865643479864567986988576896978756)
 a = [random.randint(1, n) for _ in range(n)]
 a = radix(a)
 
+"""

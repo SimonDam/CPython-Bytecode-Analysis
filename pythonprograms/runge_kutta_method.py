@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Runge-Kutta_method#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Runge-Kutta_method#Python
 
 def RK4(f):
     return lambda t, y, dt: (
@@ -18,15 +19,16 @@ from math import sqrt
 def print(*args, **kwargs):
     pass
 
-n = 200000
+n = {n}
 
 dy = RK4(lambda t, y: t*sqrt(y))
 
 t, y, dt = 0., 1., .1
 while t <= n:
     if abs(round(t) - t) < 1e-5:
-        print("y(%2.1f)\t= %4.6f \t error: %4.6g" % ( t, y, abs(y - theory(t))))
+        print("y(%2.1f)\\t= %4.6f \\t error: %4.6g" % ( t, y, abs(y - theory(t))))
     t, y = t + dt, y + dy( t, y, dt )
  
  
 
+"""

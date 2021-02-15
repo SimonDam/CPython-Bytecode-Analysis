@@ -1,4 +1,5 @@
-#Taken from: https://www.geeksforgeeks.org/python-program-for-heap-sort/
+def source_code(n):	
+    return f"""#Taken from: https://www.geeksforgeeks.org/python-program-for-heap-sort/
 # This code is contributed by Mohit Kumra 
 import random
 # To heapify subtree rooted at index i. 
@@ -43,7 +44,7 @@ def print(*args, **kwargs):
     pass
 
 # Driver code to test above 
-n = 500000
+n = {n}
 arr = [random.randint(0, n*10) for _ in range(n)] 
 heapSort(arr) 
 i = len(arr) 
@@ -53,3 +54,4 @@ for i in range(i):
 # This code is contributed by Mohit Kumra 
 
 
+"""

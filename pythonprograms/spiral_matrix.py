@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Spiral_matrix#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Spiral_matrix#Python
 
 def spiral(n):
     dx,dy = 1,0            # Starting increments
@@ -24,6 +25,7 @@ def printspiral(myarray):
 def print(*args, **kwargs):
     pass
 
-n = 3000
+n = {n}
 printspiral(spiral(n))
 
+"""

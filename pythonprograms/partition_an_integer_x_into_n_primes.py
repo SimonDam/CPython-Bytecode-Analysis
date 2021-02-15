@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Partition_an_integer_x_into_n_primes#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Partition_an_integer_x_into_n_primes#Python
 
 from itertools import combinations as cmb
  
@@ -24,7 +25,7 @@ data = [
 def print(*args, **kwargs):
     pass
 
-n = 12
+n = {n}
 
 for n, cnt in data[:12]:
     ci = iter(cmb(genP(n), cnt))
@@ -40,3 +41,4 @@ for n, cnt in data[:12]:
             print(repr((n, cnt)) + " -> Not possible")
             break
 
+"""

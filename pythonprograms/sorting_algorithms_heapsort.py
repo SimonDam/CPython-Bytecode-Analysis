@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Heapsort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Heapsort#Python
 
 def heapsort(lst):
   ''' Heapsort. Note: this function sorts in-place (it mutates the list). '''
@@ -28,8 +29,9 @@ def siftdown(lst, start, end):
 import random
 random.seed(65468986489874984)
 
-n = 500000
+n = {n}
 
 ary = [random.randint(1, n) for _ in range(n)]
 heapsort(ary)
 
+"""

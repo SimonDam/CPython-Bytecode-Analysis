@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Pancake_sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Pancake_sort#Python
 
 tutor = False
  
@@ -24,7 +25,7 @@ def pancakesort(data):
 
 def print(*args, **kwargs):
     pass
-n = 800
+n = {n}
 
 if __name__ == '__main__':
     import random
@@ -38,3 +39,4 @@ if __name__ == '__main__':
     pancakesort(data)
     print('Pancake Sorted List: %r' % ' '.join(data))
 
+"""

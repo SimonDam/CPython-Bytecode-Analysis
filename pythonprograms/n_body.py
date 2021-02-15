@@ -1,4 +1,5 @@
-# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/nbody-python3-1.html
+def source_code(n):	
+    return f"""# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/nbody-python3-1.html
 
 # The Computer Language Benchmarks Game
 # https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
@@ -22,7 +23,7 @@ PI = 3.14159265358979323
 SOLAR_MASS = 4 * PI * PI
 DAYS_PER_YEAR = 365.24
 
-BODIES = {
+BODIES = {{
     'sun': ([0.0, 0.0, 0.0], [0.0, 0.0, 0.0], SOLAR_MASS),
 
     'jupiter': ([4.84143144246472090e+00,
@@ -55,7 +56,7 @@ BODIES = {
                 [2.68067772490389322e-03 * DAYS_PER_YEAR,
                  1.62824170038242295e-03 * DAYS_PER_YEAR,
                  -9.51592254519715870e-05 * DAYS_PER_YEAR],
-                5.15138902046611451e-05 * SOLAR_MASS) }
+                5.15138902046611451e-05 * SOLAR_MASS) }}
 
 
 SYSTEM = list(BODIES.values())
@@ -117,9 +118,10 @@ def main(n, ref='sun'):
 def print(*args, **kwargs):
     pass
 
-n = 250000
+n = {n}
 if __name__ == '__main__':
     main(n)
 
 
 
+"""

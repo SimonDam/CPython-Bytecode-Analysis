@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Law_of_cosines_-_triples#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Law_of_cosines_-_triples#Python
 
 N = 13
  
@@ -26,13 +27,14 @@ def method1(N=N):
 def print(*args, **kwargs):
     pass
 
-n = 10000
+n = {n}
 
 if __name__ == '__main__':
-    print(f'Integer triangular triples for sides 1..{N}:')
+    print(f'Integer triangular triples for sides 1..{{N}}:')
     for angle, triples in zip([90, 60, 120], method1(N)):
-        print(f'  {angle:3}° has {len(triples)} solutions:\n    {triples}')
+        print(f'  {{angle:3}}° has {{len(triples)}} solutions:\\n    {{triples}}')
     _, t60, _ = method1(n)
     notsame = sum(1 for a, b, c in t60 if a != b or b != c)
     print('Extra credit:', notsame)
 
+"""

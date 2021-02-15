@@ -1,9 +1,10 @@
-# Taken from: https://www.rosettacode.org/wiki/Safe_primes_and_unsafe_primes#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Safe_primes_and_unsafe_primes#Python
 
 def print(*args, **kwargs):
     pass
 
-n = 100000
+n = {n}
 
 primes =[]
 sp =[]
@@ -23,10 +24,11 @@ for i in range(3,n+1,2):
         if (i%j==0):
             break
  
-print('First 35 safe primes are:\n' , sp[:35])
+print('First 35 safe primes are:\\n' , sp[:35])
 print('There are '+str(len(sp[:1000000]))+' safe primes below 1,000,000')
 print('There are '+str(len(sp))+' safe primes below 10,000,000')
-print('First 40 unsafe primes:\n',usp[:40])
+print('First 40 unsafe primes:\\n',usp[:40])
 print('There are '+str(len(usp[:1000000]))+' unsafe primes below 1,000,000')
 print('There are '+str(len(usp))+' safe primes below 10,000,000')
 
+"""

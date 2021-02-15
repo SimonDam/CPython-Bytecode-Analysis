@@ -1,7 +1,9 @@
-# Written by Simon Dam Nielsen
+def source_code(n):	
+    return f"""# Written by Simon Dam Nielsen
 
-n = 100000000
+n = {n}
 for i in range(n):
     pass
 
 
+"""

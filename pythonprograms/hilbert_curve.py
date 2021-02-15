@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Hilbert_curve#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Hilbert_curve#Python
 
 '''Hilbert curve'''
  
@@ -23,12 +24,12 @@ def hilbertTree(n):
     '''Nth application of a rule to a seedling tree.'''
  
     # rule :: Dict Char [Char]
-    rule = {
+    rule = {{
         'a': ['d', 'a', 'a', 'b'],
         'b': ['c', 'b', 'b', 'a'],
         'c': ['b', 'c', 'c', 'd'],
         'd': ['a', 'd', 'd', 'c']
-    }
+    }}
  
     # go :: Tree Char -> Tree Char
     def go(tree):
@@ -53,12 +54,12 @@ def hilbertPoints(w):
     '''
  
     # vectors :: Dict Char [(Int, Int)]
-    vectors = {
+    vectors = {{
         'a': [(-1, 1), (-1, -1), (1, -1), (1, 1)],
         'b': [(1, -1), (-1, -1), (-1, 1), (1, 1)],
         'c': [(1, -1), (1, 1), (-1, 1), (-1, -1)],
         'd': [(-1, 1), (1, 1), (1, -1), (-1, -1)]
-    }
+    }}
  
     # points :: Int -> ((Int, Int), Tree Char) -> [(Int, Int)]
     def points(d):
@@ -90,10 +91,10 @@ def svgFromPoints(w):
         def points(xy):
             return str(xy[0]) + ' ' + str(xy[1])
         xs = ' '.join(map(points, xys))
-        return '\n'.join(
+        return '\\n'.join(
             ['<svg xmlns="http://www.w3.org/2000/svg"',
-             f'width="512" height="512" viewBox="5 5 {w} {w}">',
-             f'<path d="M{xs}" ',
+             f'width="512" height="512" viewBox="5 5 {{w}} {{w}}">',
+             f'<path d="M{{xs}}" ',
              'stroke-width="2" stroke="red" fill="transparent"/>',
              '</svg>'
              ]
@@ -103,7 +104,7 @@ def svgFromPoints(w):
 def print(*args, **kwargs):
     pass
 
-n = 11
+n = {n}
 
 # ------------------------- TEST --------------------------
 def main():
@@ -120,7 +121,7 @@ def Node(v):
     '''Contructor for a Tree node which connects a
        value of some kind to a list of zero or
        more child trees.'''
-    return lambda xs: {'type': 'Node', 'root': v, 'nest': xs}
+    return lambda xs: {{'type': 'Node', 'root': v, 'nest': xs}}
  
  
 # flip :: (a -> b -> c) -> b -> a -> c
@@ -148,3 +149,4 @@ def iterate(f):
 if __name__ == '__main__':
     main()
 
+"""

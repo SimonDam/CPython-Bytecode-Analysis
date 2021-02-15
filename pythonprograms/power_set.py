@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Power_set#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Power_set#Python
 
 import random
 random.seed(73465083974675038247560832475630248576)
@@ -24,7 +25,8 @@ def list_powerset2(lst):
 def powerset(s):
     return frozenset(map(frozenset, list_powerset(list(s))))
 
-n = 22
+n = {n}
 list_powerset([random.randint(1, n) for _ in range(n)])
 powerset(frozenset([random.randint(1, n) for _ in range(n)]))
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Smith_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Smith_numbers#Python
 
 from sys import stdout
  
@@ -44,7 +45,7 @@ def list_smith_numbers(cnt):
         fac = factors(i)
         if len(fac) > 1:
             if sum_digits(i) == add_all_digits(fac):
-                stdout.write("{0} ".format(i) )
+                stdout.write("{{0}} ".format(i) )
 
 def print(*args, **kwargs):
     pass
@@ -52,6 +53,7 @@ def print(*args, **kwargs):
 stdout.write = print
 
 # entry point
-n = 40000
+n = {n}
 list_smith_numbers(n)
 
+"""

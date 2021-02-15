@@ -1,10 +1,11 @@
-# Taken from: https://www.rosettacode.org/wiki/Elementary_cellular_automaton#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Elementary_cellular_automaton#Python
 
 def eca(cells, rule):
     lencells = len(cells)
     c = "0" + cells + "0"    # Zero pad the ends
-    rulebits = '{0:08b}'.format(rule)
-    neighbours2next = {'{0:03b}'.format(n):rulebits[::-1][n] for n in range(8)}
+    rulebits = '{{0:08b}}'.format(rule)
+    neighbours2next = {{'{{0:03b}}'.format(n):rulebits[::-1][n] for n in range(8)}}
     yield c[1:-1]
     while True:
         c = ''.join(['0',
@@ -16,13 +17,14 @@ def eca(cells, rule):
 def print(*args, **kwargs):
     pass
 
-n = 400000
+n = {n}
 if __name__ == '__main__':
     lines, start, rules = n, '0000000001000000000', (90, 30, 122)
     zipped = [range(lines)] + [eca(start, rule) for rule in rules]
-    print('\n   Rules: %r' % (rules,))
+    print('\\n   Rules: %r' % (rules,))
     for data in zip(*zipped):
         i = data[0]
         cells = data[1:]
         print('%2i: %s' % (i, '    '.join(cells).replace('0', '.').replace('1', '#')))
 
+"""

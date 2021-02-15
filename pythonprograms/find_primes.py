@@ -1,4 +1,5 @@
-# Written by Simon Dam Nielsen
+def source_code(n):	
+    return f"""# Written by Simon Dam Nielsen
 
 def find_primes(start, end):
     primes = []
@@ -10,9 +11,10 @@ def find_primes(start, end):
             primes.append(i)
     return primes
 
-n = 40000
+n = {n}
 
 if __name__ == "__main__":
     find_primes(1, n)
 
 
+"""

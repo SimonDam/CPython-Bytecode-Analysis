@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Permutations_by_swapping#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Permutations_by_swapping#Python
 
 from operator import itemgetter
  
@@ -49,13 +50,13 @@ def spermutations(n):
 def print(*args, **kwargs):
     pass
 
-n = 10
+n = {n}
 
 if __name__ == '__main__':
     from itertools import permutations
  
     for n in range(2,n):
-        print( '\nPermutations and sign of %i items' % n)
+        print( '\\nPermutations and sign of %i items' % n)
         sp = set()
         for i in spermutations(n):
             sp.add(i[0])
@@ -65,3 +66,4 @@ if __name__ == '__main__':
         p = set(permutations(range(n)))
         assert sp == p, 'Two methods of generating permutations do not agree'
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Tree_traversal#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Tree_traversal#Python
 
 from collections import namedtuple
  
@@ -62,7 +63,7 @@ def bottom_up_order(node, more=None, visitor = printwithspace, order='BT'):
 def print(*args, **kwargs):
     pass
 
-n = 3000000000
+n = {n}
 
 if __name__ == '__main__':
     w = n
@@ -70,10 +71,11 @@ if __name__ == '__main__':
                       reverse_preorder, bottom_up_order]:
         if traversal == reverse_preorder:
             w = 20
-            print('\nThe generalisation of function dfs allows:')
+            print('\\nThe generalisation of function dfs allows:')
         if traversal == bottom_up_order:
             print('The generalisation of function ls allows:')
-        print(f"{traversal.__name__:>{w}}:", end=' ')
+        print(f"{{traversal.__name__:>{{w}}}}:", end=' ')
         traversal(tree)
         print()
 
+"""

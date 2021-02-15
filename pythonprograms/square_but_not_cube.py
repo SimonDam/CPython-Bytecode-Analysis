@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Square_but_not_cube#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Square_but_not_cube#Python
 
 # nonCubeSquares :: Int -> [(Int, Bool)]
 def nonCubeSquares(n):
@@ -27,7 +28,7 @@ def squareListing(xs):
 def print(*args, **kawrgs):
     pass
 
-n = 3000000
+n = {n}
 def main():
     print(
         unlines(
@@ -54,8 +55,9 @@ def justifyRight(n):
  
 # unlines :: [String] -> String
 def unlines(xs):
-    return '\n'.join(xs)
+    return '\\n'.join(xs)
  
  
 main()
 
+"""

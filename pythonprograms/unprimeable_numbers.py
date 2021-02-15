@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Unprimeable_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Unprimeable_numbers#Python
 
 from itertools import count, islice
  
@@ -9,7 +10,7 @@ def primes(_cache=[2, 3]):
             _cache.append(n)
             yield n
  
-def isprime(n, _seen={0: False, 1: False}):
+def isprime(n, _seen={{0: False, 1: False}}):
     def _isprime(n):
         for p in primes():
             if p*p > n:
@@ -35,12 +36,12 @@ def unprime():
 def print(*args, **kwargs):
     pass
 
-n = 9
+n = {n}
  
 print('First 35:')
 print(' '.join(str(i) for i in islice(unprime(), 35)))
  
-print('\nThe 600-th:')
+print('\\nThe 600-th:')
 print(list(islice(unprime(), 599, 600))[0])
 print()
 
@@ -55,5 +56,6 @@ for p in unprime():
         break
  
 for i,v in enumerate(first):
-    print(f'{i} ending: {v}')
+    print(f'{{i}} ending: {{v}}')
 
+"""

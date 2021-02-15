@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Doubly-linked_list/Traversal#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Doubly-linked_list/Traversal#Python
 
 def print(*args, **kwargs):
     pass
@@ -18,7 +19,7 @@ class List:
  
 # Build the list
 tail = head = List(10)
-n = 3000000
+n = {n}
 for i in range(n):
     tail = tail.append(i)
  
@@ -34,3 +35,4 @@ while node != None:
     print(node.data)
     node = node.prev
 
+"""

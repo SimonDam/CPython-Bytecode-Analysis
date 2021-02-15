@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Ulam_spiral_(for_primes)#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Ulam_spiral_(for_primes)#Python
 
 # coding=UTF-8
 from __future__ import print_function, division
@@ -35,7 +36,7 @@ def show_spiral(n, symbol='# ', start=1, space=None):
 def print(*args, **kwargs):
     pass
 
-n = 3000
+n = {n}
 
 show_spiral(10, symbol=u'♞', space=u'♘') # black are the primes
 show_spiral(9, symbol='', space=' - ')
@@ -44,3 +45,4 @@ show_spiral(9, symbol='', space=' - ')
 
 show_spiral(n, symbol='*', start=42)
 
+"""

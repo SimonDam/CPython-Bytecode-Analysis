@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Gaussian_elimination#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Gaussian_elimination#Python
 
 # The 'gauss' function takes two matrices, 'a' and 'b', with 'a' square, and it return the determinant of 'a' and a matrix 'x' such that a*x = b.
 # If 'b' is the identity, then 'x' is the inverse of 'a'.
@@ -99,8 +100,9 @@ matmul(a, c)
 
 import random
 random.seed(132454358776)
-n = 300
+n = {n}
 x = [[random.randint(1,10000000) for _ in range(n)] for _ in range(n)]
 y = [[random.randint(1,10000000) for _ in range(n)] for _ in range(n)]
 det, c = gauss(x, y)
 
+"""

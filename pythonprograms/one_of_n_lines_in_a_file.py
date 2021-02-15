@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/One_of_n_lines_in_a_file#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/One_of_n_lines_in_a_file#Python
 
 from random import randrange, seed
 seed(1983475984370983780475098724558072458057425089756234)
@@ -23,6 +24,7 @@ def one_of_n_test(n=10, trials=1000000):
 def print(*args, **kwargs):
     pass
 
-n = 500000
+n = {n}
 print(one_of_n_test(trials=n))
 
+"""

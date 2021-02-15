@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Cyclotomic_polynomial#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Cyclotomic_polynomial#Python
 
 from itertools import count, chain
 from collections import deque
@@ -67,9 +68,9 @@ def to_text(poly):
     parts = []
     for (c,e) in (poly):
         if c < 0:
-            coef = ' - ' if c == -1 else f' - {-c} '
+            coef = ' - ' if c == -1 else f' - {{-c}} '
         else:
-            coef = (parts and ' + ' or '') if c == 1 else f' + {c}'
+            coef = (parts and ' + ' or '') if c == 1 else f' + {{c}}'
         parts.append(coef + getx(c,e))
     return ''.join(parts)
  
@@ -117,13 +118,14 @@ def print(*args, **kwargs):
     pass
 
 for n in chain(range(11), [2]):
-    print(f'{n}: {to_text(terms(cyclotomic(n)))}')
+    print(f'{{n}}: {{to_text(terms(cyclotomic(n)))}}')
  
 want = 1
-n = 6000
+n = {n}
 for i in range(n):
     c = [c for c,_ in terms(cyclotomic(i))]
     while want in c or -want in c:
-        print(f'C[{want}]: {i}')
+        print(f'C[{{want}}]: {{i}}')
         want += 1
 
+"""

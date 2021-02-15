@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/9_billion_names_of_God_the_integer#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/9_billion_names_of_God_the_integer#Python
 
 cache = [[1]]
 def cumu(n):
@@ -17,12 +18,13 @@ def print(*args, **kwargs):
     pass
 
 print("rows:")
-n = 10000
+n = {n}
 for x in range(1, n):
     print("%2d:"%x, row(x))
 
  
-print("\nsums:")
+print("\\nsums:")
 for x in list(range(n)): 
     print(x, cumu(x)[-1])
 
+"""

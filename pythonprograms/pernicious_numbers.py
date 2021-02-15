@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Pernicious_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Pernicious_numbers#Python
 
 '''Pernicious numbers'''
  
@@ -56,7 +57,7 @@ def Just(x):
     '''Constructor for an inhabited Maybe (option type) value.
        Wrapper containing the result of a computation.
     '''
-    return {'type': 'Maybe', 'Nothing': False, 'Just': x}
+    return {{'type': 'Maybe', 'Nothing': False, 'Just': x}}
  
  
 # Nothing :: Maybe a
@@ -64,7 +65,7 @@ def Nothing():
     '''Constructor for an empty Maybe (option type) value.
        Empty wrapper returned where a computation is not possible.
     '''
-    return {'type': 'Maybe', 'Nothing': True}
+    return {{'type': 'Maybe', 'Nothing': True}}
  
  
 # enumFromTo :: Int -> Int -> [Int]
@@ -132,9 +133,10 @@ def unfoldl(f):
 def print(*args, **kwargs):
     pass
 
-n = 60000
+n = {n}
 
 # MAIN ---
 if __name__ == '__main__':
     main(n)
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Galton_box_animation#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Galton_box_animation#Python
 
 #!/usr/bin/python
  
@@ -7,7 +8,7 @@ import random
 import time
  
 def print_there(x, y, text):
-     sys.stdout.write("\x1b7\x1b[%d;%df%s\x1b8" % (x, y, text))
+     sys.stdout.write("\\x1b7\\x1b[%d;%df%s\\x1b8" % (x, y, text))
      sys.stdout.flush()
  
  
@@ -75,7 +76,7 @@ def print(*args, **kwargs):
 sys.stdout.write = print
 sys.stdout.flush = print
 
-n = 200
+n = {n}
 def main():
     board = Board(width = n, well_depth = 5, N = 10)
     board.add_ball() #initialization
@@ -92,3 +93,4 @@ def main():
 if __name__=="__main__":
     main()
 
+"""

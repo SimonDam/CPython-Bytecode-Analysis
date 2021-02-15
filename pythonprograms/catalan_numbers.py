@@ -1,11 +1,12 @@
-# Taken from: https://www.rosettacode.org/wiki/Catalan_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Catalan_numbers#Python
 
 from math import factorial
 import functools
  
  
 def memoize(func):
-    cache = {}
+    cache = {{}}
  
     def memoized(key):
         # Returned, new, memoized version of decorated function
@@ -40,7 +41,7 @@ def catR2(n):
 def print(*args, **kwargs):
     pass
 
-n = 2000
+n = {n}
 if __name__ == '__main__':
     def pr(results):
         fmt = '%-10s %-10s %-10s'
@@ -53,3 +54,4 @@ if __name__ == '__main__':
     results = [tuple(c(i) for i in range(n)) for c in defs]
     pr(results)
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sierpinski_triangle#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sierpinski_triangle#Python
 
 def sierpinski(n):
     d = ["*"]
@@ -10,6 +11,7 @@ def sierpinski(n):
 def print(*args, **kwargs):
     pass
 
-n = 15
-print("\n".join(sierpinski(n)))
+n = {n}
+print("\\n".join(sierpinski(n)))
 
+"""

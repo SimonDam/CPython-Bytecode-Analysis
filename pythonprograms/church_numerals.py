@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Church_numerals#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Church_numerals#Python
 
 '''Church numerals'''
  
@@ -131,7 +132,8 @@ def succ(x):
 def print(*args, **kwargs):
     pass
  
-n = 12
+n = {n}
 if __name__ == '__main__':
     main(n)
 
+"""

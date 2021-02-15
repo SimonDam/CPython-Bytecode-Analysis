@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Fermat_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Fermat_numbers#Python
 
 def factors(x):
     factors = []
@@ -16,19 +17,20 @@ def factors(x):
 def print(*args, **kwargs):
     pass
 
-n = 7
+n = {n}
 
 print("First 10 Fermat numbers:")
 for i in range(10):
     fermat = 2 ** 2 ** i + 1
-    print("F{} = {}".format(chr(i + 0x2080) , fermat))
+    print("F{{}} = {{}}".format(chr(i + 0x2080) , fermat))
  
-print("\nFactors of first few Fermat numbers:")
+print("\\nFactors of first few Fermat numbers:")
 for i in range(n):
     fermat = 2 ** 2 ** i + 1
     fac = factors(fermat)
     if len(fac) == 1:
-        print("F{} -> IS PRIME".format(chr(i + 0x2080)))
+        print("F{{}} -> IS PRIME".format(chr(i + 0x2080)))
     else:
-        print("F{} -> FACTORS: {}".format(chr(i + 0x2080), fac))
+        print("F{{}} -> FACTORS: {{}}".format(chr(i + 0x2080), fac))
 
+"""

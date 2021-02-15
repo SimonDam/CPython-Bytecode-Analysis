@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Pig_the_dice_game/Player#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Pig_the_dice_game/Player#Python
 
 #!/usr/bin/python3
  
@@ -18,7 +19,7 @@ from collections import Counter
 def print(*args, **kwargs):
     pass
 
-n = 15000
+n = {n}
 
 playercount = 2
 maxscore = 100
@@ -61,9 +62,9 @@ class Desparat(Player):
  
 def game__str__(self):
     'Pretty printer for Game class'
-    return ("Game(players=%r, maxscore=%i,\n  rounds=[\n    %s\n  ])"
+    return ("Game(players=%r, maxscore=%i,\\n  rounds=[\\n    %s\\n  ])"
             % (self.players, self.maxscore,
-               ',\n    '.join(repr(round) for round in self.rounds)))
+               ',\\n    '.join(repr(round) for round in self.rounds)))
 Game.__str__ = game__str__
  
  
@@ -117,18 +118,19 @@ if __name__ == '__main__':
                 maxscore=20,
                 rounds=[])
     print('ONE GAME')
-    print('Winning order: %r; Respective scores: %r\n' % playpig(game))
+    print('Winning order: %r; Respective scores: %r\\n' % playpig(game))
     print(game)
     game = Game(players=tuple(RandPlay(i) for i in range(playercount)),
                 maxscore=maxscore,
                 rounds=[])
     algos = (RollTo20, RandPlay, Desparat)
-    print('\n\nMULTIPLE STATISTICS using %r\n  for %i GAMES'
+    print('\\n\\nMULTIPLE STATISTICS using %r\\n  for %i GAMES'
           % (', '.join(p.__name__ for p in algos), maxgames,))
     winners = Counter(repr(playpig(game._replace(players=tuple(random.choice(algos)(i)
                                                                for i in range(playercount)),
                                                  rounds=[]))[0])
                       for i in range(maxgames))
-    print('  Players(position) winning on left; occurrences on right:\n    %s'
-          % ',\n    '.join(str(w) for w in winners.most_common()))
+    print('  Players(position) winning on left; occurrences on right:\\n    %s'
+          % ',\\n    '.join(str(w) for w in winners.most_common()))
 
+"""

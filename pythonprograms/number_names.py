@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Number_names#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Number_names#Python
 
 def int_to_english(n):
     if n < 0: return "minus " + int_to_english(-n)
@@ -19,7 +20,7 @@ def int_to_english(n):
         if n % 100 == 0:
             return int_to_english(n // 100) + " hundred"
         else:
-            return int_to_english(n // 100) + " hundred and " +\
+            return int_to_english(n // 100) + " hundred and " +\\
                int_to_english(n % 100)
     # http://www.isthe.com/chongo/tech/math/number/tenpower.html
     powers = [("thousand", 3), ("million", 6),
@@ -47,7 +48,7 @@ def int_to_english(n):
 def print(*args, **kwargs):
     pass
 
-n = 70000
+n = {n}
 if __name__ == "__main__":
     print(int_to_english(42))
     print(int_to_english(3 ** 7))
@@ -56,3 +57,4 @@ if __name__ == "__main__":
     print(int_to_english(3 ** (n)))
  
 
+"""

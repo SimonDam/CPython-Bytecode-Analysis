@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Happy_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Happy_numbers#Python
 
 def happy(n):
     past = set()			
@@ -9,7 +10,8 @@ def happy(n):
         past.add(n)
     return True
 
-n = 300000
+n = {n}
 [x for x in range(n) if happy(x)][:n]
 
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/De_Bruijn_sequences#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/De_Bruijn_sequences#Python
 # from https://en.wikipedia.org/wiki/De_Bruijn_sequence
 
 def print(*args, **kwargs):
@@ -74,7 +75,7 @@ def validate(db):
     else:
         print("  No errors found")
 
-n = 30
+n = {n}
 db = de_bruijn(n, 4)
  
 print(" ")
@@ -96,3 +97,4 @@ print("Validating the overlaid deBruijn sequence:")
 validate(dboverlaid)
  
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Diversity_prediction_theorem#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Diversity_prediction_theorem#Python
 
 '''Diversity prediction theorem'''
  
@@ -9,7 +10,7 @@ def print(*args, **kwargs):
     pass
  
 #  diversityValues :: Num a => a -> [a] ->
-#  { mean-Error :: a, crowd-error :: a, diversity :: a }
+#  {{ mean-Error :: a, crowd-error :: a, diversity :: a }}
 def diversityValues(x):
     '''The mean error, crowd error and
        diversity, for a given observation x
@@ -17,11 +18,11 @@ def diversityValues(x):
     '''
     def go(ps):
         mp = mean(ps)
-        return {
+        return {{
             'mean-error': meanErrorSquared(x)(ps),
             'crowd-error': pow(x - mp, 2),
             'diversity': meanErrorSquared(mp)(ps)
-        }
+        }}
     return go
  
  
@@ -41,7 +42,7 @@ import random
 random.seed(23987498077098798719208374)
 # ------------------------- TEST -------------------------
 # main :: IO ()
-n = 60000
+n = {n}
 def main():
     '''Observed value: 49,
        prediction lists: various.
@@ -52,7 +53,7 @@ def main():
         [
             [48, 47, 51],
             [48, 47, 51, 42],
-            [50, '?', 50, {}, 50],  # Non-numeric values.
+            [50, '?', 50, {{}}, 50],  # Non-numeric values.
             [],                      # Missing predictions.
             [random.randint(1,n) for _ in range(n)]
         ]
@@ -82,9 +83,9 @@ def showDiversityValues(x):
             def showKV(a, kv):
                 k, v = kv
                 return a + k.rjust(w, ' ') + (
-                    ' : ' + showPrecision(3)(v) + '\n'
+                    ' : ' + showPrecision(3)(v) + '\\n'
                 )
-            return 'Predictions: ' + showList(ps) + ' ->\n' + (
+            return 'Predictions: ' + showList(ps) + ' ->\\n' + (
                 reduce(showKV, dct.items(), '')
             )
  
@@ -93,9 +94,9 @@ def showDiversityValues(x):
                 unlines(map(indented(1), e)) if (
                     isinstance(e, list)
                 ) else indented(1)(repr(e))
-            ) + '\n'
+            ) + '\\n'
  
-        return 'Observation:  ' + repr(x) + '\n' + (
+        return 'Observation:  ' + repr(x) + '\\n' + (
             either(showProblem)(showDict)(
                 bindLR(numLR(x))(
                     lambda n: bindLR(numsLR(ps))(
@@ -114,13 +115,13 @@ def Left(x):
     '''Constructor for an empty Either (option type) value
        with an associated string.
     '''
-    return {'type': 'Either', 'Right': None, 'Left': x}
+    return {{'type': 'Either', 'Right': None, 'Left': x}}
  
  
 # Right :: b -> Either a b
 def Right(x):
     '''Constructor for a populated Either (option type) value'''
-    return {'type': 'Either', 'Left': None, 'Right': x}
+    return {{'type': 'Either', 'Left': None, 'Right': x}}
  
  
 # bindLR (>>=) :: Either a -> (a -> Either b) -> Either b
@@ -258,10 +259,11 @@ def showPrecision(n):
 def unlines(xs):
     '''A single string derived by the intercalation
        of a list of strings with the newline character.'''
-    return '\n'.join(xs)
+    return '\\n'.join(xs)
  
  
 # MAIN ---
 if __name__ == '__main__':
     main()
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Next_highest_int_from_digits#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Next_highest_int_from_digits#Python
 
 def closest_more_than(n, lst):
     "(index of) closest int from lst, to n that is also > n"
@@ -27,11 +28,12 @@ def print(*args, **kwargs):
     pass
 
 
-n = 300000
+n = {n}
 t = 10**n
 
 if __name__ == '__main__':
     for x in [0, 9, 12, 21, 12453, 738440, 45072010, 95322020,
               9589776899767587796600, random.randint(t,t*10)]:
-        print(f"{x:>12_d} -> {nexthigh(x):>12_d}")
+        print(f"{{x:>12_d}} -> {{nexthigh(x):>12_d}}")
 
+"""

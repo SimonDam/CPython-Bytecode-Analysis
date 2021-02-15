@@ -1,8 +1,9 @@
-# Taken from: https://www.rosettacode.org/wiki/Feigenbaum_constant_calculation#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Feigenbaum_constant_calculation#Python
 
 def print(*args, **kwargs):
     pass
-n = 20
+n = {n}
 
 max_it = n
 max_it_j = 10
@@ -22,8 +23,9 @@ for i in range(2, max_it + 1):
             x = a - x * x
         a = a - x / y
     d = (a1 - a2) / (a - a1)
-    print("{0:2d}    {1:.8f}".format(i, d))
+    print("{{0:2d}}    {{1:.8f}}".format(i, d))
     d1 = d
     a2 = a1
     a1 = a
 
+"""

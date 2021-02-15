@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/List_comprehensions#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/List_comprehensions#Python
 
 from functools import (reduce)
 from operator import (add)
@@ -60,6 +61,7 @@ def main(n):
 def print(*args, **kwargs):
     pass
 
-n = 300
+n = {n}
 main(n)
 
+"""

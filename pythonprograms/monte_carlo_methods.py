@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Monte_Carlo_methods#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Monte_Carlo_methods#Python
 
 from random import random, seed
 seed(923879834679834745983476983475987)
@@ -20,8 +21,9 @@ def pi(nthrows):
 def print(*args, **kwargs):
     pass
 
-n = 20000000
+n = {n}
 
 for i in [10**4, 10**6, n]:
     print("%9d: %07f" % (i, pi(i)))
 
+"""

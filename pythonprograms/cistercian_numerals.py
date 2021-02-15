@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Cistercian_numerals#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Cistercian_numerals#Python
 
 # -*- coding: utf-8 -*-
 '''
@@ -34,10 +35,10 @@ def _init():
 '''.strip()
  
     lines = [[d.replace('.', ' ') for d in ln.strip().split()]
-             for ln in digi_bits.strip().split('\n')
+             for ln in digi_bits.strip().split('\\n')
              if '#' not in ln]
     formats = '<2 >2 <2 >2'.split()
-    digits = [[f"{dig:{f}}" for dig in line]
+    digits = [[f"{{dig:{{f}}}}" for dig in line]
               for f, line in zip(formats, lines)]
  
     return digits
@@ -49,7 +50,7 @@ _digits = _init()
 def _to_digits(n):
     #assert 0 <= n < 10_000 and int(n) == n
  
-    return [int(digit) for digit in f"{int(n):04}"][::-1]
+    return [int(digit) for digit in f"{{int(n):04}}"][::-1]
  
 def num_to_lines(n):
     global _digits
@@ -70,25 +71,26 @@ def print(*args, **kwargs):
 #%% main
 import random
 random.seed(984508945750984257908425960842598067425908672495067)
-n = 40000
+n = {n}
 
 if __name__ == '__main__':
     #n = 6666
-    #print(f"Arabic {n} to Cistercian:\n")
-    #print('\n'.join(num_to_lines(n)))
+    #print(f"Arabic {{n}} to Cistercian:\\n")
+    #print('\\n'.join(num_to_lines(n)))
  
     for pow10 in range(4):    
         step = 10 ** pow10
-        print(f'\nArabic {step}-to-{9*step} by {step} in Cistercian:\n')
+        print(f'\\nArabic {{step}}-to-{{9*step}} by {{step}} in Cistercian:\\n')
         lines = num_to_lines(step)
         for i in range(step*2, step*10, step):
             lines = cjoin(lines, num_to_lines(i))
-        print('\n'.join(lines))
+        print('\\n'.join(lines))
  
     numbers = [random.randint(1,n) for _ in range(n)]
-    print(f'\nArabic {str(numbers)[1:-1]} in Cistercian:\n')
+    print(f'\\nArabic {{str(numbers)[1:-1]}} in Cistercian:\\n')
     lines = num_to_lines(numbers[0])
     for t in numbers[1:]:
         lines = cjoin(lines, num_to_lines(t))
-    print('\n'.join(lines))
+    print('\\n'.join(lines))
 
+"""

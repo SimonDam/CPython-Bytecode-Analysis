@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Long_primes#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Long_primes#Python
 
 def sieve(limit):
     primes = []
@@ -32,7 +33,7 @@ def findPeriod(n):
 def print(*args, **kwargs):
     pass
 
-n = 32000
+n = {n}
 
 primes = sieve(n)
 longPrimes = []
@@ -51,7 +52,8 @@ for longPrime in longPrimes:
 totals[-1] = count
 print('The long primes up to 500 are:')
 print(str(longPrimes[:totals[0]]).replace(',', ''))
-print('\nThe number of long primes up to:')
+print('\\nThe number of long primes up to:')
 for (i, total) in enumerate(totals):
     print('  %5d is %d' % (numbers[i], total))
 
+"""

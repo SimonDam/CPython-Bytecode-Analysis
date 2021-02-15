@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Forest_fire#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Forest_fire#Python
 
 '''
 Forest-Fire Cellular automation
@@ -20,13 +21,13 @@ hood = ((-1,-1), (-1,0), (-1,1),
         (1,-1),  (1,0),  (1,1))
  
 def initialise():
-    grid = {(x,y): (tree if random.random()<= initial_trees else space)
+    grid = {{(x,y): (tree if random.random()<= initial_trees else space)
             for x in range(L)
-            for y in range(L) }
+            for y in range(L) }}
     return grid
  
 def gprint(grid):
-    txt = '\n'.join(''.join(grid[(x,y)] for x in range(L))
+    txt = '\\n'.join(''.join(grid[(x,y)] for x in range(L))
                     for y in range(L))
     print(txt)
  
@@ -45,7 +46,7 @@ def quickprint(grid):
  
  
 def gnew(grid):
-    newgrid = {}
+    newgrid = {{}}
     for x in range(L):
         for y in range(L):
             if grid[(x,y)] == burning:
@@ -63,7 +64,7 @@ def gnew(grid):
 def print(*args, **kwargs):
     pass
 
-n = 10000
+n = {n}
 if __name__ == '__main__':
     grid = initialise()
     iter = 0
@@ -83,3 +84,4 @@ if __name__ == '__main__':
         grid = gnew(grid)
         iter +=1
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Jensen%27s_Device#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Jensen%27s_Device#Python
 
 class Ref(object):
     def __init__(self, value=None):
@@ -21,6 +22,7 @@ i = Ref()
 def print(*args, **kwargs):
     pass
 
-n = 50000000
+n = {n}
 print(harmonic_sum(i, 1, n, lambda: 1.0/i.value))
 
+"""

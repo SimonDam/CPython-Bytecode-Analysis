@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Bead_sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Bead_sort#Python
 
 import random
 random.seed(65873487523469520)
@@ -13,8 +14,9 @@ def beadsort(l):
 def print(*args, **kwargs):
     pass
 
-n = 13000
+n = {n}
 
 # Demonstration code:
 print(beadsort([random.randint(1,n) for _ in range(n)]))
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Resistor_mesh#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Resistor_mesh#Python
 
 DIFF_THRESHOLD = 1e-40
  
@@ -61,7 +62,7 @@ def iter(m):
 def print(*args, **kwargs):
     pass
 
-n = 16
+n = {n}
 
 def main():
     w = h = n
@@ -70,3 +71,4 @@ def main():
  
 main()
 
+"""

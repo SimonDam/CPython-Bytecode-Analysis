@@ -1,4 +1,5 @@
-#Taken from: https://www.rosettacode.org/wiki/Determine_if_a_string_is_collapsible#Python
+def source_code(n):	
+    return f"""#Taken from: https://www.rosettacode.org/wiki/Determine_if_a_string_is_collapsible#Python
 
 from itertools import groupby
 import string
@@ -11,7 +12,7 @@ def collapser(txt):
 def print(*args, **kwargs):
     pass
 
-n = 8000000
+n = {n}
 if __name__ == '__main__':
     strings = [
             "",
@@ -27,8 +28,9 @@ if __name__ == '__main__':
             ]
     for txt in strings:
         this = "Original"
-        print(f"\n{this:14} Size: {len(txt)} «««{txt}»»»" )
+        print(f"\\n{{this:14}} Size: {{len(txt)}} «««{{txt}}»»»" )
         this = "Collapsed"
         sqz = collapser(txt)
-        print(f"{this:>14} Size: {len(sqz)} «««{sqz}»»»" )
+        print(f"{{this:>14}} Size: {{len(sqz)}} «««{{sqz}}»»»" )
 
+"""

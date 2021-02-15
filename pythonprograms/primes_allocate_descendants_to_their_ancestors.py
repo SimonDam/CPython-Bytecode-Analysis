@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Primes_-_allocate_descendants_to_their_ancestors#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Primes_-_allocate_descendants_to_their_ancestors#Python
 
 from __future__ import print_function
 from itertools import takewhile
@@ -6,7 +7,7 @@ from itertools import takewhile
 def print(*args, **kwargs):
     pass
 
-n = 150
+n = {n}
 maxsum = n
  
 def get_primes(max):
@@ -49,3 +50,4 @@ for s in range(1, maxsum + 1):
  
 print("Total descendants", total)
 
+"""

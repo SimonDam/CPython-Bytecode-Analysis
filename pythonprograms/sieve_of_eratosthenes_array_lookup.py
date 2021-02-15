@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sieve_of_Eratosthenes#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sieve_of_Eratosthenes#Python
 
 def primes_upto(limit):
     is_prime = [False] * 2 + [True] * (limit - 1) 
@@ -11,6 +12,7 @@ def primes_upto(limit):
 def print(*args, **kwargs):
     pass
 
-n = 30000000
+n = {n}
 print(list(primes_upto(n)))
 
+"""

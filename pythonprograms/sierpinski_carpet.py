@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sierpinski_carpet#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sierpinski_carpet#Python
 
 '''Iterations of the Sierpinski carpet'''
  
@@ -30,7 +31,7 @@ def sierpinskiCarpet(n):
 def print(*args, **kwargs):
     pass
 
-n = 9
+n = {n}
 # TEST ----------------------------------------------------
 def main():
     '''Test iteration of the Sierpinski carpet'''
@@ -41,8 +42,8 @@ def main():
         max(map(compose(len)(str), levels))
     )
     print(
-        fTable(__doc__ + ':')(lambda x: '\n' + str(x))(
-            lambda xs: xs[0] + '\n' + (
+        fTable(__doc__ + ':')(lambda x: '\\n' + str(x))(
+            lambda xs: xs[0] + '\\n' + (
                 unlines(map(lambda x: t + x, xs[1:])))
         )
         (sierpinskiCarpet)(levels)
@@ -111,7 +112,7 @@ def iterate(f):
 def unlines(xs):
     '''A single string derived by the intercalation
        of a list of strings with the newline character.'''
-    return '\n'.join(xs)
+    return '\\n'.join(xs)
  
  
 # zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
@@ -135,7 +136,7 @@ def fTable(s):
     def go(xShow, fxShow, f, xs):
         ys = [xShow(x) for x in xs]
         w = max(map(len, ys))
-        return s + '\n' + '\n'.join(map(
+        return s + '\\n' + '\\n'.join(map(
             lambda x, y: y.rjust(w, ' ') + ' -> ' + fxShow(f(x)),
             xs, ys
         ))
@@ -148,3 +149,4 @@ def fTable(s):
 if __name__ == '__main__':
     main()
 
+"""

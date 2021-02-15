@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Heronian_triangles#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Heronian_triangles#Python
 
 from __future__ import division, print_function
 from math import gcd, sqrt
@@ -21,7 +22,7 @@ def gcd3(x, y, z):
 def print(*args, **kwargs):
     pass
 
-n = 500
+n = {n}
 if __name__ == '__main__':
     N = 1 + n
     h = [(x, y, z)
@@ -37,12 +38,13 @@ if __name__ == '__main__':
     print(
         'Primitive Heronian triangles with sides up to %i:' % n, len(h)
     )
-    print('\nFirst ten when ordered by increasing area, then perimeter,',
+    print('\\nFirst ten when ordered by increasing area, then perimeter,',
           'then maximum sides:')
-    print('\n'.join('  %14r perim: %3i area: %i'
+    print('\\n'.join('  %14r perim: %3i area: %i'
                     % (sides, sum(sides), hero(*sides)) for sides in h[:10]))
-    print('\nAll with area 210 subject to the previous ordering:')
-    print('\n'.join('  %14r perim: %3i area: %i'
+    print('\\nAll with area 210 subject to the previous ordering:')
+    print('\\n'.join('  %14r perim: %3i area: %i'
                     % (sides, sum(sides), hero(*sides)) for sides in h
                     if hero(*sides) == 210))
 
+"""

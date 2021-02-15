@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Langton%27s_ant#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Langton%27s_ant#Python
 
 '''Langton's ant implementation.'''
 from enum import Enum, IntEnum
@@ -60,7 +61,7 @@ def next_position(x, y, direction):
 def print_grid(grid):
     '''Display grid.'''
     print(80 * "#")
-    print("\n".join("".join(v.value for v in row) for row in grid))
+    print("\\n".join("".join(v.value for v in row) for row in grid))
  
  
 def ant(width, height, max_nb_steps):
@@ -81,8 +82,9 @@ def ant(width, height, max_nb_steps):
 def print(*args, **kwargs):
     pass
 
-n = 5000
+n = {n}
 if __name__ == "__main__":
     ant(width=75, height=52, max_nb_steps=n)
  
 
+"""

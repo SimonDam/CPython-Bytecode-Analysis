@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Mind_boggling_card_trick#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Mind_boggling_card_trick#Python
 
 import random
 random.seed(129083839845794387534928745392487539487)
@@ -6,7 +7,7 @@ random.seed(129083839845794387534928745392487539487)
 def print(*args, **kwargs):
     pass
 
-n = 400000
+n = {n}
 
 Black, Red = 'Black', 'Red'
 blacks = [Black] * (n // 2) 
@@ -24,7 +25,7 @@ while pack:
     else:
         red_stack.append(pack.pop())
     discard.append(top)
-print('(Discards:', ' '.join(d[0] for d in discard), ')\n')
+print('(Discards:', ' '.join(d[0] for d in discard), ')\\n')
  
 ## 3. Swap the same, random, number of cards between the two stacks.
 # We can't swap more than the number of cards in a stack.
@@ -54,3 +55,4 @@ if black_stack.count(Black) == red_stack.count(Red):
 else:
     print('Whoops - The mathematicians (or my card manipulations) are flakey')
 
+"""

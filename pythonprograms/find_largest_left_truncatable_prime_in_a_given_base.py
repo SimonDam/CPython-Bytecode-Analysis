@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Find_largest_left_truncatable_prime_in_a_given_base#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Find_largest_left_truncatable_prime_in_a_given_base#Python
 
 import random
 random.seed(873465098236458723647586234980756)
@@ -53,8 +54,9 @@ def largest_left_truncatable_prime(base):
 def print(*args, **kwargs):
     pass
 
-n = 12
+n = {n}
 
 for b in range(3,n):
-    print("%d:%d\n" % (b,largest_left_truncatable_prime(b)))
+    print("%d:%d\\n" % (b,largest_left_truncatable_prime(b)))
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Hash_join
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Hash_join
 
 from collections import defaultdict
  
@@ -16,10 +17,11 @@ random.seed(38763489765283745283756)
 def print(*args, **kwargs):
     pass
 
-n = 500000
+n = {n}
 table1 = [(random.randint(1,int(n/10)), random.randint(1,int(n/10))) for _ in range(n)]
 table2 = [(random.randint(1,int(n/10)), random.randint(1,int(n/10))) for _ in range(n)]
  
 for row in hashJoin(table1, 1, table2, 0):
     print(row)
 
+"""

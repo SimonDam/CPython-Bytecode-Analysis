@@ -1,15 +1,16 @@
-# Taken from: https://www.rosettacode.org/wiki/Five_weekends#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Five_weekends#Python
 
 from datetime import timedelta, date
 
 def print(*args, **kwargs):
     pass
 
-n = 9999
+n = {n}
 
 DAY     = timedelta(days=1)
 START, STOP = date(1, 1, 1), date(n, 1, 1)
-WEEKEND = {6, 5, 4}     # Sunday is day 6
+WEEKEND = {{6, 5, 4}}     # Sunday is day 6
 FMT     = '%Y %m(%B)'
  
 def fiveweekendspermonth(start=START, stop=STOP):
@@ -33,10 +34,11 @@ def fiveweekendspermonth(start=START, stop=STOP):
 dates = fiveweekendspermonth()
 indent = '  '
 print('There are %s months of which the first and last five are:' % len(dates))
-print(indent +('\n'+indent).join(d.strftime(FMT) for d in dates[:5]))
+print(indent +('\\n'+indent).join(d.strftime(FMT) for d in dates[:5]))
 print(indent +'...')
-print(indent +('\n'+indent).join(d.strftime(FMT) for d in dates[-5:]))
+print(indent +('\\n'+indent).join(d.strftime(FMT) for d in dates[-5:]))
  
-print('\nThere are %i years in the range that do not have months with five weekends'
-      % len(set(range(START.year, STOP.year)) - {d.year for d in dates}))
+print('\\nThere are %i years in the range that do not have months with five weekends'
+      % len(set(range(START.year, STOP.year)) - {{d.year for d in dates}}))
 
+"""

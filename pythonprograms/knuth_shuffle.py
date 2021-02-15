@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Knuth_shuffle#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Knuth_shuffle#Python
 
 from random import randrange, seed
 seed(89732465987234658972346587932465873264)
@@ -11,8 +12,9 @@ def knuth_shuffle(x):
 def print(*args, **kwargs):
     pass
 
-n = 8000000
+n = {n}
 x = list(range(n))
 knuth_shuffle(x)
 print("shuffled:", x)
 
+"""

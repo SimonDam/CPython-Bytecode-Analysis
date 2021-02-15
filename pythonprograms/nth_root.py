@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Nth_root#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Nth_root#Python
 
 from decimal import Decimal, getcontext
  
@@ -14,6 +15,7 @@ def nthroot (n, A, precision):
         if x_0 == x_1:
             return x_1
 
-n = 250000
+n = {n}
 nthroot(2, 5, n)
 
+"""

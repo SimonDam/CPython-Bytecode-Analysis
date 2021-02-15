@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Euler_method#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Euler_method#Python
 
 def euler(f,y0,a,b,h):
 	t,y = a,y0
@@ -13,7 +14,8 @@ def newtoncooling(time, temp):
 def print(*args, **kwargs):
     pass
 
-n = 70000000
+n = {n}
 euler(newtoncooling,10**300,0,n,10)
  
 
+"""

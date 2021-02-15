@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Perfect_totient_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Perfect_totient_numbers#Python
 
 from math import gcd
 from functools import lru_cache
@@ -21,7 +22,8 @@ def perfect_totient():
 def print(*args, **kwargs):
     pass
 
-n = 22
+n = {n}
 if __name__ == '__main__':
     print(list(islice(perfect_totient(), n)))
 
+"""

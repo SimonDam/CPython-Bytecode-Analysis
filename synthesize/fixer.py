@@ -1,6 +1,7 @@
 import os
 
 def main():
+    print(os.listdir("."))
     for program in os.listdir("./pythonprograms"):
         new_text = ""
         if program.endswith(".py"):

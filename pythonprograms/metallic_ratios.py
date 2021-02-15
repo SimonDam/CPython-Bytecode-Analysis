@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Metallic_ratios#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Metallic_ratios#Python
 
 from itertools import count, islice
 from _pydecimal import getcontext, Decimal
@@ -18,7 +19,7 @@ def stable(b, prec):
     last = 0
     for i,x in zip(count(), to_decimal(b)):
         if x == last:
-            print(f'after {i} iterations:\n\t{x}')
+            print(f'after {{i}} iterations:\\n\\t{{x}}')
             break
         last = x
 
@@ -27,10 +28,11 @@ def print(*args, **kwargs):
 
 for b in range(4):
     coefs = [n for _,n in islice(metallic_ratio(b), 15)]
-    print(f'\nb = {b}: {coefs}')
+    print(f'\\nb = {{b}}: {{coefs}}')
     stable(b, 32)
  
-print(f'\nb = 1 with 256 digits:')
-n = 4000
+print(f'\\nb = 1 with 256 digits:')
+n = {n}
 stable(1, n)
 
+"""

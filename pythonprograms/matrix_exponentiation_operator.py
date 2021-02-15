@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Matrix-exponentiation_operator#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Matrix-exponentiation_operator#Python
 
 class Mat(list) :
     def __matmul__(self, B) :
@@ -30,10 +31,11 @@ def printtable(data):
 def print(*args, **kwargs):
     pass
 
-n = 5000
+n = {n}
 
 m = [[3,2], [2,1]]
 for i in range(n):
-    print('\n%i:' % i)
+    print('\\n%i:' % i)
     printtable(power(m, i))
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://github.com/kostya/benchmarks/blob/master/matmul/matmul.py
+def source_code(n):	
+    return f"""# Taken from: https://github.com/kostya/benchmarks/blob/master/matmul/matmul.py
 # Writen by Attractive Chaos; distributed under the MIT license
 
 import array
@@ -51,7 +52,7 @@ def notify(msg):
 def print(*args, **kwargs):
     pass
 
-n = 300
+n = {n}
 
 if __name__ == "__main__":
     left = calc(101)
@@ -60,9 +61,10 @@ if __name__ == "__main__":
         print("%f != %f" % (left, right), file=sys.stderr)
         quit(1)
 
-    notify("%s\t%d" % (platform.python_implementation(), os.getpid()))
+    notify("%s\\t%d" % (platform.python_implementation(), os.getpid()))
     results = calc(n)
     notify("stop")
 
     print(results)
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Permutation_test#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Permutation_test#Python
 
 from itertools import combinations as comb
  
@@ -22,9 +23,10 @@ def print(*args, **kwargs):
 
 import random
 random.seed(928374983279384536987348)
-n = 12
+n = {n}
 treatmentGroup = [random.randint(1,n) for _ in range(n)]
 controlGroup   = [random.randint(1,n) for _ in range(n)]
 under = permutationTest(treatmentGroup, controlGroup)
 print("under=%.2f%%, over=%.2f%%" % (under, 100. - under))
 
+"""

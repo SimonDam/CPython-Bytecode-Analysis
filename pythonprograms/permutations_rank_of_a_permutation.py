@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Permutations/Rank_of_a_permutation#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Permutations/Rank_of_a_permutation#Python
 
 from math import factorial as fact
 from random import randrange
@@ -67,7 +68,7 @@ def test1(comment, unranker, ranker):
     for r, pi in perms:
         pi1 = init_pi1(n, pi)
         print('  From rank %2i to %r back to %2i' % (r, pi, ranker(n, pi[:], pi1)))
-    print('\n  %i random individual samples of %i items:' % (samplesize, n2))
+    print('\\n  %i random individual samples of %i items:' % (samplesize, n2))
     for r in get_random_ranks(n2, samplesize):
         pi = identity_perm(n2)
         print('    ' + ' '.join('%2i' % i for i in unranker(n2, r, pi)))
@@ -79,16 +80,17 @@ def test2(comment, unranker, n):
     print('  %i random individual samples of %i items:' % (samplesize, n2))
     for r in get_random_ranks(n2, samplesize):
         pi = identity_perm(n2)
-        print('    ' + '\n      '.join(wrap(repr(unranker(n2, r, pi)))))
+        print('    ' + '\\n      '.join(wrap(repr(unranker(n2, r, pi)))))
     print('')
 
 def print(*args, **kwargs):
     pass
 
-n = 20000
+n = {n}
 
 if __name__ == '__main__':
     test1('First ordering:', unranker1, ranker1)
     test1('Second ordering:', unranker2, ranker2)
     test2('First ordering, large number of perms:', unranker1, n)
 
+"""

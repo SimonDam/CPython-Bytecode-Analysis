@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Total_circles_area#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Total_circles_area#Python
 
 from collections import namedtuple
  
@@ -59,6 +60,7 @@ def main(n):
 def print(*args, **kwargs):
     pass
 
-n = 1000
+n = {n}
 main(n)
 
+"""

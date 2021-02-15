@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Yin_and_yang#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Yin_and_yang#Python
 
 import math
 def yinyang(n=3):
@@ -9,7 +10,7 @@ def yinyang(n=3):
     circles = [[ (x,y) for x,y in sqrpoints
              if math.hypot(x,y) <= radius ]
            for sqrpoints, radius in zip(squares, radii)]
-    m = {(x,y):' ' for x,y in squares[-1]}
+    m = {{(x,y):' ' for x,y in squares[-1]}}
     for x,y in circles[-1]:
         m[x,y] = '*'
     for x,y in circles[-1]:
@@ -20,12 +21,13 @@ def yinyang(n=3):
     for x,y in circles[-3]:
         m[(x,y+3*n)] = '·'
         m[(x,y-3*n)] = '*'
-    return '\n'.join(''.join(m[(x,y)] for x in reversed(ranges[-1])) for y in ranges[-1])
+    return '\\n'.join(''.join(m[(x,y)] for x in reversed(ranges[-1])) for y in ranges[-1])
 
 def print(*args, **kwargs):
     pass
 
-n = 150
+n = {n}
 
 print(yinyang(n))
 
+"""

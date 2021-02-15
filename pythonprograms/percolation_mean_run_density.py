@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Percolation/Mean_run_density#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Percolation/Mean_run_density#Python
 
 from __future__ import division
 from random import random, seed
@@ -8,7 +9,7 @@ seed(745029375890723958762345)
 
 N, p, t = 100, 0.5, 500
 
-n = 12
+n = {n}
 
 def print(*args, **kwargs):
     pass
@@ -35,3 +36,4 @@ for p10 in range(1, n, 2):
               % (t, p, N, limit, sim, abs(sim - limit) / limit * 100 if limit else sim * 100))
 
 
+"""

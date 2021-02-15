@@ -1,10 +1,11 @@
-# Taken from: https://www.rosettacode.org/wiki/EKG_sequence_convergence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/EKG_sequence_convergence#Python
 
 from itertools import count, islice, takewhile
 from math import gcd
  
 def EKG_gen(start=2):
-    '''\
+    '''\\
     Generate the next term of the EKG together with the minimum cache of 
     numbers left in its production; (the "state" of the generator).
     Using math.gcd
@@ -33,9 +34,10 @@ def find_convergence(ekgs=(5,7)):
 def print(*args, **kwargs):
     pass
 
-n = 800
+n = {n}
 if __name__ == '__main__':
     for start in range(2,n):
-        print(f"EKG({start}):", str([n[0] for n in islice(EKG_gen(start), 10)])[1: -1])
-    print(f"\nEKG(5) and EKG(7) converge at term {find_convergence(ekgs=(5,7))}!")
+        print(f"EKG({{start}}):", str([n[0] for n in islice(EKG_gen(start), 10)])[1: -1])
+    print(f"\\nEKG(5) and EKG(7) converge at term {{find_convergence(ekgs=(5,7))}}!")
 
+"""

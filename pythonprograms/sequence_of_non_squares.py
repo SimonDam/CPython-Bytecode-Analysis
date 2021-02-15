@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sequence_of_non-squares#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sequence_of_non-squares#Python
 
 '''Sequence of non-squares'''
  
@@ -20,7 +21,7 @@ def nonSquare(n):
 def print(*args, **kwargs):
     pass
 
-n = 5000000
+n = {n}
 # --------------------------TEST---------------------------
 # main :: IO ()
 def main():
@@ -39,7 +40,7 @@ def main():
  
     print(
         fTable(main.__doc__)(
-            lambda f: '\n' + f.__doc__
+            lambda f: '\\n' + f.__doc__
         )(lambda x: '    ' + showList(x))(
             lambda f: f()
         )([first22, squareInFirstMillion])
@@ -56,8 +57,8 @@ def fTable(s):
     '''
     def go(xShow, fxShow, f, xs):
         ys = [xShow(x) for x in xs]
-        return s + '\n' + '\n'.join(map(
-            lambda x, y: y + ':\n' + fxShow(f(x)),
+        return s + '\\n' + '\\n'.join(map(
+            lambda x, y: y + ':\\n' + fxShow(f(x)),
             xs, ys
         ))
     return lambda xShow: lambda fxShow: lambda f: lambda xs: go(
@@ -93,3 +94,4 @@ def take(n):
 if __name__ == '__main__':
     main()
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Weird_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Weird_numbers#Python
 
 '''Weird numbers'''
  
@@ -66,14 +67,14 @@ def main(n):
     xs = take(n)(weirds())
  
     print(
-        (tabulated('First ' + str(n) + ' weird numbers:\n')(
+        (tabulated('First ' + str(n) + ' weird numbers:\\n')(
             lambda i: str(1 + i)
         )(str)(5)(
             index(xs)
         )(range(0, n)))
     )
     print(
-        '\nApprox computation time: ' +
+        '\\nApprox computation time: ' +
         str(int(1000 * (time() - start))) + ' ms'
     )
  
@@ -183,7 +184,7 @@ def tabulated(s):
           number of columns -> f -> value list -> tabular string.'''
     def go(xShow, fxShow, intCols, f, xs):
         w = max(map(compose(len)(xShow), xs))
-        return s + '\n' + showColumns(intCols)([
+        return s + '\\n' + showColumns(intCols)([
             xShow(x).rjust(w, ' ') + ' -> ' + fxShow(f(x)) for x in xs
         ])
     return lambda xShow: lambda fxShow: lambda nCols: (
@@ -223,7 +224,7 @@ def transpose(m):
 def unlines(xs):
     '''A single string derived by the intercalation
        of a list of strings with the newline character.'''
-    return '\n'.join(xs)
+    return '\\n'.join(xs)
  
  
 # until :: (a -> Bool) -> (a -> a) -> a -> a
@@ -240,8 +241,9 @@ def until(p):
 def print(*args, **kwargs):
     pass
 
-n = 500
+n = {n}
 # MAIN ----------------------------------------------------
 if __name__ == '__main__':
     main(n)
 
+"""

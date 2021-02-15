@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Palindrome_dates#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Palindrome_dates#Python
 
 '''Palindrome dates'''
  
@@ -23,7 +24,7 @@ def palinDay(y):
 def print(*args, **kwargs):
     pass
 
-n = 800000
+n = {n}
 # --------------------------TEST---------------------------
 # main :: IO ()
 def main():
@@ -35,10 +36,10 @@ def main():
     for x in [
             'Count of palindromic dates [2021..9999]:',
             len(palinDates),
-            '\nFirst 15:',
-            '\n'.join(palinDates[0:15]),
-            '\nLast 15:',
-            '\n'.join(palinDates[-15:])
+            '\\nFirst 15:',
+            '\\n'.join(palinDates[0:15]),
+            '\\nLast 15:',
+            '\\n'.join(palinDates[-15:])
     ]:
         print(x)
  
@@ -47,3 +48,4 @@ def main():
 if __name__ == '__main__':
     main()
 
+"""

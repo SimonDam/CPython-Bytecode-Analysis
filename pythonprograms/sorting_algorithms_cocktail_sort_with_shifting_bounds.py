@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Cocktail_sort_with_shifting_bounds#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Cocktail_sort_with_shifting_bounds#Python
 
 '''
  
@@ -39,7 +40,7 @@ random.seed(6926928735872369856)
 def print(*args, **kwargs):
     pass
 
-n = 7000
+n = {n}
 test1 = [random.randint(1, n) for _ in range(n)]
 cocktailshiftingbounds(test1)
 print(test1)
@@ -49,3 +50,4 @@ cocktailshiftingbounds(test2)
 print(''.join(test2))
  
 
+"""

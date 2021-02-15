@@ -1,11 +1,12 @@
-# Taken from: https://www.rosettacode.org/wiki/Eertree#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Eertree#Python
 
 #!/bin/python
 from __future__ import print_function
  
 class Node(object):
     def __init__(self):
-        self.edges = {} # edges (or forward links)
+        self.edges = {{}} # edges (or forward links)
         self.link = None # suffix link (backward links)
         self.len = 0 # the length of the node
  
@@ -97,7 +98,7 @@ def print(*args, **kwargs):
 import string
 import random
 random.seed(21567936858973456873658973465)
-n = 2000000
+n = {n}
 if __name__=="__main__":
     st = "eertree"
     print ("Processing string", st)
@@ -123,3 +124,4 @@ if __name__=="__main__":
     eertree.get_sub_palindromes(eertree.rte, [eertree.rte], [], result) #Even length 
 
 
+"""

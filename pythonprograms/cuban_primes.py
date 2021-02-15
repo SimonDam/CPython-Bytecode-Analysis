@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Cuban_primes#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Cuban_primes#Python
 
 import datetime
 import math
@@ -6,7 +7,7 @@ import math
 def print(*args, **kwargs):
     pass
 
-n = 30000
+n = {n}
 
 primes = [ 3, 5 ]
  
@@ -17,7 +18,7 @@ chunks = 50
 little = bigUn / chunks
  
 tn = " cuban prime"
-print ("The first {:,}{}s:".format(cutOff, tn))
+print ("The first {{:,}}{{}}s:".format(cutOff, tn))
  
 c = 0
 showEach = True
@@ -57,19 +58,20 @@ for i in range(1, n):
 					primes.append(z)
  
 			primes.append(v)
-			print("{:>11,}".format(v), end='')
+			print("{{:>11,}}".format(v), end='')
  
 			if (c % 10 == 0):
 				print("");
 			if (c == cutOff):
 				showEach = False
-				print ("Progress to the {:,}th {}:".format(bigUn, tn), end='')
+				print ("Progress to the {{:,}}th {{}}:".format(bigUn, tn), end='')
 		if (c % little == 0):
 			print('.', end='')
 		if (c == bigUn):
 			break
  
 print("");
-print ("The {:,}th{} is {:,}".format(c, tn, v))
-print("Computation time was {} seconds".format((datetime.datetime.now() - st).seconds))
+print ("The {{:,}}th{{}} is {{:,}}".format(c, tn, v))
+print("Computation time was {{}} seconds".format((datetime.datetime.now() - st).seconds))
 
+"""

@@ -1,9 +1,10 @@
-# Taken from: https://www.rosettacode.org/wiki/Probabilistic_choice#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Probabilistic_choice#Python
 
 import random, bisect
  
 def probchoice(items, probs):
-  '''\
+  '''\\
   Splits the interval 0.0-1.0 in proportion to probs
   then finds where each random.random() choice lies
   '''
@@ -19,7 +20,7 @@ def probchoice(items, probs):
     yield items[bisect.bisect(accumulator, r)]
  
 def probchoice2(items, probs, bincount=10000):
-  '''\
+  '''\\
   Puts items in bins in proportion to probs
   then uses random.choice() to select items.
  
@@ -39,7 +40,7 @@ def tester(func=probchoice, items='good bad ugly'.split(),
                     trials = 100000
                     ):
   def problist2string(probs):
-    '''\
+    '''\\
     Turns a list of probabilities into a string
     Also rounds FP values
     '''
@@ -51,7 +52,7 @@ def tester(func=probchoice, items='good bad ugly'.split(),
   it = func(items, probs)
   for dummy in range(trials):
     counter[it.__next__()] += 1
-  print("\n##\n## %s\n##" % func.__name__.upper()  )
+  print("\\n##\\n## %s\\n##" % func.__name__.upper()  )
   print("Trials:              ", trials)
   print("Items:               ", ' '.join(items))
   print("Target probability:  ", problist2string(probs))
@@ -62,7 +63,7 @@ def print(*args, **kwargs):
     pass
 
 random.seed(93847502347580923470589324876)
-n = 3000000
+n = {n}
 
 if __name__ == '__main__':
   items = 'aleph beth gimel daleth he waw zayin heth'.split()
@@ -71,3 +72,4 @@ if __name__ == '__main__':
   tester(probchoice, items, probs, n)
   tester(probchoice2, items, probs, n)
 
+"""

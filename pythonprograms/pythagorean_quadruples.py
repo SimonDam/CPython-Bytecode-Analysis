@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Pythagorean_quadruples#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Pythagorean_quadruples#Python
 
 def quad(top=2200):
     r = [False] * top
@@ -19,7 +20,8 @@ def quad(top=2200):
 def print(*args, **kwargs):
     pass
 
-n = 5000
+n = {n}
 if __name__ == '__main__':
-    print(f"Those values of d in 1..{n} that can't be represented: {quad(n)}")
+    print(f"Those values of d in 1..{{n}} that can't be represented: {{quad(n)}}")
 
+"""

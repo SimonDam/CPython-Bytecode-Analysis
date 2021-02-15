@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Kolakoski_sequence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Kolakoski_sequence#Python
 
 import itertools
  
@@ -30,13 +31,14 @@ def is_series_eq_its_rle(series):
 def print(*args, **kwargs):
     pass
 
-n = 20000000
+n = {n}
 if __name__ == '__main__':
     for start_items, length in [((1, 2), 20), ((2, 1), 20), 
                                 ((1, 3, 1, 2), 30), ((1, 3, 2, 1), n)]:
-        print(f'\n## {length} members of the series generated from {start_items} is:')
+        print(f'\\n## {{length}} members of the series generated from {{start_items}} is:')
         s = kolakoski(start_items, length)
-        print(f'  {s}')
+        print(f'  {{s}}')
         ans = 'YES' if is_series_eq_its_rle(s) else 'NO'
-        print(f'  Does it look like a Kolakoski sequence: {ans}')
+        print(f'  Does it look like a Kolakoski sequence: {{ans}}')
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Fusc_sequence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Fusc_sequence#Python
 
 from collections import deque
 from itertools import islice, count
@@ -29,15 +30,16 @@ def longest_fusc():
 def print(*args, **kwargs):
     pass
 
-n = 6
+n = {n}
  
  
 print('First 61:')
 print(list(islice(fusc(), 61)))
  
-print('\nLength records:')
+print('\\nLength records:')
 
 
 for i, f in islice(longest_fusc(), n):
-    print(f'fusc({i}) = {f}')
+    print(f'fusc({{i}}) = {{f}}')
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Chaocipher
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Chaocipher
 
 # Python3 implementation of Chaocipher 
 # left wheel = ciphertext wheel
@@ -11,7 +12,7 @@ random.seed(89734598234874589562)
 def print(*args, **kwargs):
     pass
 
-n = 750000
+n = {n}
 def main():
     # letters only! makealpha(key) helps generate lalpha/ralpha. 
     lalpha = "HXUCZVAMDSLKPEFJRIGTWOBNYQ"
@@ -21,7 +22,7 @@ def main():
     print("L:", lalpha)
     print("R:", ralpha)
     print("I:", msg)
-    print("O:", do_chao(msg, lalpha, ralpha, 1, 0), "\n")
+    print("O:", do_chao(msg, lalpha, ralpha, 1, 0), "\\n")
  
     do_chao(msg, lalpha, ralpha, 1, 1)
  
@@ -32,7 +33,7 @@ def do_chao(msg, lalpha, ralpha, en=1, show=0):
         print("="*54)        
         print(10*" " + "left:" + 21*" " + "right: ")
         print("="*54)        
-        print(lalpha, ralpha, "\n")
+        print(lalpha, ralpha, "\\n")
     for L in msg:
         if en:
             lalpha, ralpha = rotate_wheels(lalpha, ralpha, L)
@@ -85,3 +86,4 @@ def scramble_wheels(lalph, ralph):
  
 main()
 
+"""

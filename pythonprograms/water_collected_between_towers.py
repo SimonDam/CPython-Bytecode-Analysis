@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Water_collected_between_towers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Water_collected_between_towers#Python
 
 import random
 random.seed(87346598389573428956238)
@@ -20,7 +21,7 @@ def water_collected(tower):
 def print(*args, **kwargs):
     pass
 
-n = 1000
+n = {n}
 
 towers = [[1, 5, 3, 7, 2],
     [5, 3, 7, 2, 6, 4, 5, 9, 1, 2],
@@ -33,3 +34,4 @@ towers = [[1, 5, 3, 7, 2],
 [water_collected(tower) for tower in towers]
 
 
+"""

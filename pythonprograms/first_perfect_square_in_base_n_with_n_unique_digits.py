@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/First_perfect_square_in_base_n_with_n_unique_digits#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/First_perfect_square_in_base_n_with_n_unique_digits#Python
 
 '''Perfect squares using every digit in a given base.'''
  
@@ -47,7 +48,7 @@ def main(n):
  
     start = time()
  
-    print(main.__doc__ + ':\n\nBase      Root    Square')
+    print(main.__doc__ + ':\\n\\nBase      Root    Square')
     q = 0
     for b in enumFromTo(2)(n):
         if b == 13: continue
@@ -59,7 +60,7 @@ def main(n):
         )
  
     print(
-        '\nc. ' + str(ceil(time() - start)) + ' seconds.'
+        '\\nc. ' + str(ceil(time() - start)) + ' seconds.'
     )
  
  
@@ -94,7 +95,8 @@ def showIntAtBase(base):
 # MAIN ---
 def print(*args, **kwargs):
     pass
-n = 16
+n = {n}
 if __name__ == '__main__':
     main(n)
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Bubble_sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Bubble_sort#Python
 
 def bubble_sort(seq):
     '''Inefficiently sort the mutable sequence (list) in place.
@@ -15,7 +16,7 @@ def bubble_sort(seq):
                 changed = True
     return seq
 
-n = 7000
+n = {n}
 
 if __name__ == "__main__":
    '''Sample usage and simple test suite'''
@@ -30,3 +31,4 @@ if __name__ == "__main__":
    bubble_sort(testcase)
    assert testcase == testset  # we've unshuffled it back into a copy
 
+"""

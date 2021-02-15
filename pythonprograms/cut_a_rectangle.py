@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Cut_a_rectangle#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Cut_a_rectangle#Python
 
 def cut_it(h, w):
     dirs = ((1, 0), (-1, 0), (0, -1), (0, 1))
@@ -49,7 +50,7 @@ def cut_it(h, w):
 def print(*args, **kwargs):
     pass
 
-n = 10
+n = {n}
 def main():
     for w in range(1, n):
         for h in range(1, w + 1):
@@ -59,3 +60,4 @@ def main():
 
 main()
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Count_the_coins#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Count_the_coins#Python
 
 def count_changes(amount_cents, coins):
     n = len(coins)
@@ -24,7 +25,7 @@ def count_changes(amount_cents, coins):
 def print(*args, **kwargs):
     pass
 
-n = 1500000
+n = {n}
 def main():
     us_coins = [100, 50, 25, 10, 5, 1]
     eu_coins = [200, 100, 50, 20, 10, 5, 2, 1]
@@ -33,3 +34,4 @@ def main():
  
 main()
 
+"""

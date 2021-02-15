@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sequence:_smallest_number_greater_than_previous_term_with_exactly_n_divisors#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sequence:_smallest_number_greater_than_previous_term_with_exactly_n_divisors#Python
 
 def divisors(n):
     divs = [1]
@@ -29,10 +30,11 @@ def sequence(max_n=None):
 def print(*args, **kwargs):
     pass
 
-n = 22
+n = {n}
  
 if __name__ == '__main__':
     for item in enumerate(sequence(n)):
         print(item)
  
 
+"""

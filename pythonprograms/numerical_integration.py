@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Numerical_integration#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Numerical_integration#Python
 
 from fractions import Fraction
  
@@ -34,17 +35,17 @@ def integrate( f, a, b, steps, meth):
 def print(*args, **kwargs):
     pass
 
-n = 30000
+n = {n}
 
 # Tests
 for a, b, steps, func in ((0., 1., 100, cube), (1., 100., 1000, reciprocal)):
     for rule in (left_rect, mid_rect, right_rect, trapezium, simpson):
-        print('%s integrated using %s\n  from %r to %r (%i steps) = %r' %
+        print('%s integrated using %s\\n  from %r to %r (%i steps) = %r' %
               (func.__name__, rule.__name__, a, b, steps,
                integrate( func, a, b, steps, rule)))
     a, b = Fraction.from_float(a), Fraction.from_float(b)
     for rule in (left_rect, mid_rect, right_rect, trapezium, simpson):
-        print('%s integrated using %s\n  from %r to %r (%i steps and fractions) = %r' %
+        print('%s integrated using %s\\n  from %r to %r (%i steps and fractions) = %r' %
               (func.__name__, rule.__name__, a, b, steps,
                float(integrate( func, a, b, steps, rule))))
 
@@ -52,13 +53,14 @@ for a, b, steps, func in ((0., 1., 100, cube), (1., 100., 1000, reciprocal)):
 for a, b, steps, func in ((0., 5000., n, identity),
                           (0., 6000., n, identity)):
     for rule in (left_rect, mid_rect, right_rect, trapezium, simpson):
-        print('%s integrated using %s\n  from %r to %r (%i steps) = %r' %
+        print('%s integrated using %s\\n  from %r to %r (%i steps) = %r' %
               (func.__name__, rule.__name__, a, b, steps,
                integrate( func, a, b, steps, rule)))
     a, b = Fraction.from_float(a), Fraction.from_float(b)
     for rule in (left_rect, mid_rect, right_rect, trapezium, simpson):
-        print('%s integrated using %s\n  from %r to %r (%i steps and fractions) = %r' %
+        print('%s integrated using %s\\n  from %r to %r (%i steps and fractions) = %r' %
               (func.__name__, rule.__name__, a, b, steps,
                float(integrate( func, a, b, steps, rule))))
 
 
+"""

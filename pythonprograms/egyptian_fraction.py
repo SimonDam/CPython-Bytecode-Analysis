@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Egyptian_fractions#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Egyptian_fractions#Python
 
 from fractions import Fraction
 from math import ceil
@@ -25,7 +26,7 @@ def ef(fr):
 def print(*args, **kwargs):
     pass
 
-n = 400
+n = {n}
 if __name__ == '__main__':
     for fr in [Fr(43, 48), Fr(5, 121), Fr(2014, 59)]:
         print('%r ─► %s' % (fr, ' '.join(str(x) for x in ef(fr))))
@@ -42,3 +43,4 @@ if __name__ == '__main__':
     dstr = str(denommax[0])
     print('Denominator max is %r with %i digits %s...%s' % (denommax[1], len(dstr), dstr[:5], dstr[-5:]))
 
+"""

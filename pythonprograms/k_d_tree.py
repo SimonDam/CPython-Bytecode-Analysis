@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/K-d_tree#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/K-d_tree#Python
 
 from random import seed, random
 import time
@@ -106,7 +107,7 @@ def show_nearest(k, heading, kd, p):
     n = find_nearest(k, kd, p)
     print("Nearest neighbor:", n.nearest)
     print("Distance:        ", sqrt(n.dist_sqd))
-    print("Nodes visited:   ", n.nodes_visited, "\n")
+    print("Nodes visited:   ", n.nodes_visited, "\\n")
  
  
 def random_point(k):
@@ -121,7 +122,7 @@ def print(*args, **kwargs):
     pass
 
 
-n = 600000
+n = {n}
 if __name__ == "__main__":
     seed(65874326589732465872346586)
     P = lambda *coords: list(coords)
@@ -138,3 +139,4 @@ if __name__ == "__main__":
                          t1-t0, "s)"),
                  kd2, random_point(3))
 
+"""

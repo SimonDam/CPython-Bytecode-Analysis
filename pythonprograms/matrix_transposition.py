@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Matrix_transposition#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Matrix_transposition#Python
 
 # transpose :: Matrix a -> Matrix a
 def transpose(m):
@@ -16,7 +17,7 @@ def print(*args, **kwargs):
  
 import random
 random.seed(2139847839857)
-n = 2000
+n = {n}
 
 if __name__ == '__main__':
     # TRANSPOSING FOUR BASIC TYPES OF PYTHON MATRIX
@@ -40,7 +41,7 @@ if __name__ == '__main__':
 
     emptyList = []
  
-    print('transpose function :: (Transposition without type change):\n')
+    print('transpose function :: (Transposition without type change):\\n')
     for m in [emptyTuple, tts, tls, emptyList, lls, lts, lst]:
         tm = transpose(m)
         print (
@@ -49,3 +50,4 @@ if __name__ == '__main__':
             ) + ' :: ' + str(m) + ' -> ' + str(tm)
         )
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Mian-Chowla_sequence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Mian-Chowla_sequence#Python
 
 from itertools import count, islice, chain
 import time
@@ -27,11 +28,12 @@ def pretty(p, t, s, f):
 def print(*args, **kwargs):
     pass
 
-n = 500
+n = {n}
 if __name__ == '__main__':
     st = time.time()
-    ts = "of the Mian-Chowla sequence are:\n"
+    ts = "of the Mian-Chowla sequence are:\\n"
     pretty("The first 30 terms", ts, 0, 30)
-    pretty("\nTerms 91 to 100", ts, 90, n)
-    print("\nComputation time was", (time.time()-st) * 1000, "ms")
+    pretty("\\nTerms 91 to 100", ts, 90, n)
+    print("\\nComputation time was", (time.time()-st) * 1000, "ms")
 
+"""

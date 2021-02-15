@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Selection_sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Selection_sort#Python
 
 def selection_sort(lst):
     for i, e in enumerate(lst):
@@ -6,7 +7,7 @@ def selection_sort(lst):
         lst[i], lst[mn] = lst[mn], e
     return lst
 
-n = 15000
+n = {n}
 
 import random
 random.seed(5865643479864567986988576896978756)
@@ -14,3 +15,4 @@ random.seed(5865643479864567986988576896978756)
 a = [random.randint(1, n) for _ in range(n)]
 a = selection_sort(a)
 
+"""

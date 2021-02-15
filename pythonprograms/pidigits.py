@@ -1,4 +1,5 @@
-# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/pidigits-python3-4.html
+def source_code(n):	
+    return f"""# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/pidigits-python3-4.html
 
 # The Computer Language Benchmarks Game
 # https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
@@ -64,12 +65,13 @@ def main(n):
         print(chr(48+d), end="")
         i+=1
         if i%10==0:
-            print("\t:%d" % (i))
+            print("\\t:%d" % (i))
         eliminate_Digit(d)
 
 def print(*args, **kwargs):
     pass
 
-n = 10000
+n = {n}
 main(n)
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Huffman_coding#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Huffman_coding#Python
 
 from heapq import heappush, heappop, heapify
 from collections import defaultdict
@@ -24,7 +25,7 @@ random.seed(983475897345893475)
 def print(*args, **kwargs):
     pass
 
-n = 10000000
+n = {n}
 txt = [random.choice(string.ascii_letters) for _ in range(n)]
 symb2freq = defaultdict(int)
 for ch in txt:
@@ -32,7 +33,8 @@ for ch in txt:
 # in Python 3.1+:
 # symb2freq = collections.Counter(txt)
 huff = encode(symb2freq)
-print( "Symbol\tWeight\tHuffman Code")
+print( "Symbol\\tWeight\\tHuffman Code")
 for p in huff:
-    print( "%s\t%s\t%s" % (p[0], symb2freq[p[0]], p[1]))
+    print( "%s\\t%s\\t%s" % (p[0], symb2freq[p[0]], p[1]))
 
+"""

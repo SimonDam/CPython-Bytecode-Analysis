@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Magic_squares_of_singly_even_order#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Magic_squares_of_singly_even_order#Python
 
 import math
 from sys import stdout
@@ -73,13 +74,13 @@ def format_sqr(s, l):
  
 def display(q):
     s = q[1]
-    print(" - {0} x {1}\n".format(s, s))
+    print(" - {{0}} x {{1}}\\n".format(s, s))
     k = 1 + math.floor(math.log(s * s) / LOG_10)
     for j in range(0, s):
         for i in range(0, s):
-            stdout.write(format_sqr("{0}".format(q[0][i][j]), k))
+            stdout.write(format_sqr("{{0}}".format(q[0][i][j]), k))
         print()
-    print("Magic sum: {0}\n".format(s * ((s * s) + 1) // 2))
+    print("Magic sum: {{0}}\\n".format(s * ((s * s) + 1) // 2))
 
 def print(*args, **kwargs):
     pass
@@ -87,7 +88,8 @@ stdout.write = print
  
 stdout.write("Singly Even Magic Square")
 
-n = 2000
+n = {n}
 display(build_sems(n))
  
 
+"""

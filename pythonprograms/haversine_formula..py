@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Haversine_formula#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Haversine_formula#Python
 
 from math import radians, sin, cos, sqrt, asin
  
@@ -19,8 +20,9 @@ def haversine(lat1, lon1, lat2, lon2):
 import random
 random.seed(2938746787236587687345)
 
-n = 1000000
+n = {n}
 for _ in range(n):
     haversine(random.randint(1,1000000)+random.random(), random.randint(1,1000000)+random.random(), random.randint(1,1000000)+random.random(), random.randint(1,1000000)+random.random())
     
 
+"""

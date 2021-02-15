@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Hickerson_series_of_almost_integers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Hickerson_series_of_almost_integers#Python
 
 from decimal import Decimal
 import math
@@ -14,7 +15,7 @@ def h2(n):
 def print(*args, **kwargs):
     pass
 
-n = 1500
+n = {n}
 
 for i in range(n):
     x = h2(i)
@@ -24,3 +25,4 @@ for i in range(n):
                      else ' NOT nearly integer!')
     print('n:%2i h:%s%s' % (i, norm, almostinteger))
 
+"""

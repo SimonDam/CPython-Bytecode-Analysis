@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Determine_if_a_string_has_all_the_same_characters#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Determine_if_a_string_has_all_the_same_characters#Python
 
 '''Determine if a string has all the same characters'''
  
@@ -18,12 +19,12 @@ def firstDifferingCharLR(s):
     '''
     def details(xs):
         c = xs[1][0]
-        return {
+        return {{
             'char': repr(c),
             'hex': hex(ord(c)),
             'index': s.index(c),
             'total': len(s)
-        }
+        }}
     xs = list(groupby(s))
     return Right(details(xs)) if 1 < len(xs) else (
         Left('Total length ' + str(len(s)) + ' - No character changes.')
@@ -32,12 +33,12 @@ def firstDifferingCharLR(s):
  
 # TEST ----------------------------------------------------
 # main :: IO ()
-n = 4500000
+n = {n}
 
 def main():
     '''Test of 7 strings'''
  
-    print(fTable('First, if any, points of difference:\n')(repr)(
+    print(fTable('First, if any, points of difference:\\n')(repr)(
         either(identity)(
             lambda dct: dct['char'] + ' (' + dct['hex'] +
             ') at character ' + str(1 + dct['index']) +
@@ -82,7 +83,7 @@ def fTable(s):
     def go(xShow, fxShow, f, xs):
         ys = [xShow(x) for x in xs]
         w = max(map(len, ys))
-        return s + '\n' + '\n'.join(map(
+        return s + '\\n' + '\\n'.join(map(
             lambda x, y: y.rjust(w, ' ') + ' -> ' + fxShow(f(x)),
             xs, ys
         ))
@@ -96,16 +97,17 @@ def Left(x):
     '''Constructor for an empty Either (option type) value
        with an associated string.
     '''
-    return {'type': 'Either', 'Right': None, 'Left': x}
+    return {{'type': 'Either', 'Right': None, 'Left': x}}
  
  
 # Right :: b -> Either a b
 def Right(x):
     '''Constructor for a populated Either (option type) value'''
-    return {'type': 'Either', 'Left': None, 'Right': x}
+    return {{'type': 'Either', 'Left': None, 'Right': x}}
  
  
 # MAIN ---
 if __name__ == '__main__':
     main()
 
+"""

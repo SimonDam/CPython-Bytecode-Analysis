@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Roots_of_unity#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Roots_of_unity#Python
 
 import cmath
 
@@ -30,8 +31,9 @@ def croots(n):
 def print(*args, **kwargs):
     pass
 
-n = 5000
+n = {n}
  
 for nr in range(2, n):
     print(nr, list(croots(nr)))
 
+"""

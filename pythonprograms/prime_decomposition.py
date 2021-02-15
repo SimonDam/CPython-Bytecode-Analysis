@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Prime_decomposition#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Prime_decomposition#Python
 
 from __future__ import print_function
  
@@ -39,7 +40,7 @@ def croft():
     # dict ``roots`` stores an entry x:p for every prime p.
     for p in (2, 3, 5):
         yield p
-    roots = {9: 3, 25: 5}  # Map d**2 -> d.
+    roots = {{9: 3, 25: 5}}  # Map d**2 -> d.
     primeroots = frozenset((1, 7, 11, 13, 17, 19, 23, 29))
     selectors = (1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0)
     for q in compress(
@@ -74,7 +75,7 @@ def decompose(n):
 def print(*args, **kwargs):
     pass
 
-n = 59
+n = {n}
 if __name__ == '__main__':
     # Example: calculate factors of Mersenne numbers to M59 #
  
@@ -82,13 +83,14 @@ if __name__ == '__main__':
  
     for m in primes():
         p = 2 ** m - 1
-        print( "2**{0:d}-1 = {1:d}, with factors:".format(m, p) )
+        print( "2**{{0:d}}-1 = {{1:d}}, with factors:".format(m, p) )
         start = time.time()
         for factor in decompose(p):
             print(factor, end=' ')
             sys.stdout.flush()
  
-        print( "=> {0:.2f}s".format( time.time()-start ) )
+        print( "=> {{0:.2f}}s".format( time.time()-start ) )
         if m >= n:
             break
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Wireworld#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Wireworld#Python
 
 '''
 Wireworld implementation.
@@ -13,23 +14,23 @@ WW = namedtuple('WW', 'world, w, h')
 head, tail, conductor, empty = allstates = 'Ht. '
  
  
-infile = StringIO('''\
+infile = StringIO('''\\
 tH.........
 .   .
    ...
 .   .
-Ht.. ......\
+Ht.. ......\\
 ''')
  
 def readfile(f):
     '''file > initial world configuration'''
-    world  = [row.rstrip('\r\n') for row in f]
+    world  = [row.rstrip('\\r\\n') for row in f]
     height = len(world)
     width  = max(len(row) for row in world)
     # fill right and frame in empty cells
     nonrow = [ " %*s " % (-width, "") ]
-    world  = nonrow + \
-               [ " %*s " % (-width, row) for row in world ] + \
+    world  = nonrow + \\
+               [ " %*s " % (-width, row) for row in world ] + \\
                nonrow   
     world = [list(row) for row in world]
     return WW(world, width, height)
@@ -61,7 +62,7 @@ def nextgen(ww):
     return WW(newworld, width, height)
  
 def world2string(ww):
-    return '\n'.join( ''.join(row[1:-1]).rstrip() for row in ww.world[1:-1] )
+    return '\\n'.join( ''.join(row[1:-1]).rstrip() for row in ww.world[1:-1] )
  
 ww = readfile(infile)
 infile.close()
@@ -69,10 +70,11 @@ infile.close()
 def print(*args, **kwargs):
     pass
 
-n = 30000
+n = {n}
 
 for gen in range(n):
-    print ( ("\n%3i " % gen) + '=' * (ww.w-4) + '\n' )
+    print ( ("\\n%3i " % gen) + '=' * (ww.w-4) + '\\n' )
     print ( world2string(ww) )
     ww = nextgen(ww)
 
+"""

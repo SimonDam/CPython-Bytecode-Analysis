@@ -1,11 +1,12 @@
-# Taken from: https://www.rosettacode.org/wiki/Chinese_zodiac#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Chinese_zodiac#Python
 
 # coding: utf-8
  
 from __future__ import print_function
 from datetime import datetime
  
-pinyin = {
+pinyin = {{
   '甲': 'jiă',
   '乙': 'yĭ',
   '丙': 'bĭng',
@@ -29,7 +30,7 @@ pinyin = {
   '酉': 'yŏu',
   '戌': 'xū',
   '亥': 'hài'
-}
+}}
  
 animals = ['Rat', 'Ox', 'Tiger', 'Rabbit', 'Dragon', 'Snake',
            'Horse', 'Goat', 'Monkey', 'Rooster', 'Dog', 'Pig']
@@ -56,7 +57,7 @@ def calculate(year):
     aspect_number = cycle_year % 2
     aspect = aspects[aspect_number]
     index = cycle_year % 60 + 1
-    print("{}: {}{} ({}-{}, {} {}; {} - year {} of the cycle)"
+    print("{{}}: {{}}{{}} ({{}}-{{}}, {{}} {{}}; {{}} - year {{}} of the cycle)"
           .format(year, stem_han, branch_han,
                   stem_pinyin, branch_pinyin, element, animal, aspect, index))
  
@@ -64,8 +65,9 @@ def print(*args, **kwargs):
     pass
 
 current_year = datetime.now().year
-n = 3500000
+n = {n}
 years = list(range(n)) + [current_year]
 for year in years:
     calculate(year)
 
+"""

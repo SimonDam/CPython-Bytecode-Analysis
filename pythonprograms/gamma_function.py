@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Gamma_function#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Gamma_function#Python
 
 _a = ( 1.00000000000000000000, 0.57721566490153286061, -0.65587807152025388108,
       -0.04200263503409523553, 0.16653861138229148950, -0.04219773455554433675,
@@ -21,8 +22,9 @@ def gamma (x):
 def print(*args, **kwargs):
    pass
 
-n = 1000000
+n = {n}
 if __name__ == '__main__':
     for i in range(1,n):
        print("  %20.14e" % gamma(i/3.0))
 
+"""

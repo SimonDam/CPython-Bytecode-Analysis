@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/K-means%2B%2B_clustering#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/K-means%2B%2B_clustering#Python
 
 from math import pi, sin, cos
 from collections import namedtuple
@@ -142,13 +143,13 @@ def print_eps(points, cluster_centers, W=400, H=400):
     cx = (max_x + min_x) / 2
     cy = (max_y + min_y) / 2
  
-    print( "%%!PS-Adobe-3.0\n%%%%BoundingBox: -5 -5 %d %d" % (W + 10, H + 10))
+    print( "%%!PS-Adobe-3.0\\n%%%%BoundingBox: -5 -5 %d %d" % (W + 10, H + 10))
  
-    print( ("/l {rlineto} def /m {rmoveto} def\n" +
-           "/c { .25 sub exch .25 sub exch .5 0 360 arc fill } def\n" +
-           "/s { moveto -2 0 m 2 2 l 2 -2 l -2 -2 l closepath " +
+    print( ("/l {{rlineto}} def /m {{rmoveto}} def\\n" +
+           "/c {{ .25 sub exch .25 sub exch .5 0 360 arc fill }} def\\n" +
+           "/s {{ moveto -2 0 m 2 2 l 2 -2 l -2 -2 l closepath " +
            "   gsave 1 setgray fill grestore gsave 3 setlinewidth" +
-           " 1 setgray stroke grestore 0 setgray stroke }def"))
+           " 1 setgray stroke grestore 0 setgray stroke }}def"))
  
     for i, cc in enumerate(cluster_centers):
         print( ("%g %g %g setrgbcolor" %
@@ -160,15 +161,15 @@ def print_eps(points, cluster_centers, W=400, H=400):
             print( ("%.3f %.3f c" % ((p.x - cx) * scale + W / 2,
                                     (p.y - cy) * scale + H / 2)))
  
-        print( ("\n0 setgray %g %g s" % ((cc.x - cx) * scale + W / 2,
+        print( ("\\n0 setgray %g %g s" % ((cc.x - cx) * scale + W / 2,
                                         (cc.y - cy) * scale + H / 2)))
  
-    print( "\n%%%%EOF")
+    print( "\\n%%%%EOF")
  
 def print(*args, **kwargs):
     pass
 
-n = 30000
+n = {n}
 def main():
     k = 10 # # clusters
  
@@ -179,3 +180,4 @@ def main():
  
 main()
 
+"""

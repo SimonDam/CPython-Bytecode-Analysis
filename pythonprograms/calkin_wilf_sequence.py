@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Calkin-Wilf_sequence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Calkin-Wilf_sequence#Python
 
 from fractions import Fraction
 from math import floor
@@ -29,9 +30,10 @@ def get_term_num(rational):
 def print(*args, **kwargs):
     pass
 
-n = 750000
+n = {n}
 if __name__ == '__main__':
     print('TERMS 1..20: ', ', '.join(str(x) for x in islice(cw(), n)))
     x = Fraction(83116, 51639)
-    print(f"\n{x} is the {get_term_num(x):_}'th term.")
+    print(f"\\n{{x}} is the {{get_term_num(x):_}}'th term.")
 
+"""

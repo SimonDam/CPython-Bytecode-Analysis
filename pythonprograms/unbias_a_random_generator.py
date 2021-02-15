@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Unbias_a_random_generator#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Unbias_a_random_generator#Python
 
 from __future__ import print_function
 import random
@@ -18,7 +19,7 @@ def print(*args, **kwargs):
     pass
 
 random.seed(638752689734569823765892304756)
-n = 300000
+n = {n}
 
 if __name__ == '__main__':
     from collections import namedtuple
@@ -35,3 +36,4 @@ if __name__ == '__main__':
         v1, v0 = v.count(1), v.count(0)
         print ( "  Unbiased = %r" % (Stats(v1, v0, 100. * v1/(v1 + v0)), ) )
 
+"""

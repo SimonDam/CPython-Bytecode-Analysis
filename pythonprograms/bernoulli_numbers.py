@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Bernoulli_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Bernoulli_numbers#Python
 
 from fractions import Fraction as Fr
  
@@ -12,10 +13,11 @@ def bernoulli(n):
  
 def print(*args, **kwargs):
     pass
-n = 150
+n = {n}
 bn = [(i, bernoulli(i)) for i in range(n)]
 bn = [(i, b) for i,b in bn if b]
 width = max(len(str(b.numerator)) for i,b in bn)
 for i,b in bn:
     print('B(%2i) = %*i/%i' % (i, width, b.numerator, b.denominator))
 
+"""

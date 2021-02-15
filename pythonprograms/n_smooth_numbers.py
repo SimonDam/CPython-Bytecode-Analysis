@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/N-smooth_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/N-smooth_numbers#Python
 
 primes = [2, 3, 5, 7, 11, 13, 17, 19, 23]
  
@@ -61,7 +62,7 @@ def nsmooth(n, size):
 def print(*args, **kwargs):
     pass
 
-n = 100000
+n = {n}
 
 def main():
     init()
@@ -85,3 +86,4 @@ def main():
         print( )
 main()
 
+"""

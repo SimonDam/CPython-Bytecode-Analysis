@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Binary_digits#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Binary_digits#Python
 '''Decomposition of an integer to a string of booleans.'''
  
  
@@ -26,7 +27,7 @@ def stringFromBools(xs):
 def print(*args, **kwargs):
     pass
 
-n = 150000
+n = {n}
 def main():
     '''Test'''
     import random
@@ -41,7 +42,7 @@ def main():
  
     print(
         tabulated(
-            '\n\nTabulating a string display from binary data:'
+            '\\n\\nTabulating a string display from binary data:'
         )(str)(stringFromBools)(
             boolsFromInt
         )(x)
@@ -53,13 +54,13 @@ def main():
 # Just :: a -> Maybe a
 def Just(x):
     '''Constructor for an inhabited Maybe (option type) value.'''
-    return {'type': 'Maybe', 'Nothing': False, 'Just': x}
+    return {{'type': 'Maybe', 'Nothing': False, 'Just': x}}
  
  
 # Nothing :: Maybe a
 def Nothing():
     '''Constructor for an empty Maybe (option type) value.'''
-    return {'type': 'Maybe', 'Nothing': True}
+    return {{'type': 'Maybe', 'Nothing': True}}
  
  
 # compose (<<<) :: (b -> c) -> (a -> b) -> a -> c
@@ -82,7 +83,7 @@ def tabulated(s):
                 f -> value list -> tabular string.'''
     def go(xShow, fxShow, f, xs):
         w = max(map(compose(len)(xShow), xs))
-        return s + '\n' + '\n'.join(
+        return s + '\\n' + '\\n'.join(
             xShow(x).rjust(w, ' ') + ' -> ' + fxShow(f(x)) for x in xs
         )
     return lambda xShow: lambda fxShow: lambda f: lambda xs: go(
@@ -119,10 +120,11 @@ def unfoldl(f):
 def unlines(xs):
     '''A single string derived by the intercalation
        of a list of strings with the newline character.'''
-    return '\n'.join(xs)
+    return '\\n'.join(xs)
  
  
 # MAIN -------------------------------------------------
 if __name__ == '__main__':
     main()
 
+"""

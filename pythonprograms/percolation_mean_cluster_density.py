@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Percolation/Mean_cluster_density#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Percolation/Mean_cluster_density#Python
 
 from __future__ import division
 from random import random, seed
@@ -8,7 +9,7 @@ from math import fsum
 def print(*args, **kwargs):
     pass
 seed(152694657)
-n = 250
+n = {n}
 
 n_range, p, t = (n2 for n2 in range(4, n, 2)), 0.5, 5
 N = M = 15
@@ -58,7 +59,7 @@ def walk_maze(m, n, cell, indx):
  
 if __name__ == '__main__':
     cell = newgrid(n=N, p=0.5)
-    print('Found %i clusters in this %i by %i grid\n' 
+    print('Found %i clusters in this %i by %i grid\\n' 
           % (clustercount(cell), N, N))
     pgrid(cell)
     print('')
@@ -69,3 +70,4 @@ if __name__ == '__main__':
         print('t=%3i p=%4.2f n=%5i sim=%7.5f'
               % (t, p, n, sim))
 
+"""

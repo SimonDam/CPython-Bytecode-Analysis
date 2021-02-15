@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Koch_curve#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Koch_curve#Python
 
 '''Koch curve'''
  
@@ -124,10 +125,10 @@ def svgFromPoints(w):
             lambda xy: str(round(xy[0], 2)) + ' ' + str(round(xy[1], 2)),
             xys
         ))
-        return '\n'.join([
+        return '\\n'.join([
             '<svg xmlns="http://www.w3.org/2000/svg"',
-            f'width="512" height="512" viewBox="5 5 {w} {w}">',
-            f'<path d="M{xs}" ',
+            f'width="512" height="512" viewBox="5 5 {{w}} {{w}}">',
+            f'<path d="M{{xs}}" ',
             'stroke-width="2" stroke="red" fill="transparent"/>',
             '</svg>'
         ])
@@ -137,7 +138,8 @@ def print(*args, **kwargs):
     pass
 
 # MAIN ---
-n = 10
+n = {n}
 if __name__ == '__main__':
     main(n)
 
+"""

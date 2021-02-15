@@ -1,16 +1,17 @@
-# Taken from: https://www.rosettacode.org/wiki/Conway%27s_Game_of_Life#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Conway%27s_Game_of_Life#Python
 
 import random
 from collections import defaultdict
-n = 650
+n = {n}
 printdead, printlive = '-#'
 maxgenerations = 3
 cellcount = n,n
-celltable = defaultdict(int, {
+celltable = defaultdict(int, {{
  (1, 2): 1,
  (1, 3): 1,
  (0, 3): 1,
- } ) # Only need to populate with the keys leading to life
+ }} ) # Only need to populate with the keys leading to life
  
 ##
 ## Start States
@@ -43,7 +44,7 @@ universe = defaultdict(int,
                        ) )  # returns 0 for out of bounds
  
 for i in range(maxgenerations):
-    print("\nGeneration %3i:" % ( i, ))
+    print("\\nGeneration %3i:" % ( i, ))
     for row in range(cellcount[1]):
         print("  ", ''.join(str(universe[(row,col)])
                             for col in range(cellcount[0])).replace(
@@ -59,3 +60,4 @@ for i in range(maxgenerations):
                 ) ]
     universe = nextgeneration
 
+"""

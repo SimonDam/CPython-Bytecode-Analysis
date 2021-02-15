@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Dice_game_probabilities#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Dice_game_probabilities#Python
 
 from __future__ import division, print_function
 from itertools import accumulate # Python3 only
@@ -26,6 +27,7 @@ def winning(d1, n1, d2, n2):
 print(winning(4, 9, 6, 6))
 print(winning(5, 10, 6, 7))
 
-n = 1700
+n = {n}
 print(winning(6, n, 8, n))
 
+"""

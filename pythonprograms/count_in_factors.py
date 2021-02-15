@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Count_in_factors#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Count_in_factors#Python
 
 from functools import lru_cache
  
@@ -25,7 +26,7 @@ def pfactor(n):
 def print(*args, **kwargs):
     pass
 
-n = 80000
+n = {n}
 if __name__ == '__main__':
     for i in range(1, n + 1):
         factors = pfactor(i)
@@ -36,6 +37,7 @@ if __name__ == '__main__':
         if i == 11:
             print('...')
  
-    print('\nNumber of primes gathered up to', i, 'is', len(primes))
+    print('\\nNumber of primes gathered up to', i, 'is', len(primes))
     print(pfactor.cache_info())
 
+"""

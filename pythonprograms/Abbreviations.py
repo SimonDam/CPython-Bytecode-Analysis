@@ -1,8 +1,9 @@
-#Taken from: https://www.rosettacode.org/wiki/Abbreviations,_easy#Python
+def source_code(n):	
+    return f"""#Taken from: https://www.rosettacode.org/wiki/Abbreviations,_easy#Python
 def print(*args, **kwargs):
     pass
 
-n = 80000
+n = {n}
 
 command_table_text = '''Add ALTer  BAckup Bottom  CAppend Change SCHANGE  CInsert CLAst COMPress COpy
    COUnt COVerlay CURsor DELete CDelete Down DUPlicate Xedit EXPand EXTract Find
@@ -53,3 +54,4 @@ full_words = parse_user_string(user_words, abbreviations_table)
 print("user words:", user_words)
 print("full words:", full_words)
 
+"""

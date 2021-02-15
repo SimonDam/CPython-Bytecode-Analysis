@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Gnome_sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Gnome_sort#Python
 
 def gnomesort(a):
     i,j,size = 1,2,len(a)
@@ -15,8 +16,9 @@ def gnomesort(a):
 import random
 random.seed(5423863759875698767436)
 
-n = 7000
+n = {n}
 
 gnomesort([random.randint(1, n) for _ in range(n)])
 
 
+"""

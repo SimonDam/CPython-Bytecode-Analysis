@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Comb_sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Comb_sort#Python
 
 def combsort(input):
     gap = len(input)
@@ -15,8 +16,9 @@ def combsort(input):
 import random
 random.seed(32584848684307567894305)
 
-n = 700000
+n = {n}
 y = [random.randint(1, n) for _ in range(n)]
 combsort(y)
 assert y == sorted(y)
 
+"""

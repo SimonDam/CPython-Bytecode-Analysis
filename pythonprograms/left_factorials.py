@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Left_factorials#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Left_factorials#Python
 
 from itertools import islice
  
@@ -12,13 +13,14 @@ def lfact():
 def print(*args, **kwargs):
     pass
 
-n = 40000
+n = {n}
 
-print('first 11:\n  %r' % [lf for i, lf in zip(range(11), lfact())])
+print('first 11:\\n  %r' % [lf for i, lf in zip(range(11), lfact())])
 print('20 through 110 (inclusive) by tens:')
 for lf in islice(lfact(), 20, 111, 10):
     print(lf)
 
-print('Digits in 1,000 through 10,000 (inclusive) by thousands:\n  %r' 
+print('Digits in 1,000 through 10,000 (inclusive) by thousands:\\n  %r' 
       % [len(str(lf)) for lf in islice(lfact(), 1000, n, 1000)] )
 
+"""

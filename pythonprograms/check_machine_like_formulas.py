@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Check_Machin-like_formulas#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Check_Machin-like_formulas#Python
 
 import re
 from fractions import Fraction
@@ -7,9 +8,9 @@ from pprint import pprint as pp
 def print(*args, **kwargs):
     pass
 
-n = 500
+n = {n}
 
-equationtext = '''\
+equationtext = '''\\
   pi/4 = arctan(1/2) + arctan(1/3) 
   pi/4 = 2*arctan(1/3) + arctan(1/7)
   pi/4 = 4*arctan(1/5) - arctan(1/239)
@@ -31,11 +32,11 @@ equationtext = '''\
  
 def parse_eqn(equationtext=equationtext):
     eqn_re = re.compile(r'''(?mx)
-    (?P<lhs> ^ \s* pi/4 \s* = \s*)?             # LHS of equation
+    (?P<lhs> ^ \\s* pi/4 \\s* = \\s*)?             # LHS of equation
     (?:                                         # RHS
-        \s* (?P<sign> [+-])? \s* 
-        (?: (?P<mult> \d+) \s* \*)? 
-        \s* arctan\( (?P<numer> \d+) / (?P<denom> \d+)
+        \\s* (?P<sign> [+-])? \\s* 
+        (?: (?P<mult> \\d+) \\s* \\*)? 
+        \\s* arctan\\( (?P<numer> \\d+) / (?P<denom> \\d+)
     )''')
  
     found = eqn_re.findall(equationtext)
@@ -71,7 +72,8 @@ def tanEval(coef, f):
 if __name__ == '__main__':
     machins = parse_eqn()
     #pp(machins, width=160)
-    for machin, eqn in zip(machins, equationtext.split('\n')):
+    for machin, eqn in zip(machins, equationtext.split('\\n')):
         ans = tans(machin)
         print('%5s: %s' % ( ('OK' if ans == 1 else 'ERROR'), eqn))
 
+"""

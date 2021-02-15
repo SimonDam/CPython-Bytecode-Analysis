@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Quicksort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Quicksort#Python
 
 def quickSort(arr):
     less = []
@@ -19,7 +20,7 @@ def quickSort(arr):
         more = quickSort(more)
         return less + pivotList + more
 
-n = 1000000
+n = {n}
 
 import random
 random.seed(165234365)
@@ -27,3 +28,4 @@ random.seed(165234365)
 a = [random.randint(1, n) for _ in range(n)]
 a = quickSort(a)
 
+"""

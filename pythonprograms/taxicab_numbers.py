@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Taxicab_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Taxicab_numbers#Python
 
 from collections import defaultdict
 from itertools import product
@@ -9,10 +10,10 @@ def print(*args, **kwargs):
 
 pp = print
 
-n = 3000
+n = {n}
 
 
-cube2n = {x**3:x for x in range(1, n)}
+cube2n = {{x**3:x for x in range(1, n)}}
 sum2cubes = defaultdict(set)
 for c1, c2 in product(cube2n, cube2n):
 	if c1 >= c2: sum2cubes[c1 + c2].add((cube2n[c1], cube2n[c2]))
@@ -26,3 +27,4 @@ print('...')
 for t in enumerate(taxied[2000-1:2000+6], 2000):
     pp(t)
 
+"""

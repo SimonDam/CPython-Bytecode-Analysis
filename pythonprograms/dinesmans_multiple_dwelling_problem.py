@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Dinesman%27s_multiple-dwelling_problem#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Dinesman%27s_multiple-dwelling_problem#Python
 
 import re
 from itertools import product
@@ -9,31 +10,31 @@ def print(*args, **kwargs):
 problem_re = re.compile(r'''(?msx)(?:
  
 # Multiple names of form n1, n2, n3, ... , and nK
-(?P<namelist> [a-zA-Z]+ (?: , \s+ [a-zA-Z]+)* (?: ,? \s+ and) \s+ [a-zA-Z]+ )
+(?P<namelist> [a-zA-Z]+ (?: , \\s+ [a-zA-Z]+)* (?: ,? \\s+ and) \\s+ [a-zA-Z]+ )
  
 # Flexible floor count (2 to 10 floors)
-| (?:  .* house \s+ that \s+ contains \s+ only \s+
-  (?P<floorcount> two|three|four|five|six|seven|eight|nine|ten ) \s+ floors \s* \.)
+| (?:  .* house \\s+ that \\s+ contains \\s+ only \\s+
+  (?P<floorcount> two|three|four|five|six|seven|eight|nine|ten ) \\s+ floors \\s* \\.)
  
 # Constraint: "does not live on the n'th floor" 
-|(?: (?P<not_live>  \b [a-zA-Z]+ \s+ does \s+ not \s+ live \s+ on \s+ the \s+
-  (?: top|bottom|first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth) \s+ floor \s* \. ))
+|(?: (?P<not_live>  \\b [a-zA-Z]+ \\s+ does \\s+ not \\s+ live \\s+ on \\s+ the \\s+
+  (?: top|bottom|first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth) \\s+ floor \\s* \\. ))
  
 # Constraint: "does not live on either the I'th or the J'th [ or the K'th ...] floor
-|(?P<not_either> \b [a-zA-Z]+ \s+ does \s+ not \s+ live \s+ on \s+ either
-  (?: \s+ (?: or \s+)? the \s+       
-    (?: top|bottom|first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth))+ \s+ floor \s* \. )
+|(?P<not_either> \\b [a-zA-Z]+ \\s+ does \\s+ not \\s+ live \\s+ on \\s+ either
+  (?: \\s+ (?: or \\s+)? the \\s+       
+    (?: top|bottom|first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth))+ \\s+ floor \\s* \\. )
  
 # Constraint: "P1 lives on a higher/lower floor than P2 does"
-|(?P<hi_lower> \b  [a-zA-Z]+ \s+ lives \s+ on \s+ a \s (?: higher|lower)
-   \s+ floor \s+ than (?: \s+ does)  \s+  [a-zA-Z]+ \s* \. )
+|(?P<hi_lower> \\b  [a-zA-Z]+ \\s+ lives \\s+ on \\s+ a \\s (?: higher|lower)
+   \\s+ floor \\s+ than (?: \\s+ does)  \\s+  [a-zA-Z]+ \\s* \\. )
  
 # Constraint: "P1 does/does not live on a floor adjacent to P2's"
-|(?P<adjacency>  \b [a-zA-Z]+ \s+ does (?:\s+ not)? \s+ live \s+ on \s+ a \s+
-   floor \s+ adjacent \s+ to \s+  [a-zA-Z]+ (?: 's )? \s* \. )
+|(?P<adjacency>  \\b [a-zA-Z]+ \\s+ does (?:\\s+ not)? \\s+ live \\s+ on \\s+ a \\s+
+   floor \\s+ adjacent \\s+ to \\s+  [a-zA-Z]+ (?: 's )? \\s* \\. )
  
 # Ask for the solution
-|(?P<question> Where \s+ does \s+ everyone \s+ live \s* \?)
+|(?P<question> Where \\s+ does \\s+ everyone \\s+ live \\s* \\?)
  
 )
 ''')
@@ -111,12 +112,12 @@ else:
         for a2n in zip(a, names):
             output += ['  Floor %i is occupied by %s' % a2n]
         output.sort(reverse=True)
-        print('\n'.join(output))
+        print('\\n'.join(output))
     else:
         print('No solution found.')
     print()
  
-handler = {
+handler = {{
     'namelist': do_namelist,
     'floorcount': do_floorcount,
     'not_live': do_not_live,
@@ -124,15 +125,15 @@ handler = {
     'hi_lower': do_hi_lower,
     'adjacency': do_adjacency,
     'question': do_question,
-    }
+    }}
 def parse_and_solve(problem):
-    p = re.sub(r'\s+', ' ', problem).strip()
+    p = re.sub(r'\\s+', ' ', problem).strip()
     for x in problem_re.finditer(p):
         groupname, txt = [(k,v) for k,v in x.groupdict().items() if v][0]
         print ("%r, %r" % (groupname, txt))
         handler[groupname](txt)
 
-n = 2500
+n = {n}
 if __name__ == '__main__':  
     for _ in range(n):
         names, lennames = None, None
@@ -160,3 +161,4 @@ if __name__ == '__main__':
             adjacent to Fletcher's. Fletcher does not live on a floor
             adjacent to Cooper's. Where does everyone live?''')
 
+"""

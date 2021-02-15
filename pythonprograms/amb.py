@@ -1,9 +1,10 @@
-# Taken from: https://www.rosettacode.org/wiki/Amb#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Amb#Python
 import itertools as _itertools
  
 class Amb(object):
     def __init__(self):
-        self._names2values   = {}       # set of values for each global name
+        self._names2values   = {{}}       # set of values for each global name
         self._func           = None     # Boolean constraint function
         self._valueiterator  = None     # itertools.product of names values
         self._funcargnames   = None     # Constraint parameter names
@@ -18,7 +19,7 @@ class Amb(object):
             argv = arg.__code__.co_varnames[:arg.__code__.co_argcount]
             for name in argv:
                 if name not in self._names2values:
-                    assert name in globls, \
+                    assert name in globls, \\
                            "Global name %s not found in function globals" % name
                     self._names2values[name] = globls[name]
             # Gather the range of values of all names used in the constraint
@@ -64,13 +65,13 @@ class Amb(object):
 def print(*args, **kwargs):
     pass
 
-n = 2000
+n = {n}
 
 if __name__ == '__main__':
     if True:
         amb = Amb()
  
-        print("\nSmall Pythagorean triples problem:")
+        print("\\nSmall Pythagorean triples problem:")
         x = amb(range(1,11))
         y = amb(range(1,11))
         z = amb(range(1,11))
@@ -82,22 +83,22 @@ if __name__ == '__main__':
     if True:
         amb = Amb()
  
-        print("\nRosetta Code Amb problem:")
+        print("\\nRosetta Code Amb problem:")
         w1 = amb(["the", "that", "a"])
         w2 = amb(["frog", "elephant", "thing"])
         w3 = amb(["walked", "treaded", "grows"])
         w4 = amb(["slowly", "quickly"])
  
-        for _dummy in amb( lambda w1, w2, w3, w4: \
-                             w1[-1] == w2[0] and \
-                             w2[-1] == w3[0] and \
+        for _dummy in amb( lambda w1, w2, w3, w4: \\
+                             w1[-1] == w2[0] and \\
+                             w2[-1] == w3[0] and \\
                              w3[-1] == w4[0] ):
             print ('%s %s %s %s' % (w1, w2, w3, w4))
  
     if True:
         amb = Amb()
  
-        print("\nAmb problem from "
+        print("\\nAmb problem from "
             "http://www.randomhacks.net/articles/2005/10/11/amb-operator:")
         x = amb(list(range(n)))
         y = amb(list(range(n,n*2)))
@@ -105,3 +106,4 @@ if __name__ == '__main__':
         for _dummy in amb( lambda x, y: x * y != 8 ):
             print ('%s %s' % (x, y))
 
+"""

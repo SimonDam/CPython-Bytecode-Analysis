@@ -1,4 +1,5 @@
-# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/fannkuchredux-python3-6.html
+def source_code(n):	
+    return f"""# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/fannkuchredux-python3-6.html
 
 # The Computer Language Benchmarks Game
 # https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
@@ -57,7 +58,8 @@ from sys import argv
 def print(*args, **kwargs):
     pass
 
-n = 10
+n = {n}
 
 print(( "Pfannkuchen(%i) = %i" % (n, fannkuch(n)) ))
 
+"""

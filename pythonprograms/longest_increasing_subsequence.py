@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Longest_increasing_subsequence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Longest_increasing_subsequence#Python
 
 def longest_increasing_subsequence(X):
     '''Returns the Longest Increasing Subsequence in the Given List/Array'''
@@ -36,10 +37,11 @@ random.seed(983247539487)
 def print(*args, **kwargs):
     pass
 
-n = 1000000
+n = {n}
 if __name__ == '__main__':
     lst = [random.randint(0,n) for _ in range(n)]
     for d in [[3,2,6,4,5,1], [0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15],
               lst]:
         print('a L.I.S. of %s is %s' % (d, longest_increasing_subsequence(d)))
 
+"""

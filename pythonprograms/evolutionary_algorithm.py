@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Evolutionary_algorithm#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Evolutionary_algorithm#Python
 
 from random import choice, random, seed
 seed(13465865448683659745658387978578749)
@@ -6,7 +7,7 @@ seed(13465865448683659745658387978578749)
 def print(*args, **kwargs):
     pass
 
-n = 70
+n = {n}
 alphabet = " ABCDEFGHIJLKLMNOPQRSTUVWXYZ"
 target  = list(''.join(choice(alphabet) for _ in range(n)))
 
@@ -28,3 +29,4 @@ while parent != target:
     print("%3d" % i, "".join(parent))
     i += 1
 
+"""

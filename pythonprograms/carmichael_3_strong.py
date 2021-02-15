@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Carmichael_3_strong_pseudoprimes#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Carmichael_3_strong_pseudoprimes#Python
 
 class Isprime():
     '''
@@ -7,20 +8,20 @@ class Isprime():
     >>> isprime.check(11)
     True
     >>> isprime.multiples
-    {2, 4, 6, 8, 9, 10}
+    {{2, 4, 6, 8, 9, 10}}
     >>> isprime.primes
     [2, 3, 5, 7, 11]
     >>> isprime(13)
     True
     >>> isprime.multiples
-    {2, 4, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 18, 20, 21, 22}
+    {{2, 4, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 18, 20, 21, 22}}
     >>> isprime.primes
     [2, 3, 5, 7, 11, 13, 17, 19]
     >>> isprime.nmax
     22
     >>> 
     '''
-    multiples = {2}
+    multiples = {{2}}
     primes = [2]
     nmax = 2
  
@@ -71,7 +72,8 @@ def print(*args, **kwargs):
     pass
 
 isprime = Isprime(2)
-n = 280
+n = {n}
 ans = sorted(sum((carmichael(x) for x in range(n) if isprime(x)), []))
-print(',\n'.join(repr(ans[i:i+5])[1:-1] for i in range(0, len(ans)+1, 5)))
+print(',\\n'.join(repr(ans[i:i+5])[1:-1] for i in range(0, len(ans)+1, 5)))
 
+"""

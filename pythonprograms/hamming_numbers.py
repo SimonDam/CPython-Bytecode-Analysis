@@ -1,9 +1,10 @@
-# Taken from: https://www.rosettacode.org/wiki/Hamming_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Hamming_numbers#Python
 
 from itertools import islice
  
 def hamming2():
-    '''\
+    '''\\
     This version is based on a snippet from:
         https://web.archive.org/web/20081219014725/http://dobbscodetalk.com:80
                          /index.php?option=com_content&task=view&id=913&Itemid=85
@@ -21,9 +22,9 @@ def hamming2():
               x2=2*h[ i ]; x3=3*h[j]; x5=5*h[k];
               repeat:
                 h[++n] = min(x2,x3,x5);
-                if (x2==h[n]) { x2=2*h[++i]; }
-                if (x3==h[n]) { x3=3*h[++j]; }
-                if (x5==h[n]) { x5=5*h[++k]; } 
+                if (x2==h[n]) {{ x2=2*h[++i]; }}
+                if (x3==h[n]) {{ x3=3*h[++j]; }}
+                if (x5==h[n]) {{ x5=5*h[++k]; }} 
     '''
     h = 1
     _h=[h]    # memoized
@@ -47,6 +48,7 @@ def hamming2():
         #
         yield h
 
-n = 4000000
+n = {n}
 list(islice(hamming2(), n))
 
+"""

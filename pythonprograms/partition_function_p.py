@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Partition_function_P#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Partition_function_P#Python
 
 from itertools import islice
  
@@ -49,12 +50,13 @@ def part(n):
 def print(*args, **kwargs):
     pass
 
-n = 1200
+n = {n}
 
 print("(Intermediaries):")
 print("    posd:", list(islice(posd(), 10)))
 print("    pos_gen:", list(islice(pos_gen(), 10)))
 print("    plus_minus:", list(islice(plus_minus(), 15)))
-print("\nPartitions:", [part(x) for x in range(n)])
+print("\\nPartitions:", [part(x) for x in range(n)])
 
 
+"""

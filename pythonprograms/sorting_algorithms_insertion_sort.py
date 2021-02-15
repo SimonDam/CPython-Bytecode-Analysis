@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Insertion_sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Insertion_sort#Python
 
 def insertion_sort(L):
     for i in range(1, len(L)):
@@ -12,8 +13,9 @@ def insertion_sort(L):
 import random
 random.seed(12346556479846987445)
 
-n = 10000
+n = {n}
 test = [random.randint(1, n) for _ in range(n)]
 insertion_sort(test)
 
 
+"""

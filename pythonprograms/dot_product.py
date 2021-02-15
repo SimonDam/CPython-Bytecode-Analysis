@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Dot_product#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Dot_product#Python
 
 import random
 random.seed(982348732680623580234805632480563420856)
@@ -10,8 +11,9 @@ def dotp(a,b):
 def print(*args, **kwargs):
     pass
 
-n = 2500000
+n = {n}
 if __name__ == '__main__':
     a, b = [random.randint(-10000,10000) for _ in range(n)], [random.randint(-10000,10000) for _ in range(n)]
     print(dotp(a,b))
 
+"""

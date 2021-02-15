@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Factorions#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Factorions#Python
 
 def print(*args, **kwargs):
     pass
@@ -8,10 +9,10 @@ for t in range(1, 12):
     fact.append(fact[t-1] * t)
  
 
-n = 600000
+n = {n}
 
 for b in range(9, 12+1):
-    print(f"The factorions for base {b} are:")
+    print(f"The factorions for base {{b}} are:")
     for i in range(n):
         fact_sum = 0
         j = i
@@ -23,3 +24,4 @@ for b in range(9, 12+1):
             print(i, end=" ")
     print()
 
+"""

@@ -1,9 +1,10 @@
-# Taken from: https://www.rosettacode.org/wiki/Roots_of_a_function#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Roots_of_a_function#Python
 
 def print(*args, **kwargs):
     pass
 
-n = 5000
+n = {n}
 
 f = lambda x: x * x * x - 3 * x * x + 2 * x
  
@@ -29,3 +30,4 @@ while x <= stop:
  
     x += step
 
+"""

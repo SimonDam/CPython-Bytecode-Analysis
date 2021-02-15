@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Factors_of_an_integer#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Factors_of_an_integer#Python
 
 from math import sqrt
 
@@ -10,6 +11,7 @@ def factor(n):
           factors.add(n//x)
       return sorted(factors)
 
-n = 1000000000000000
+n = {n}
 factor(n)
 
+"""

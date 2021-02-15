@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Palindromic_gapful_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Palindromic_gapful_numbers#Python
 
 from itertools import count
 from pprint import pformat
@@ -21,20 +22,21 @@ def is_gapful(x):
 def print(*args, **kwargs):
     pass
 
-n = 8000
+n = {n}
 if __name__ == '__main__':
     start = 100
     for mx, last in [(20, 20), (100, 15), (n, 10)]:
-        print(f"\nLast {last} of the first {mx} binned-by-last digit " 
-              f"gapful numbers >= {start}")
-        bin = {i: [] for i in range(1, 10)}
+        print(f"\\nLast {{last}} of the first {{mx}} binned-by-last digit " 
+              f"gapful numbers >= {{start}}")
+        bin = {{i: [] for i in range(1, 10)}}
         gen = (i for i in pal_ordered_gen() if i >= start and is_gapful(i))
         while any(len(val) < mx for val in bin.values()):
             g = next(gen)
             val = bin[g % 10]
             if len(val) < mx:
                 val.append(g)
-        b = {k:v[-last:] for k, v in bin.items()}
+        b = {{k:v[-last:] for k, v in bin.items()}}
         txt = pformat(b, width=220)
-        print('', re.sub(r"[{},\[\]]", '', txt))
+        print('', re.sub(r"[{{}},\\[\\]]", '', txt))
 
+"""

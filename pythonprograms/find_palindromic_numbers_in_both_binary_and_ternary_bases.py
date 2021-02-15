@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Find_palindromic_numbers_in_both_binary_and_ternary_bases#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Find_palindromic_numbers_in_both_binary_and_ternary_bases#Python
 
 from itertools import islice
  
@@ -26,8 +27,8 @@ def pal_23():
         b = baseN(n, 3)
         revb = b[::-1]
         #if len(b) > 12: break
-        for trial in ('{0}{1}'.format(b, revb), '{0}0{1}'.format(b, revb),
-                      '{0}1{1}'.format(b, revb), '{0}2{1}'.format(b, revb)):
+        for trial in ('{{0}}{{1}}'.format(b, revb), '{{0}}0{{1}}'.format(b, revb),
+                      '{{0}}1{{1}}'.format(b, revb), '{{0}}2{{1}}'.format(b, revb)):
             t = int(trial, 3)
             if pal2(t):
                 yield t
@@ -35,7 +36,8 @@ def pal_23():
 def print(*args, **kwargs):
     pass
 
-n = 6
+n = {n}
 for pal23 in islice(pal_23(), n):
     print(pal23, baseN(pal23, 3), baseN(pal23, 2))
 
+"""

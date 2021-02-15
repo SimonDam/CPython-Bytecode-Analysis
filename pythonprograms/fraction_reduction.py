@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Fraction_reduction#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Fraction_reduction#Python
 
 def indexOf(haystack, needle):
     idx = 0
@@ -89,6 +90,7 @@ def main(n):
         i += 1
     return None
  
-n = 3000
+n = {n}
 main(n)
 
+"""

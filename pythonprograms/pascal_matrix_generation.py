@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Pascal_matrix_generation#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Pascal_matrix_generation#Python
 
 from pprint import pprint as pp
  
@@ -27,13 +28,14 @@ def print(*args, **kwargs):
 
 pp = print
 
-n = 2000
+n = {n}
  
 if __name__ == "__main__":
-    print("\nUpper:")
+    print("\\nUpper:")
     pp(pascal_upp(n))
-    print("\nLower:")
+    print("\\nLower:")
     pp(pascal_low(n))
-    print("\nSymmetric:")
+    print("\\nSymmetric:")
     pp(pascal_sym(n))
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Generator/Exponential#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Generator/Exponential#Python
 
 from itertools import islice, count
  
@@ -19,9 +20,10 @@ def filtered(s1, s2):
 squares, cubes = powers(2), powers(3)
 f = filtered(squares, cubes)
 
-n = 10000000
+n = {n}
 def print(*args, **kwargs):
     pass
 
 print(list(islice(f, 0, n)))
 
+"""

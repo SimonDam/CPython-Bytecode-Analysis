@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Vigen%C3%A8re_cipher#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Vigen%C3%A8re_cipher#Python
 
 '''Vigenere encryption and decryption'''
  
@@ -33,7 +34,7 @@ def decrypt(message, key):
 def print(*args, **kwargs):
     pass
 
-n = 5000000
+n = {n}
 def main():
     '''Demonstration'''
     text = "a" * n
@@ -50,3 +51,4 @@ def main():
 if __name__ == '__main__':
     main()
 
+"""

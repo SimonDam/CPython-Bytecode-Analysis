@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Levenshtein_distance#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Levenshtein_distance#Python
 
 def minimumEditDistance(s1,s2):
     if len(s1) > len(s2):
@@ -27,6 +28,7 @@ import random
 random.seed(982375498723)
 import string
 
-n = 4000
+n = {n}
 minimumEditDistance(''.join(random.choice(string.ascii_letters) for _ in range(n)), ''.join(random.choice(string.ascii_letters) for _ in range(n)))
 
+"""

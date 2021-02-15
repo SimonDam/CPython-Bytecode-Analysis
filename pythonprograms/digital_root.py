@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Digital_root#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Digital_root#Python
 
 def print(*args, **kwargs):
     pass
@@ -13,7 +14,7 @@ def digital_root (n):
 
 import random
 random.seed(25314387634867458764398543685734875634)
-n = 1000000
+n = {n}
  
 if __name__ == '__main__':
     for t in [random.randint(1,n) for _ in range(n)]:
@@ -21,3 +22,4 @@ if __name__ == '__main__':
         print("%12i has additive persistance %2i and digital root %i." 
               % (t, persistance, root))
 
+"""

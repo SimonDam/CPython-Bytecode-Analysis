@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Topswops#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Topswops#Python
 
 from itertools import permutations
 def f1(p):
@@ -16,8 +17,9 @@ def fannkuch(n):
 def print(*args, **kwargs):
     pass
  
-n = 11
+n = {n}
 
 for i in range(1, n):
     print(i,fannkuch(i))
 
+"""

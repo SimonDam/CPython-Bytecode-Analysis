@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Van_Eck_sequence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Van_Eck_sequence#Python
 
 from itertools import islice
 
@@ -18,10 +19,11 @@ def van_eck():
 def print(*args, **kwargs):
     pass
 
-n = 50000
+n = {n}
 if __name__ == '__main__':
     print("Van Eck: first 10 terms:  ", list(islice(van_eck(), 10)))
     print("Van Eck: terms 991 - 1000:", list(islice(van_eck(), 1000))[-10:])
     print("Van Eck: terms 991 - 1000:", list(islice(van_eck(), n)))
 
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Self_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Self_numbers#Python
 
 class DigitSumer :
     def __init__(self): 
@@ -28,7 +29,7 @@ def self_numbers ():
 def print(*args, **kwargs):
     pass
 
-n = 1000000
+n = {n}
 
 import time
 p = 100
@@ -43,3 +44,4 @@ for i,s in enumerate(self_numbers(), 1):
     if i == n:
         break
 
+"""

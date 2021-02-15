@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Kaprekar_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Kaprekar_numbers#Python
 
 def encode(n, base):
     result = ""
@@ -24,7 +25,7 @@ def print(*args, **kwargs):
     pass
 
 m = 1
-n = 500000
+n = {n}
 base = 7
 KNumbers = Find(m, n, base)
 for i in KNumbers:
@@ -33,3 +34,4 @@ print( 'The number of Kaprekar Numbers found are',)
 print( len(KNumbers))
 
 
+"""

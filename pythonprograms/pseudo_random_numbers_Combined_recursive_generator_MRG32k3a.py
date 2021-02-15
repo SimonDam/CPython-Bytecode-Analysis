@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Pseudo-random_numbers/Combined_recursive_generator_MRG32k3a#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Pseudo-random_numbers/Combined_recursive_generator_MRG32k3a#Python
 
 # Constants
 a1 = [0, 1403580, -810728]
@@ -15,7 +16,7 @@ class MRG32k3a():
         self.seed(seed_state)
  
     def seed(self, seed_state):
-        assert 0 <seed_state < d, f"Out of Range 0 x < {d}"
+        assert 0 <seed_state < d, f"Out of Range 0 x < {{d}}"
         self.x1 = [seed_state, 0, 0]
         self.x2 = [seed_state, 0, 0]
  
@@ -38,7 +39,7 @@ class MRG32k3a():
 def print(*args, **kwargs):
     pass
 
-n = 1000000
+n = {n}
 if __name__ == '__main__':
     random_gen = MRG32k3a()
     random_gen.seed(1234567)
@@ -46,8 +47,9 @@ if __name__ == '__main__':
         print(random_gen.next_int())
  
     random_gen.seed(987654321)
-    hist = {i:0 for i in range(5)}
+    hist = {{i:0 for i in range(5)}}
     for i in range(n):
         hist[int(random_gen.next_float() *5)] += 1
     print(hist)
 
+"""

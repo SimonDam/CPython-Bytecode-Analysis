@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Lucas-Lehmer_test#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Lucas-Lehmer_test#Python
 
 from sys import stdout
 from math import sqrt, log
@@ -24,7 +25,7 @@ def is_mersenne_prime ( p ):
 def print(*args, **kwargs):
     pass
 
-n = 1500
+n = {n}
 precision = n   # maximum requested number of decimal places of 2 ** MP-1 #
 long_bits_width = precision * log(10, 2)
 upb_prime = int( long_bits_width - 1 ) / 2    # no unsigned #
@@ -41,3 +42,4 @@ for p in range(2, int(upb_prime+1)):
   if count >= upb_count: break
 print()
 
+"""

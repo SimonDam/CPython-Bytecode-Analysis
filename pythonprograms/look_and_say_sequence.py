@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Look-and-say_sequence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Look-and-say_sequence#Python
 
 def lookandsay(number):
     result = ""
@@ -22,8 +23,9 @@ num = "1"
 def print(*args, **kwargs):
     pass
 
-n = 55
+n = {n}
 for i in range(n):
     print(num)
     num = lookandsay(num)
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Leonardo_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Leonardo_numbers#Python
 
 def Leonardo(L_Zero, L_One, Add, Amount):
     terms = [L_Zero,L_One]
@@ -11,7 +12,7 @@ def Leonardo(L_Zero, L_One, Add, Amount):
 def print(*args, **kwargs):
     pass
 
-n = 10000
+n = {n}
 
 out = ""
 print("First 25 Leonardo numbers:")
@@ -26,3 +27,4 @@ for term in Leonardo(0,1,0,n):
 print(out)
 
 
+"""

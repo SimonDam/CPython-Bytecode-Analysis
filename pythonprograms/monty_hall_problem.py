@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Monty_Hall_problem#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Monty_Hall_problem#Python
 
 import random
 random.seed(98347598347598347958347958)
@@ -8,7 +9,7 @@ random.seed(98347598347598347958347958)
 stay = 0  #amount won if stay in the same position
 switch = 0 # amount won if you switch 
  
-n = 2000000
+n = {n}
 
 def print(*args, **kwargs):
     pass
@@ -40,3 +41,4 @@ print("Stay =",stay)
 print("Switch = ",switch)
 #Done by Sam Witton 09/04/2014
 
+"""

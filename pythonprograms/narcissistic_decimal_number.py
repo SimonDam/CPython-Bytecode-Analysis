@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Narcissistic_decimal_number#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Narcissistic_decimal_number#Python
 
 from __future__ import print_function
 from itertools import count, islice
@@ -17,9 +18,10 @@ def narcissists():
 def print(*args, **kwargs):
     pass
 
-n = 23
+n = {n}
 for i, n in enumerate(islice(narcissists(), n), 1):
     print(n, end=' ')
     if i % 5 == 0: print() 
 print()
 
+"""

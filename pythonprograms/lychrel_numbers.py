@@ -1,9 +1,10 @@
-# Taken from: https://www.rosettacode.org/wiki/Lychrel_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Lychrel_numbers#Python
 
 from __future__ import print_function
  
 def add_reverse(num, max_iter=1000):
-    i, nums = 0, {num}
+    i, nums = 0, {{num}}
     while True:
         i, num = i+1, num + reverse_int(num)
         nums.add(num)
@@ -38,7 +39,7 @@ def find_lychrel(maxn, max_reversions):
 def print(*args, **kwargs):
     pass
 
-n = 50000
+n = {n}
  
 if __name__ == '__main__':
     maxn, reversion_limit = n, 500
@@ -53,3 +54,4 @@ if __name__ == '__main__':
     print('  Number of Lychrel palindromes:', len(pals))
     print('    Lychrel palindromes:', ', '.join(str(n) for n in pals))
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/fasta-python3-1.html
+def source_code(n):	
+    return f"""# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/fasta-python3-1.html
 
 # The Computer Language Benchmarks Game
 # https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
@@ -75,6 +76,7 @@ def main(n):
     randomFasta(iub, n*3)
     randomFasta(homosapiens, n*5)
 
-n = 1000000
+n = {n}
 main(n)
 
+"""

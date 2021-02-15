@@ -1,4 +1,5 @@
-# Taken from: https://www.python.org/ftp/python/parrotbench/
+def source_code(n):	
+    return f"""# Taken from: https://www.python.org/ftp/python/parrotbench/
 # Updated to work on Python3. I have no idea if it is semantically correct.
 # Also removed some code as I didn't see an obvious way to convert it to Python3.
 
@@ -49,7 +50,7 @@ def icmp(a, b):
 def print(*args, **kwargs):
     pass
 
-n = 2100000
+n = {n}
 K = 1
 
 ##if __debug__: import time
@@ -83,3 +84,4 @@ if __name__ == '__main__':
     main()
 
 
+"""

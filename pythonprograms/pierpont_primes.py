@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Pierpont_primes#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Pierpont_primes#Python
 
 import random
  
@@ -65,7 +66,7 @@ def print(*args, **kwargs):
     pass
 
 random.seed(834587029346587234658702345873248756)
-n = 200
+n = {n}
 def main():
     print( "First 50 Pierpont primes of the first kind:")
     pp = pierpont(2, 40, True)
@@ -84,3 +85,4 @@ def main():
  
 main()
 
+"""

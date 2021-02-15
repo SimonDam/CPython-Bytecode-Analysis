@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Perfect_shuffle#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Perfect_shuffle#Python
 
 import doctest
 import random
@@ -35,7 +36,7 @@ def after_how_many_is_equal(shuffle_type,start,end):
 def print(*args, **kwargs):
     pass
 
-n = 50000
+n = {n}
 
 def main():
     doctest.testmod()
@@ -44,10 +45,11 @@ def main():
     for length in (8, 24, 52, n):
         deck = list(range(length))
         shuffles_needed = after_how_many_is_equal(magic_shuffle,deck,deck)
-        print("{} | {}".format(length,shuffles_needed))
+        print("{{}} | {{}}".format(length,shuffles_needed))
  
  
 if __name__ == "__main__":
     main()
  
 
+"""

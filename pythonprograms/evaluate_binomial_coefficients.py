@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Evaluate_binomial_coefficients#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Evaluate_binomial_coefficients#Python
 
 def binomialCoeff(n, k):
     result = 1
@@ -9,7 +10,8 @@ def binomialCoeff(n, k):
 def print(*args, **kwargs):
     pass
 
-n = 40000000
+n = {n}
 if __name__ == "__main__":
     print(binomialCoeff(0.0001, n))
 
+"""

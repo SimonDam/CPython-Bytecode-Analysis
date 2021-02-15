@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Pythagorean_triples#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Pythagorean_triples#Python
 
 from math import gcd
  
@@ -55,10 +56,11 @@ def printit(maxperimeter=100, pt=pt1):
 def print(*args, **kwargs):
     pass
 
-n = 1200
+n = {n}
 for algo, mn, mx in ((pt1, n//10, n), (pt2, n//10, n)):
     print(algo.__doc__)
     for maxperimeter in range(mn, mx+1, mn):
         printit(maxperimeter, algo)
  
 
+"""

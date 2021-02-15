@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Van_der_Corput_sequence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Van_der_Corput_sequence#Python
 
 def vdc(n, base=2):
     vdc, denom = 0,1
@@ -11,8 +12,9 @@ def vdc(n, base=2):
 def print(*args, **kwargs):
     pass
 
-n = 1000000
+n = {n}
 print([vdc(i) for i in range(n)])
 
 
 
+"""

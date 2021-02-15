@@ -1,9 +1,10 @@
-# Taken from: https://www.rosettacode.org/wiki/Multiplication_tables#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Multiplication_tables#Python
 
 def print(*args, **kwargs):
     pass
 
-n = 3000
+n = {n}
 
 size = n
 width = len(str(size**2))
@@ -18,3 +19,4 @@ for row in range(-1,size+1):
                                   else (row*col,"")))
                    for col in range(size+1)))
 
+"""

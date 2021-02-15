@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Pi#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Pi#Python
 
 def calcPi(p):
     q, r, t, k, n, l = 1, 0, 1, 1, 3, 3
@@ -24,7 +25,7 @@ def print(*args, **kwargs):
     pass
 
 sys.stdout.write = print
-n = 30000
+n = {n}
 pi_digits = calcPi(n)
 i = 0
 for d in pi_digits:
@@ -32,3 +33,4 @@ for d in pi_digits:
     i += 1
     if i == 40: print(""); i = 0
 
+"""

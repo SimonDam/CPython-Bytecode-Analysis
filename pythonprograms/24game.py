@@ -1,4 +1,5 @@
-#Taken from: https://www.rosettacode.org/wiki/24_game/Solve#Python
+def source_code(n):	
+    return f"""#Taken from: https://www.rosettacode.org/wiki/24_game/Solve#Python
 
 '''
  The 24 Game Player
@@ -20,7 +21,7 @@
 '''
  
 from   __future__ import division, print_function
-from   itertools  import permutations, combinations, product, \
+from   itertools  import permutations, combinations, product, \\
                          chain
 from   pprint     import pprint as pp
 from   fractions  import Fraction as F
@@ -51,10 +52,10 @@ def welcome(digits):
     print ("Your four digits: " + ' '.join(digits))
  
 def check(answer, digits):
-    allowed = set('() +-*/\t'+''.join(digits))
-    ok = all(ch in allowed for ch in answer) and \
-         all(digits.count(dig) == answer.count(dig) for dig in set(digits)) \
-         and not re.search('\d\d', answer)
+    allowed = set('() +-*/\\t'+''.join(digits))
+    ok = all(ch in allowed for ch in answer) and \\
+         all(digits.count(dig) == answer.count(dig) for dig in set(digits)) \\
+         and not re.search('\\d\\d', answer)
     if ok:
         try:
             ast.parse(answer)
@@ -63,7 +64,7 @@ def check(answer, digits):
     return ok
  
 def solve(digits):
-    '''\
+    '''\\
     >>> for digits in '3246 4788 1111 123456 1127 3838'.split():
             solve(list(digits))
  
@@ -138,12 +139,12 @@ def main():
         if answer == '!':
             digits = choose4()
             trial = 0
-            print ("\nNew digits:", ' '.join(digits))
+            print ("\\nNew digits:", ' '.join(digits))
             continue
         if answer == '!!':
             digits = ask4()
             trial = 0
-            print ("\nNew digits:", ' '.join(digits))
+            print ("\\nNew digits:", ' '.join(digits))
             continue
         if not chk:
             print ("The input '%s' was wonky!" % answer)
@@ -158,7 +159,7 @@ def main():
                 print ("Thats right!")
     print ("Thank you and goodbye")   
 
-n = 175
+n = {n}
 
 def print(*args, **kwargs):
     pass
@@ -169,6 +170,7 @@ if __name__ == '__main__':
                   str(random.randint(1,10)),
                   str(random.randint(1,10)),
                   str(random.randint(1,10))] for _ in range(n)]:
-        print(f"solve24({nums}) -> {solve(nums)}")
+        print(f"solve24({{nums}}) -> {{solve(nums)}}")
 
 
+"""

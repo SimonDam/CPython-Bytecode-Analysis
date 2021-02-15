@@ -1,6 +1,7 @@
-# Taken from: https://www.rosettacode.org/wiki/Stirling_numbers_of_the_first_kind#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Stirling_numbers_of_the_first_kind#Python
 
-computed = {}
+computed = {{}}
  
 def sterling1(n, k):
     key = str(n) + "," + str(k)
@@ -20,7 +21,7 @@ def sterling1(n, k):
 def print(*args, **kwargs):
     pass
 
-n = 800
+n = {n}
 
 print("Unsigned Stirling numbers of the first kind:")
 MAX = n
@@ -40,7 +41,8 @@ for k in range(1, 100 + 1):
     if current > previous:
         previous = current
     else:
-        print("{0}\n({1} digits, k = {2})\n".format(previous, len(str(previous)), k - 1))
+        print("{{0}}\\n({{1}} digits, k = {{2}})\\n".format(previous, len(str(previous)), k - 1))
         break
  
 
+"""

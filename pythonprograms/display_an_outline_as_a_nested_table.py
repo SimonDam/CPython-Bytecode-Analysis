@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Display_an_outline_as_a_nested_table#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Display_an_outline_as_a_nested_table#Python
 
 '''Display an outline as a nested table. Requires Python >=3.6.'''
  
@@ -10,7 +11,7 @@ from collections import deque
 from typing import NamedTuple
  
  
-RE_OUTLINE = re.compile(r"^((?: |\t)*)(.+)$", re.M)
+RE_OUTLINE = re.compile(r"^((?: |\\t)*)(.+)$", re.M)
  
 COLORS = itertools.cycle(
     [
@@ -149,17 +150,17 @@ def table_data(node):
     indent = "    "
  
     if node.colspan() > 1:
-        colspan = f'colspan="{node.colspan()}"'
+        colspan = f'colspan="{{node.colspan()}}"'
     else:
         colspan = ""
  
     if node.color:
-        style = f'style="background-color: {node.color};"'
+        style = f'style="background-color: {{node.color}};"'
     else:
         style = ""
  
     attrs = " ".join([colspan, style])
-    return f"{indent}<td{attrs}>{node.value}</td>"
+    return f"{{indent}}<td{{attrs}}>{{node.value}}</td>"
  
  
 def html_table(tree):
@@ -186,7 +187,7 @@ def html_table(tree):
             row_cols = 0
  
     buf.append("</table>")
-    return "\n".join(buf)
+    return "\\n".join(buf)
  
  
 def wiki_table_data(node):
@@ -195,17 +196,17 @@ def wiki_table_data(node):
         return "|  |"
  
     if node.colspan() > 1:
-        colspan = f"colspan={node.colspan()}"
+        colspan = f"colspan={{node.colspan()}}"
     else:
         colspan = ""
  
     if node.color:
-        style = f'style="background: {node.color};"'
+        style = f'style="background: {{node.color}};"'
     else:
         style = ""
  
     attrs = " ".join([colspan, style])
-    return f"| {attrs} | {node.value}"
+    return f"| {{attrs}} | {{node.value}}"
  
  
 def wiki_table(tree):
@@ -217,7 +218,7 @@ def wiki_table(tree):
     row_cols = 0
  
     # HTML buffer
-    buf = ['{| class="wikitable" style="text-align: center;"']
+    buf = ['{{| class="wikitable" style="text-align: center;"']
  
     for node in tree:
         if row_cols == 0:
@@ -229,25 +230,25 @@ def wiki_table(tree):
         if row_cols == table_cols:
             row_cols = 0
  
-    buf.append("|}")
-    return "\n".join(buf)
+    buf.append("|}}")
+    return "\\n".join(buf)
  
  
 def example(table_format="wiki"):
     '''Write an example table to stdout in either HTML or Wiki format.'''
  
     outline = (
-        "Display an outline as a nested table.\n"
-        "    Parse the outline to a tree,\n"
-        "        measuring the indent of each line,\n"
-        "        translating the indentation to a nested structure,\n"
-        "        and padding the tree to even depth.\n"
-        "    count the leaves descending from each node,\n"
-        "        defining the width of a leaf as 1,\n"
-        "        and the width of a parent node as a sum.\n"
-        "            (The sum of the widths of its children)\n"
-        "    and write out a table with 'colspan' values\n"
-        "        either as a wiki table,\n"
+        "Display an outline as a nested table.\\n"
+        "    Parse the outline to a tree,\\n"
+        "        measuring the indent of each line,\\n"
+        "        translating the indentation to a nested structure,\\n"
+        "        and padding the tree to even depth.\\n"
+        "    count the leaves descending from each node,\\n"
+        "        defining the width of a leaf as 1,\\n"
+        "        and the width of a parent node as a sum.\\n"
+        "            (The sum of the widths of its children)\\n"
+        "    and write out a table with 'colspan' values\\n"
+        "        either as a wiki table,\\n"
         "        or as HTML."
     )
  
@@ -262,7 +263,7 @@ def example(table_format="wiki"):
 def print(*args, **kwargs):
     pass
 
-n = 37000
+n = {n}
 if __name__ == "__main__":
     args = sys.argv[1:]
  
@@ -273,3 +274,4 @@ if __name__ == "__main__":
     for _ in range(n):
         example(table_format)
 
+"""

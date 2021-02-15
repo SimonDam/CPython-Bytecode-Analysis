@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sailors,_coconuts_and_a_monkey_problem#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sailors,_coconuts_and_a_monkey_problem#Python
 
 def monkey_coconuts(sailors=5):
     "Parameterised the number of sailors using an inner loop including the last mornings case"    
@@ -19,11 +20,12 @@ def monkey_coconuts(sailors=5):
 def print(*args, **kwargs):
     pass
 
-n = 8
+n = {n}
 if __name__ == "__main__":
     for sailors in range(2, n):
         nuts, wake_stats = monkey_coconuts(sailors)
-        print("\nFor %i sailors the initial nut count is %i" % (sailors, nuts))
-        print("On each waking, the nut count, portion taken, and monkeys share are:\n ", 
-              ',\n  '.join(repr(ws) for ws in wake_stats))
+        print("\\nFor %i sailors the initial nut count is %i" % (sailors, nuts))
+        print("On each waking, the nut count, portion taken, and monkeys share are:\\n ", 
+              ',\\n  '.join(repr(ws) for ws in wake_stats))
 
+"""

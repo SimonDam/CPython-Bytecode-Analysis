@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Recaman%27s_sequence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Recaman%27s_sequence#Python
 
 from itertools import islice
  
@@ -11,7 +12,7 @@ class Recamans():
     def __call__(self):
         "Recamán's sequence  generator"
         nxt = 0
-        a, n = {nxt}, 0
+        a, n = {{nxt}}, 0
         self.a = a
         self.n = n
         yield nxt
@@ -27,7 +28,7 @@ class Recamans():
 def print(*args, **kwargs):
     pass
 
-n = 1300
+n = {n}
 
 if __name__ == '__main__':
     recamans = Recamans()
@@ -37,13 +38,14 @@ if __name__ == '__main__':
     so_far = set()
     for term in recamans():
         if term in so_far:
-            print(f"First duplicate number in series is: a({recamans.n}) = {term}")
+            print(f"First duplicate number in series is: a({{recamans.n}}) = {{term}}")
             break
         so_far.add(term)
 
     setn = set(range(n + 1))    # The target set of numbers to be covered
     for _ in recamans():
         if setn.issubset(recamans.a):
-            print(f"Range 0 ..{n} is covered by terms up to a({recamans.n})")
+            print(f"Range 0 ..{{n}} is covered by terms up to a({{recamans.n}})")
             break
 
+"""

@@ -1,6 +1,7 @@
-# Taken from: https://www.rosettacode.org/wiki/List_rooted_trees#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/List_rooted_trees#Python
 
-def bags(n,cache={}):
+def bags(n,cache={{}}):
     if not n: return [(0, "")]
  
     upto = sum([bags(x) for x in range(n-1, 0, -1)], [])
@@ -20,16 +21,17 @@ def replace_brackets(s):
     depth,out = 0,[]
     for c in s:
         if c == '(':
-            out.append("([{"[depth%3])
+            out.append("([{{"[depth%3])
             depth += 1
         else:
             depth -= 1
-            out.append(")]}"[depth%3])
+            out.append(")]}}"[depth%3])
     return "".join(out)
 
 def print(*args, **kwargs):
     pass
 
-n = 14
+n = {n}
 for x in bags(n): print(replace_brackets(x[1]))
 
+"""

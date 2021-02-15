@@ -1,4 +1,5 @@
-#Taken from: https://www.rosettacode.org/wiki/Anti-primes#Python
+def source_code(n):	
+    return f"""#Taken from: https://www.rosettacode.org/wiki/Anti-primes#Python
 from itertools import chain, count, cycle, islice, accumulate
  
 def factors(n):
@@ -28,8 +29,9 @@ def antiprimes():
 def print(*args, **kwargs):
     pass
 
-n = 38
+n = {n}
 
 if __name__ == '__main__':
     print(list(islice(antiprimes(), n)))
 
+"""

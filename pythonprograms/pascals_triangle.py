@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Pascal%27s_triangle#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Pascal%27s_triangle#Python
 
 def pascal(n):
    '''Prints out n rows of Pascal's triangle.
@@ -13,6 +14,7 @@ def pascal(n):
 def print(*args, **kwargs):
     pass
 
-n = 5000
+n = {n}
 pascal(n)
 
+"""

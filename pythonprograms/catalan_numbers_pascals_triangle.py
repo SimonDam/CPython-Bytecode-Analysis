@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Catalan_numbers/Pascal%27s_triangle#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Catalan_numbers/Pascal%27s_triangle#Python
 
 '''Catalan numbers from Pascal's triangle'''
  
@@ -48,7 +49,7 @@ def nextPascal(xs):
 def print(*args, **kwargs):
     pass
 
-n = 3000
+n = {n}
 def main():
     '''First 16 Catalan numbers.'''
     print(
@@ -138,3 +139,4 @@ def zipWith(f):
 if __name__ == '__main__':
     main()
 
+"""

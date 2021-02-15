@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Patience_sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Patience_sort#Python
 
 from functools import total_ordering
 from bisect import bisect_left
@@ -26,7 +27,7 @@ def patience_sort(n):
 def print(*args, **kwargs):
     pass
 
-n = 1000000
+n = {n}
 
 if __name__ == "__main__":
     import random
@@ -36,3 +37,4 @@ if __name__ == "__main__":
     patience_sort(a)
     print(a)
 
+"""

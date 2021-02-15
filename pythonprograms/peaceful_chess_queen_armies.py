@@ -1,22 +1,23 @@
-# Taken from: https://www.rosettacode.org/wiki/Peaceful_chess_queen_armies#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Peaceful_chess_queen_armies#Python
 
 from itertools import combinations, product, count
 from functools import lru_cache, reduce
  
  
-_bbullet, _wbullet = '\u2022\u25E6'
+_bbullet, _wbullet = '\\u2022\\u25E6'
 _or = set.__or__
  
 def place(m, n):
     "Place m black and white queens, peacefully, on an n-by-n board"
     board = set(product(range(n), repeat=2))  # (x, y) tuples
-    placements = {frozenset(c) for c in combinations(board, m)}
+    placements = {{frozenset(c) for c in combinations(board, m)}}
     for blacks in placements:
         black_attacks = reduce(_or, 
                                (queen_attacks_from(pos, n) for pos in blacks), 
                                set())
-        for whites in {frozenset(c)     # Never on blsck attacking squares
-                       for c in combinations(board - black_attacks, m)}:
+        for whites in {{frozenset(c)     # Never on blsck attacking squares
+                       for c in combinations(board - black_attacks, m)}}:
             if not black_attacks & whites:
                 return blacks, whites
     return set(), set()
@@ -45,8 +46,8 @@ def pboard(black_white, n):
         blk, wht = set(), set()
     else:
         blk, wht = black_white
-    print(f"## {len(blk)} black and {len(wht)} white queens "
-          f"on a {n}-by-{n} board:", end='')
+    print(f"## {{len(blk)}} black and {{len(wht)}} white queens "
+          f"on a {{n}}-by-{{n}} board:", end='')
     for x, y in product(range(n), repeat=2):
         if y == 0:
             print()
@@ -61,7 +62,7 @@ def pboard(black_white, n):
 def print(*args, **kwargs):
     pass
 
-n = 6
+n = {n}
 if __name__ == '__main__':
     i=2
     for i in range(2, 6):
@@ -71,12 +72,13 @@ if __name__ == '__main__':
             if ans[0]:
                 pboard(ans, i)
             else:
-                print (f"# Can't place {m} queens on a {i}-by-{i} board")
+                print (f"# Can't place {{m}} queens on a {{i}}-by-{{i}} board")
                 break
     #
-    print('\n')
+    print('\\n')
     m, i = 5, 7
     ans = place(m, i)
     pboard(ans, i)
 
 
+"""

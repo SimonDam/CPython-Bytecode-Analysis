@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Brazilian_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Brazilian_numbers#Python
 
 '''Brazilian numbers'''
  
@@ -40,7 +41,7 @@ def monoDigit(n):
  
 # -------------------------- TEST --------------------------
 # main :: IO ()
-n = 33
+n = {n}
 def main():
     '''First 20 members each of:
         OEIS:A125134
@@ -53,8 +54,8 @@ def main():
             (' prime ', primes())
     ]):
         print(
-            'First 20' + kxs[0] + 'Brazilians:\n' +
-            showList(take(n)(filter(isBrazil, kxs[1]))) + '\n'
+            'First 20' + kxs[0] + 'Brazilians:\\n' +
+            showList(take(n)(filter(isBrazil, kxs[1]))) + '\\n'
         )
  
  
@@ -68,7 +69,7 @@ def primes():
     ''' Non finite sequence of prime numbers.
     '''
     n = 2
-    dct = {}
+    dct = {{}}
     while True:
         if n in dct:
             for p in dct[n]:
@@ -120,3 +121,4 @@ def until(p):
 if __name__ == '__main__':
     main()
 
+"""

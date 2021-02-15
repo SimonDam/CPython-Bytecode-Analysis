@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Humble_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Humble_numbers#Python
 
 '''Humble numbers'''
  
@@ -25,11 +26,11 @@ def humbles():
 def print(*args, **kwargs):
     pass
 
-n = 30000
+n = {n}
 def main():
     '''First 50, and counts with N digits'''
  
-    print('First 50 Humble numbers:\n')
+    print('First 50 Humble numbers:\\n')
     for row in chunksOf(10)(
             take(n)(humbles())
     ):
@@ -38,7 +39,7 @@ def main():
             row
         )))
  
-    print('\nCounts of Humble numbers with n digits:\n')
+    print('\\nCounts of Humble numbers with n digits:\\n')
     for tpl in take(10)(
             (k, len(list(g))) for k, g in
             groupby(len(str(x)) for x in humbles())
@@ -75,3 +76,4 @@ def take(n):
 if __name__ == '__main__':
     main()
 
+"""

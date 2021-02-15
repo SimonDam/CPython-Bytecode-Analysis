@@ -1,9 +1,10 @@
-# Taken from: https://www.rosettacode.org/wiki/Truncatable_primes#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Truncatable_primes#Python
 
 def print(*args, **kwargs):
     pass
 
-n = 10000000
+n = {n}
 
 maxprime = n
  
@@ -37,3 +38,4 @@ def truncatableprime(n):
 print(truncatableprime(maxprime))
 
 
+"""

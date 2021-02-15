@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sieve_of_Eratosthenes#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sieve_of_Eratosthenes#Python
 
 def primes235(limit):
     yield 2; yield 3; yield 5
@@ -23,6 +24,7 @@ def primes235(limit):
 def print(*args, **kwargs):
     pass
 
-n = 200000000
+n = {n}
 print(list(primes235(n)))
 
+"""

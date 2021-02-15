@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Parsing/RPN_calculator_algorithm#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Parsing/RPN_calculator_algorithm#Python
 
 def op_pow(stack):
     b = stack.pop(); a = stack.pop()
@@ -18,13 +19,13 @@ def op_sub(stack):
 def op_num(stack, num):
     stack.append( num )
  
-ops = {
+ops = {{
  '^': op_pow,
  '*': op_mul,
  '/': op_div,
  '+': op_add,
  '-': op_sub,
- }
+ }}
  
 def get_input(inp = None):
     'Inputs an expression and returns list of tokens'
@@ -51,17 +52,18 @@ def rpn_calc(tokens):
 def print(*args, **kwargs):
     pass
 
-n = 1000
+n = {n}
 
 if __name__ == '__main__':
     rpn = '3 4 2 * 1 5 - 2 3 ^ ^ / +' * n
-    print( 'For RPN expression: %r\n' % rpn )
+    print( 'For RPN expression: %r\\n' % rpn )
     rp = rpn_calc(get_input(rpn))
     maxcolwidths = [max(len(y) for y in x) for x in zip(*rp)]
     row = rp[0]
-    print( ' '.join('{cell:^{width}}'.format(width=width, cell=cell) for (width, cell) in zip(maxcolwidths, row)))
+    print( ' '.join('{{cell:^{{width}}}}'.format(width=width, cell=cell) for (width, cell) in zip(maxcolwidths, row)))
     for row in rp[1:]:
-        print( ' '.join('{cell:<{width}}'.format(width=width, cell=cell) for (width, cell) in zip(maxcolwidths, row)))
+        print( ' '.join('{{cell:<{{width}}}}'.format(width=width, cell=cell) for (width, cell) in zip(maxcolwidths, row)))
  
-    print('\n The final output value is: %r' % rp[-1][2])
+    print('\\n The final output value is: %r' % rp[-1][2])
 
+"""

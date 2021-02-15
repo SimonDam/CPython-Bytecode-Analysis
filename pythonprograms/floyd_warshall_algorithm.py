@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Floyd-Warshall_algorithm#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Floyd-Warshall_algorithm#Python
 
 from math import inf
 from itertools import product
@@ -30,8 +31,9 @@ def floyd_warshall(n, edge):
 def print(*args, **kwargs):
     pass
 
-n = 200
+n = {n}
 if __name__ == '__main__':
     lst = [[a, b, c] for a, b, c in zip(list(range(0,n)), list(range(1,n+1)), list(range(2,n+2)))]
     floyd_warshall(n, lst)
 
+"""

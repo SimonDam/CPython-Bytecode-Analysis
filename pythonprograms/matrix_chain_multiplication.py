@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Matrix_chain_multiplication#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Matrix_chain_multiplication#Python
 
 def parens(n):
     def aux(n, k):
@@ -17,8 +18,9 @@ def parens(n):
 def print(*args, **kwargs):
     pass
 
-n = 15
+n = {n}
 for u in parens(n):
     print(u)
 
 
+"""

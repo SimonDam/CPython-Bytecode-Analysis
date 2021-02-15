@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Pseudo-random_numbers/PCG32#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Pseudo-random_numbers/PCG32#Python
 
 mask64 = (1 << 64) - 1
 mask32 = (1 << 32) - 1
@@ -39,7 +40,7 @@ class PCG32():
 def print(*args, **kwargs):
     pass
 
-n = 3000000
+n = {n}
 if __name__ == '__main__':
     random_gen = PCG32()
     random_gen.seed(42, 54)
@@ -47,8 +48,9 @@ if __name__ == '__main__':
         print(random_gen.next_int())
  
     random_gen.seed(987654321, 1)
-    hist = {i:0 for i in range(5)}
+    hist = {{i:0 for i in range(5)}}
     for i in range(n):
         hist[int(random_gen.next_float() *5)] += 1
     print(hist)
 
+"""

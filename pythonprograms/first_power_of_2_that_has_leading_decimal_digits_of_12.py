@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/First_power_of_2_that_has_leading_decimal_digits_of_12#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/First_power_of_2_that_has_leading_decimal_digits_of_12#Python
 
 from math import log, modf, floor
  
@@ -19,8 +20,9 @@ def print(*args, **kwargs):
  
 import random
 random.seed(213445769348654687)
-n = 150
+n = {n}
 if __name__ == '__main__':
     for l, n in ((x, y) for x, y in zip(range(1, n+1), range(1, n+1))):
-        print(f"p({l}, {n}) =", p(l, n))
+        print(f"p({{l}}, {{n}}) =", p(l, n))
 
+"""

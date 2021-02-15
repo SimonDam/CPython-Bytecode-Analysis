@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Ethiopian_multiplication#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Ethiopian_multiplication#Python
 
 tutor = True
  
@@ -35,6 +36,7 @@ def ethiopian(multiplier, multiplicand):
 def print(*args, **kwargs):
     pass
 
-n = 2750
+n = {n}
 ethiopian(17**n, 34**n)
 
+"""

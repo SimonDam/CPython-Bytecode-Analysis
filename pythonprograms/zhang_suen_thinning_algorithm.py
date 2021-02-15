@@ -1,14 +1,15 @@
-# Taken from: https://www.rosettacode.org/wiki/Zhang-Suen_thinning_algorithm#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Zhang-Suen_thinning_algorithm#Python
 
 def print(*args, **kwargs):
     pass
 
-n = 500
+n = {n}
 
 # -*- coding: utf-8 -*-
  
 # Example from [http://nayefreza.wordpress.com/2013/05/11/zhang-suen-thinning-algorithm-java-implementation/ this blog post].
-beforeTxt = '''\
+beforeTxt = '''\\
 1100111
 1100111
 1100111
@@ -22,11 +23,11 @@ beforeTxt = '''\
 1100110
 1100110
 1111110
-0000000\
+0000000\\
 '''
  
 # Thanks to [http://www.network-science.de/ascii/ this site] and vim for these next two examples
-smallrc01 = '''\
+smallrc01 = '''\\
 00000000000000000000000000000000
 01111111110000000111111110000000
 01110001111000001111001111000000
@@ -36,10 +37,10 @@ smallrc01 = '''\
 01110111100000001110000111000000
 01110011110011101111001111011100
 01110001111011100111111110011100
-00000000000000000000000000000000\
+00000000000000000000000000000000\\
 '''
 
-rc01 = '''\
+rc01 = '''\\
 00000000000000000000000000000000000000000000000000000000000
 01111111111111111100000000000000000001111111111111000000000
 01111111111111111110000000000000001111111111111111000000000
@@ -57,7 +58,7 @@ rc01 = '''\
 01111111100000111111101111110000111111111111111111011111100
 01111111100000111111101111110000001111111111111111011111100
 01111111100000111111101111110000000001111111111111011111100
-00000000000000000000000000000000000000000000000000000000000\
+00000000000000000000000000000000000000000000000000000000000\\
 '''*n
  
 def intarray(binstring):
@@ -67,11 +68,11 @@ def intarray(binstring):
  
 def chararray(intmatrix):
     '''Change a 2d list of lists of 1/0 ints into lines of 1/0 chars'''
-    return '\n'.join(''.join(str(p) for p in row) for row in intmatrix)
+    return '\\n'.join(''.join(str(p) for p in row) for row in intmatrix)
  
 def toTxt(intmatrix):
     '''Change a 2d list of lists of 1/0 ints into lines of '#' and '.' chars'''
-    return '\n'.join(''.join(('#' if p else '.') for p in row) for row in intmatrix)
+    return '\\n'.join(''.join(('#' if p else '.') for p in row) for row in intmatrix)
  
 def neighbours(x, y, image):
     '''Return 8-neighbours of point p1 of picture, in order'''
@@ -120,7 +121,8 @@ def zhangSuen(image):
 if __name__ == '__main__':
     for picture in (beforeTxt, smallrc01, rc01):
         image = intarray(picture)
-        print('\nFrom:\n%s' % toTxt(image))
+        print('\\nFrom:\\n%s' % toTxt(image))
         after = zhangSuen(image)
-        print('\nTo thinned:\n%s' % toTxt(after))
+        print('\\nTo thinned:\\n%s' % toTxt(after))
 
+"""

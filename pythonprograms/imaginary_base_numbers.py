@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Imaginary_base_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Imaginary_base_numbers#Python
 
 import math
 import re
@@ -79,30 +80,31 @@ def toQuaterImaginary(c):
 def print(*args, **kwargs):
     pass
 
-n = 40000
+n = {n}
 
 for i in range(1,n):
     c1 = complex(i, 0)
     qi = toQuaterImaginary(c1)
     c2 = qi.toComplex()
-    print( f"{c1} -> {qi} -> {c2}     ")
+    print( f"{{c1}} -> {{qi}} -> {{c2}}     ")
  
     c1 = -c1
     qi = toQuaterImaginary(c1)
     c2 = qi.toComplex()
-    print( f"{c1} -> {qi} -> {c2}")
+    print( f"{{c1}} -> {{qi}} -> {{c2}}")
 print()
  
 for i in range(1,n):
     c1 = complex(0, i)
     qi = toQuaterImaginary(c1)
     c2 = qi.toComplex()
-    print( f"{c1} -> {qi} -> {c2}     ")
+    print( f"{{c1}} -> {{qi}} -> {{c2}}     ")
  
     c1 = -c1
     qi = toQuaterImaginary(c1)
     c2 = qi.toComplex()
-    print( f"{c1} -> {qi} -> {c2}")
+    print( f"{{c1}} -> {{qi}} -> {{c2}}")
  
 print( "done")
 
+"""

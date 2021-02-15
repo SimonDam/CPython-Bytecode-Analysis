@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Knight%27s_tour#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Knight%27s_tour#Python
 
 import copy
  
@@ -17,7 +18,7 @@ def boardstring(board, boardsize=boardsize):
     r = range(boardsize)
     lines = ''
     for y in r:
-        lines += '\n' + ','.join('%2i' % board[(x,y)] if board[(x,y)] else '  '
+        lines += '\\n' + ','.join('%2i' % board[(x,y)] if board[(x,y)] else '  '
                                  for x in r)
     return lines
  
@@ -41,7 +42,7 @@ def accessibility(board, P, boardsize=boardsize):
     return access
  
 def knights_tour(start, boardsize=boardsize, _debug=False):
-    board = {(x,y):0 for x in range(boardsize) for y in range(boardsize)}
+    board = {{(x,y):0 for x in range(boardsize) for y in range(boardsize)}}
     move = 1
     P = chess2index(start, boardsize)
     board[P] = move
@@ -54,13 +55,13 @@ def knights_tour(start, boardsize=boardsize, _debug=False):
         move += 1
         if _debug:
             print(boardstring(board, boardsize=boardsize))
-            input('\n%2i next: ' % move)
+            input('\\n%2i next: ' % move)
     return board
 
 def print(*args, **kwargs):
     pass
 
-n = 40
+n = {n}
 if __name__ == '__main__':
     min_n = 6
     boardsize = n
@@ -68,3 +69,4 @@ if __name__ == '__main__':
     board = knights_tour(start, boardsize)
     print(boardstring(board, boardsize=boardsize))
 
+"""

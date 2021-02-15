@@ -1,4 +1,5 @@
-#Taken from: https://www.rosettacode.org/wiki/ASCII_art_diagram_converter#Python
+def source_code(n):	
+    return f"""#Taken from: https://www.rosettacode.org/wiki/ASCII_art_diagram_converter#Python
 
 '''
 http://rosettacode.org/wiki/ASCII_art_diagram_converter
@@ -88,7 +89,7 @@ def decode(lines):
                 else:
                     bits = (spaces + len(name) + 1) // 3
                     endbit = startbit + bits - 1
-                    print('{0:7}    {1:2d}     {2:2d}   {3:2d}'.format(name, bits, startbit, endbit))
+                    print('{{0:7}}    {{1:2d}}     {{2:2d}}   {{3:2d}}'.format(name, bits, startbit, endbit))
                     reslist = [name, bits, startbit, endbit]
                     results.append(reslist)
                     spaces = 0
@@ -98,12 +99,12 @@ def decode(lines):
     return results
  
 def unpack(results, hex):
-    print("\nTest string in hex:")
+    print("\\nTest string in hex:")
     print(hex)
-    print("\nTest string in binary:")
-    bin = f'{int(hex, 16):0>{4*len(hex)}b}'
+    print("\\nTest string in binary:")
+    bin = f'{{int(hex, 16):0>{{4*len(hex)}}b}}'
     print(bin)
-    print("\nUnpacked:\n")
+    print("\\nUnpacked:\\n")
     print("Name     Size  Bit pattern")
     print("=======  ====  ================")
     for r in results:
@@ -112,12 +113,12 @@ def unpack(results, hex):
         startbit = r[2]
         endbit = r[3]
         bitpattern = bin[startbit:endbit+1]
-        print('{0:7}    {1:2d}  {2:16}'.format(name, size, bitpattern))
+        print('{{0:7}}    {{1:2d}}  {{2:16}}'.format(name, size, bitpattern))
 
 def print(*args, **kwargs):
     pass
 
-n = 1500000
+n = {n}
 
 diagram = '''
 +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
@@ -159,3 +160,4 @@ else:
     unpack(results, hex)
  
 
+"""

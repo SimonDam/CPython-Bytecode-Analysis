@@ -1,7 +1,8 @@
-# Taken from: https://www.rosettacode.org/wiki/Stern-Brocot_sequence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Stern-Brocot_sequence#Python
 
 def stern_brocot(predicate=lambda series: len(series) < 20):
-    '''\
+    '''\\
     Generates members of the stern-brocot series, in order, returning them when the predicate becomes false
  
     >>> print('The first 10 values:',
@@ -19,13 +20,13 @@ def stern_brocot(predicate=lambda series: len(series) < 20):
 def print(*args, **kwargs):
     pass
 
-n = 250
+n = {n}
  
 if __name__ == '__main__':
     from math import gcd
  
     n_first = 15
-    print('The first %i values:\n  ' % n_first,
+    print('The first %i values:\\n  ' % n_first,
           stern_brocot(lambda series: len(series) < n_first)[:n_first])
     print()
     n_max = n
@@ -41,3 +42,4 @@ if __name__ == '__main__':
     assert all(gcd(prev, this) == 1
                for prev, this in zip(s, s[1:])), 'A fraction from adjacent terms is reducible'
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/CUSIP#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/CUSIP#Python
 
 '''CUSIP'''
  
@@ -42,7 +43,7 @@ def cusipCharDict():
                 enumFromTo('A')('Z') + list('*&#')
             )
         ),
-        {}
+        {{}}
     )
  
  
@@ -53,7 +54,7 @@ def print(*args, **kwargs):
 
 import random
 random.seed(87643508280752348075672348075628340765)
-n = 350000
+n = {n}
 def main():
     '''Tests'''
  
@@ -113,7 +114,7 @@ def tabulated(s):
         def width(x):
             return len(str(x))
         w = width(max(xs, key=width))
-        return s + '\n' + '\n'.join([
+        return s + '\\n' + '\\n'.join([
             str(x).rjust(w, ' ') + ' -> ' + str(f(x)) for x in xs
         ])
     return lambda f: lambda xs: go(f, xs)
@@ -134,12 +135,12 @@ def take(n):
 # toEnum :: Type -> Int -> a
 def toEnum(t):
     '''Enumerable value from index integer'''
-    dct = {
+    dct = {{
         int: int,
         float: float,
         str: chr,
         bool: bool
-    }
+    }}
     return lambda x: dct[t](x) if t in dct else t(x)
  
  
@@ -155,3 +156,4 @@ def zipWith(f):
 if __name__ == '__main__':
     main()
 
+"""

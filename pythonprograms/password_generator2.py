@@ -1,4 +1,5 @@
-# Written by Simonm Dam Nielsen
+def source_code(n):	
+    return f"""# Written by Simonm Dam Nielsen
 
 import random
 import string
@@ -10,8 +11,9 @@ def main(n):
         password += random.choice(characters)
 
 random.seed(8764359826387563248975623487956)
-n = 5000000
+n = {n}
 if __name__ == "__main__":
     main(n)
 
 
+"""

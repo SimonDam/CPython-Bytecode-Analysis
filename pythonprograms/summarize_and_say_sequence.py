@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Summarize_and_say_sequence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Summarize_and_say_sequence#Python
 
 from itertools import groupby, permutations
  
@@ -45,7 +46,7 @@ def max_A036058_length( start_range=range(11) ):
 def print(*args, **kwargs):
     pass
 
-n = 5000000
+n = {n}
 
 lenmax, starts = max_A036058_length( range(n) )
  
@@ -58,7 +59,7 @@ for m in starts:
                                if k[0] != '0')]
 allstarts = [x for x in sorted(allstarts) if x < 1000000]
  
-print ( '''\
+print ( '''\\
 The longest length, followed by the number(s) with the longest sequence length
 for starting sequence numbers below 1000000 are:
   Iterations = %i and sequence-starts = %s.''' % (lenmax, allstarts)   )
@@ -71,3 +72,4 @@ for m in starts:
     print()
     A036058_length(str(m), printit=True)
 
+"""

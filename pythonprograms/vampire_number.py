@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Vampire_number#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Vampire_number#Python
 
 from __future__ import division
  
@@ -9,7 +10,7 @@ from functools import reduce
  
  
 def fac(n):
-    '''\
+    '''\\
     return the prime factors for n
     >>> fac(600)
     [5, 5, 3, 2, 2, 2]
@@ -32,7 +33,7 @@ def fac(n):
     return res
  
 def fact(n):
-    '''\
+    '''\\
     return the prime factors and their multiplicities for n
     >>> fact(600)
     [(2, 3), (3, 1), (5, 2)]
@@ -66,7 +67,7 @@ def vampire(n):
 def print(*args, **kwargs):
     pass
 
-n = 50
+n = {n}
 
 if __name__ == '__main__':
     print('First 25 vampire numbers')
@@ -77,8 +78,9 @@ if __name__ == '__main__':
         if fangpairs:
             count += 1
             print('%i: %r' % (i, fangpairs))
-    print('\nSpecific checks for fangpairs')
+    print('\\nSpecific checks for fangpairs')
     for i in (16758243290880, 24959017348650, 14593825548650):
         fangpairs = vampire(i)
         print('%i: %r' % (i, fangpairs))
 
+"""

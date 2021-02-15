@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Fairshare_between_two_and_more#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Fairshare_between_two_and_more#Python
 
 from itertools import count, islice
  
@@ -26,8 +27,9 @@ def fairshare(b=2):
 def print(*args, **kwargs):
     pass
 
-n = 100000
+n = {n}
 if __name__ == '__main__':
     for b in range(2, n):
-        print(f"{b:>2}: {str(list(islice(fairshare(b), 25)))[1:-1]}")
+        print(f"{{b:>2}}: {{str(list(islice(fairshare(b), 25)))[1:-1]}}")
 
+"""

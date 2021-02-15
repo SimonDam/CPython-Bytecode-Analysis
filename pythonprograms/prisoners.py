@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/100_prisoners#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/100_prisoners#Python
 
 import random
  
@@ -47,9 +48,10 @@ def play_optimal(n):
 def print(*args, **kwargs):
     pass
 
-n = 10000
+n = {n}
 if __name__ == '__main__':
     print(" Simulation count:", n)
-    print(f" Random play wins: {play_random(n):4.1f}% of simulations")
-    print(f"Optimal play wins: {play_optimal(n):4.1f}% of simulations")
+    print(f" Random play wins: {{play_random(n):4.1f}}% of simulations")
+    print(f"Optimal play wins: {{play_optimal(n):4.1f}}% of simulations")
 
+"""

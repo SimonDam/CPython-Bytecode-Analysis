@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Parsing/RPN_to_infix_conversion#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Parsing/RPN_to_infix_conversion#Python
 
 '''
 >>> # EXAMPLE USAGE
@@ -19,8 +20,8 @@ TOKEN  STACK
 +      [Node(Node(Node(Node('3','^','2'),'^',Node('5','-','1')),'/',Node('2','*','4')),'+','3')]
 '''
  
-prec_dict =  {'^':4, '*':3, '/':3, '+':2, '-':2}
-assoc_dict = {'^':1, '*':0, '/':0, '+':0, '-':0}
+prec_dict =  {{'^':4, '*':3, '/':3, '+':2, '-':2}}
+assoc_dict = {{'^':1, '*':0, '/':0, '+':0, '-':0}}
  
 class Node:
     def __init__(self,x,op,y=None):
@@ -41,8 +42,8 @@ class Node:
  
         # determine left side string
         str_y = str(self.y)
-        if  self.y < self or \
-            (self.y == self and self.assocright) or \
+        if  self.y < self or \\
+            (self.y == self and self.assocright) or \\
             (str_y[0] == '-' and self.assocright):
  
             str_y = '(%s)'%str_y
@@ -55,8 +56,8 @@ class Node:
         elif self.op == '-' and not isinstance(self.x, Node) and str_x[0] == '-':
             str_x = str_x[1:]
             str_op = '+'
-        elif self.x < self or \
-             (self.x == self and not self.assocright and \
+        elif self.x < self or \\
+             (self.x == self and not self.assocright and \\
               getattr(self.x, 'op', 1) != getattr(self, 'op', 2)):
  
             str_x = '(%s)'%str_x
@@ -101,7 +102,7 @@ def rpn_to_infix(s, VERBOSE=False):
         else:
             stack.append(token)
  
-        # can't use \t in order to make global docstring pass doctest
+        # can't use \\t in order to make global docstring pass doctest
         if VERBOSE : print(token+' '*(7-len(token))+repr(stack)) 
  
     return str(stack[0])
@@ -116,9 +117,10 @@ print ("Output:",strResult)
  
 print()
 
-n = 750000
+n = {n}
 strTest = "1 2 + 3 4 + ^ 5 6 + ^"*n
 strResult = rpn_to_infix(strTest, VERBOSE=False)
 print ("Input: ",strTest)
 print ("Output:",strResult)
 
+"""

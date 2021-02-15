@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Deconvolution/1D#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Deconvolution/1D#Python
 
 def ToReducedRowEchelonForm( M ):
     if not M: return
@@ -27,7 +28,7 @@ def ToReducedRowEchelonForm( M ):
     return M
  
 def pmtx(mtx):
-    print ('\n'.join(''.join(' %4s' % col for col in row) for row in mtx))
+    print ('\\n'.join(''.join(' %4s' % col for col in row) for row in mtx))
  
 def convolve(f, h):
     g = [0] * (len(f) + len(h) - 1)
@@ -54,7 +55,7 @@ def print(*args, **kwargs):
 import random
 random.seed(8973465982346589234875)
 
-n = 425
+n = {n}
 if __name__ == '__main__':
     f = int(n/10)
     h = [random.randint(1,10) for _ in range(n)]
@@ -66,3 +67,4 @@ if __name__ == '__main__':
     convolve(f,h)
     deconvolve(g, f)
 
+"""

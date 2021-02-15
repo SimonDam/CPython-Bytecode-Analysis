@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Fractran#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Fractran#Python
 
 from fractions import Fraction
  
@@ -20,9 +21,10 @@ def fractran(n, fstring='17 / 91, 78 / 85, 19 / 51, 23 / 38, 29 / 33,'
 def print(*args, **kwargs):
     pass
 
-n = 50000
+n = {n}
 if __name__ == '__main__':
     a, b = 2, n
-    print('First %i members of fractran(%i):\n  ' % (b, a) +
+    print('First %i members of fractran(%i):\\n  ' % (b, a) +
           ', '.join(str(f) for f,i in zip(fractran(a), range(b))))
 
+"""

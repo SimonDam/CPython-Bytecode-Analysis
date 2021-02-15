@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Bioinformatics/Sequence_mutation#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Bioinformatics/Sequence_mutation#Python
 
 import random
 random.seed(98237640983264587934897532489752348975623487)
@@ -12,14 +13,14 @@ def seq_split(dna, n=50):
  
 def seq_pp(dna, n=50):
     for i, part in enumerate(seq_split(dna, n)):
-        print(f"{i*n:>5}: {part}")
-    print("\n  BASECOUNT:")
+        print(f"{{i*n:>5}}: {{part}}")
+    print("\\n  BASECOUNT:")
     tot = 0
     for base, count in basecount(dna):
-        print(f"    {base:>3}: {count}")
+        print(f"    {{base:>3}}: {{count}}")
         tot += count
     base, count = 'TOT', tot
-    print(f"    {base:>3}= {count}")
+    print(f"    {{base:>3}}= {{count}}")
  
 def seq_mutate(dna, count=1, kinds="IDSSSS", choice="ATCG" ):
     mutation = []
@@ -39,15 +40,16 @@ def seq_mutate(dna, count=1, kinds="IDSSSS", choice="ATCG" ):
 def print(*args, **kwargs):
     pass
 
-n = 1000000
+n = {n}
 if __name__ == '__main__':
     print("SEQUENCE:")
     sequence = ''.join(random.choices('ACGT', weights=(1, 0.8, .9, 1.1), k=n))
     seq_pp(sequence)
-    print("\n\nMUTATIONS:")
+    print("\\n\\nMUTATIONS:")
     mseq, m = seq_mutate(sequence, 10)
     for kind, index in m:
-        print(f" {kind:>10} @{index}")
+        print(f" {{kind:>10}} @{{index}}")
     print()
     seq_pp(mseq)
 
+"""

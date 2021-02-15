@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Emirp_primes#PL.2FI and https://www.rosettacode.org/wiki/Prime_decomposition#Python:_Using_Croft_Spiral_sieve
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Emirp_primes#PL.2FI and https://www.rosettacode.org/wiki/Prime_decomposition#Python:_Using_Croft_Spiral_sieve
 
 from __future__ import print_function
 from heapq import *
@@ -41,7 +42,7 @@ def croft():
     # dict ``roots`` stores an entry x:p for every prime p.
     for p in (2, 3, 5):
         yield p
-    roots = {9: 3, 25: 5}  # Map d**2 -> d.
+    roots = {{9: 3, 25: 5}}  # Map d**2 -> d.
     primeroots = frozenset((1, 7, 11, 13, 17, 19, 23, 29))
     selectors = (1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0)
     for q in compress(
@@ -91,13 +92,14 @@ def emirp():
 def print(*args, **kwargs):
     pass
 
-print('First 20:\n  ', list(islice(emirp(), 20)))
-print('Between 7700 and 8000:\n  [', end='')
+print('First 20:\\n  ', list(islice(emirp(), 20)))
+print('Between 7700 and 8000:\\n  [', end='')
 for pr in emirp():
     if pr >= 8000: break
     if pr >= 7700: print(pr, end=', ')
 print(']')
 
-n = 20000
-print('10000th:\n  ', list(islice(emirp(), n-1, n)))
+n = {n}
+print('10000th:\\n  ', list(islice(emirp(), n-1, n)))
 
+"""

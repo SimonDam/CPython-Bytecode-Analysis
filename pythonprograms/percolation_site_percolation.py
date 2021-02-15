@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Percolation/Site_percolation#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Percolation/Site_percolation#Python
 
 from random import random, seed
 import string
@@ -6,7 +7,7 @@ from pprint import pprint as pp
 
 seed(928374509234758724)
 
-n = 800
+n = {n}
 
 def print(*args, **kwargs):
     pass
@@ -64,7 +65,7 @@ def walk_maze(m, n, cell, indx):
 
 if __name__ == '__main__':
     sample_printed = False
-    pcount = {}
+    pcount = {{}}
     for p10 in range(n):
         p = p10 / 10.0
         pcount[p] = 0
@@ -74,10 +75,11 @@ if __name__ == '__main__':
             if percolated:
                 pcount[p] += 1
                 if not sample_printed:
-                    print('\nSample percolating %i x %i, p = %5.2f grid\n' % (M, N, p))
+                    print('\\nSample percolating %i x %i, p = %5.2f grid\\n' % (M, N, p))
                     pgrid(cell, percolated)
                     sample_printed = True
-    print('\n p: Fraction of %i tries that percolate through\n' % t )
+    print('\\n p: Fraction of %i tries that percolate through\\n' % t )
  
-    pp({p:c/float(t) for p, c in pcount.items()})
+    pp({{p:c/float(t) for p, c in pcount.items()}})
 
+"""

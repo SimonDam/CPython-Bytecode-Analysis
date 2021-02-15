@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Counting_sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Counting_sort#Python
 
 from collections import defaultdict
 def countingSort(array, mn, mx):
@@ -13,8 +14,9 @@ def countingSort(array, mn, mx):
 import random
 random.seed(46753892658732498576234857)
 
-n = 3000000
+n = {n}
 data = [random.randint(1, n) for _ in range(n)]
 mini,maxi = 1,n
 countingSort(data, mini, maxi) == sorted(data)
 
+"""

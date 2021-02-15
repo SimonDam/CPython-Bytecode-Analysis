@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Cocktail_sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Cocktail_sort#Python
 
 def cocktailSort(A):
     up = range(len(A)-1)
@@ -18,9 +19,10 @@ random.seed(6926928735872369856)
 def print(*args, **kwargs):
     pass
 
-n = 6000
+n = {n}
 test1 = [random.randint(1, n) for _ in range(n)]
 cocktailSort(test1)
 print(test1)
 
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Statistics/Basic#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Statistics/Basic#Python
 
 def sd1(numbers):
     if numbers:
@@ -34,13 +35,14 @@ def histogram(numbers):
 def print(*args, **kwargs):
     pass
 
-n = 10000000
+n = {n}
 if __name__ == '__main__':
     import random
     for i in range(1):
         m = [random.random() for j in range(n)]
-        print("\n##\n## %i numbers\n##" % 10**i)
+        print("\\n##\\n## %i numbers\\n##" % 10**i)
         print('  Naive  method: sd: %8.6f, mean: %8.6f' % sd1(m))
         print('  Second method: sd: %8.6f, mean: %8.6f' % sd2(m))
         histogram(m)
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sieve_of_Eratosthenes#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sieve_of_Eratosthenes#Python
 
 def eratosthenes2(n):
     multiples = set()
@@ -10,6 +11,7 @@ def eratosthenes2(n):
 def print(*args, **kwargs):
     pass
 
-n = 20000000
+n = {n}
 print(list(eratosthenes2(n)))
 
+"""

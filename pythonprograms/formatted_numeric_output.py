@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Forward_difference#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Forward_difference#Python
 
 '''Forward difference'''
  
@@ -29,7 +30,7 @@ def print(*args, **kwargs):
 
 import random
 random.seed(2093475453985786674)
-n = 1000000
+n = {n}
 def main():
     '''Nth order forward difference.'''
     xs = [random.randint(1, 10000) for _ in range(n)]
@@ -41,7 +42,7 @@ def main():
         ' -> ' + repr(nthForwardDifference(xs)(9))
     )
  
-    print('\nSuccessive orders of forward difference:')
+    print('\\nSuccessive orders of forward difference:')
     print(unlines([
         str(i) + ' -> ' + repr(x) for i, x in
         enumerate(take(10)(
@@ -93,10 +94,11 @@ def unlines(xs):
     '''A single string formed by the intercalation
        of a list of strings with the newline character.
     '''
-    return '\n'.join(xs)
+    return '\\n'.join(xs)
  
  
 # MAIN ---
 if __name__ == '__main__':
     main()
 
+"""

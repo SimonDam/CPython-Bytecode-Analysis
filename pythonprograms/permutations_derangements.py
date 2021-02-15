@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Permutations/Derangements#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Permutations/Derangements#Python
 
 from itertools import permutations
 import math
@@ -31,7 +32,7 @@ def _iterlen(iter):
 def print(*args, **kwargs):
     pass
 
-n = 47
+n = {n}
 
 if __name__ == '__main__':
     i = 4
@@ -39,10 +40,11 @@ if __name__ == '__main__':
     for d in derangements(i):
         print("  %s" % (d,))
  
-    print("\nTable of n vs counted vs calculated derangements")
+    print("\\nTable of n vs counted vs calculated derangements")
     for i in range(9):
         print("%2i %-5i %-5i" %
               (i, _iterlen(derangements(i)), subfact(i)))
  
-    print("\n!%i = %i" % (n, subfact(n)))
+    print("\\n!%i = %i" % (n, subfact(n)))
 
+"""

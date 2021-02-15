@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Move-to-front_algorithm#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Move-to-front_algorithm#Python
 
 from __future__ import print_function
 from string import ascii_lowercase
@@ -26,7 +27,7 @@ def move2front_decode(sequence, symboltable):
 def print(*args, **kwargs):
     pass
 
-n = 3000000
+n = {n}
 if __name__ == '__main__':
     for s in ['broood', 'bananaaa', 'hiphophiphop', ''.join(random.choice(ascii_lowercase) for _ in range(n))]:
         encode = move2front_encode(s, SYMBOLTABLE)
@@ -35,3 +36,4 @@ if __name__ == '__main__':
         print('which decodes back to %r' % decode)
         assert s == decode, 'Whoops!'
 
+"""

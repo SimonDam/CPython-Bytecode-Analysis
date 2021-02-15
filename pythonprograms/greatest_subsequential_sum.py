@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Greatest_subsequential_sum#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Greatest_subsequential_sum#Python
 
 def maxsumit(iterable):
     maxseq = seq = []
@@ -18,7 +19,7 @@ def maxsumit(iterable):
 import random
 random.seed(98437539862987346523984756837587234583724589273465)
 
-n = 5000000
+n = {n}
 def x ():
     for _ in range(n):
         yield random.randint(-10000,10000)
@@ -26,3 +27,4 @@ def x ():
 maxsumit(x())
 
 
+"""

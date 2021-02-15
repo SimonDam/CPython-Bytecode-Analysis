@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Determine_if_a_string_is_squeezable#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Determine_if_a_string_is_squeezable#Python
 
 from itertools import groupby
 import string
@@ -12,7 +13,7 @@ def squeezer(s, txt):
     return ''.join(item if item == s else ''.join(grp)
                    for item, grp in groupby(txt))
  
-n = 6000000
+n = {n}
 if __name__ == '__main__':
     strings = [
             "",
@@ -26,12 +27,13 @@ if __name__ == '__main__':
             "😍😀🙌💃😍😍😍🙌",
             ''.join((random.choice(string.ascii_letters)) for _ in range(n))
             ]
-    squeezers = f' ,-,7,., -r,e,s,a,😍,{random.choice(string.ascii_letters)}'.split(',')
+    squeezers = f' ,-,7,., -r,e,s,a,😍,{{random.choice(string.ascii_letters)}}'.split(',')
     for txt, chars in zip(strings, squeezers):
         this = "Original"
-        print(f"\n{this:14} Size: {len(txt)} «««{txt}»»»" )
+        print(f"\\n{{this:14}} Size: {{len(txt)}} «««{{txt}}»»»" )
         for ch in chars:
-            this = f"Squeezer '{ch}'"
+            this = f"Squeezer '{{ch}}'"
             sqz = squeezer(ch, txt)
-            print(f"{this:>14} Size: {len(sqz)} «««{sqz}»»»" )
+            print(f"{{this:>14}} Size: {{len(sqz)}} «««{{sqz}}»»»" )
 
+"""

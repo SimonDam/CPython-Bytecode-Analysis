@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Circular_primes#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Circular_primes#Python
 
 import random
 random.seed(8073459823465982347895239480756)
@@ -63,7 +64,7 @@ def isPrime(n: int) -> bool:
  
 def rotations(n: int)-> set((int,)):
     '''
-        >>> {123, 231, 312} == rotations(123)
+        >>> {{123, 231, 312}} == rotations(123)
         True
     '''
     a = str(n)
@@ -96,5 +97,6 @@ def main(n):
 def print(*args, **kwargs):
     pass
 
-n = 9
+n = {n}
 print(main(n))
+"""

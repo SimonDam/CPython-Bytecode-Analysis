@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Merge_sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Merge_sort#Python
 
 from heapq import merge
  
@@ -17,7 +18,8 @@ def merge_sort(m):
 import random
 random.seed(657834598756438976598432658723465897)
 
-n = 500000
+n = {n}
 test = [random.randint(1, n) for _ in range(n)]
 merge_sort(test)
 
+"""

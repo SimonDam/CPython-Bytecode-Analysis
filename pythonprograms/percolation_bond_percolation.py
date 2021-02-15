@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Percolation/Bond_percolation#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Percolation/Bond_percolation#Python
 
 from collections import namedtuple
 from random import random
@@ -70,10 +71,10 @@ def print(*args, **kwargs):
 
 pp = print
 
-n = 600
+n = {n}
 if __name__ == '__main__':
     sample_printed = False
-    pcount = {}
+    pcount = {{}}
     for p10 in range(n):
         p = (10 - p10) / 10.0    # count down so sample print is interesting
         pcount[p] = 0
@@ -83,10 +84,11 @@ if __name__ == '__main__':
             if percolated:
                 pcount[p] += 1
                 if not sample_printed:
-                    print('\nSample percolating %i x %i grid' % (M, N))
+                    print('\\nSample percolating %i x %i grid' % (M, N))
                     pgrid(grid, percolated)
                     sample_printed = True
-    print('\n p: Fraction of %i tries that percolate through' % t )
+    print('\\n p: Fraction of %i tries that percolate through' % t )
  
-    pp({p:c/float(t) for p, c in pcount.items()})
+    pp({{p:c/float(t) for p, c in pcount.items()}})
 
+"""

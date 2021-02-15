@@ -1,12 +1,13 @@
-# Taken from: https://www.rosettacode.org/wiki/Draw_a_cuboid#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Draw_a_cuboid#Python
 
 def _pr(t, x, y, z):
-    txt = '\n'.join(''.join(t[(n,m)] for n in range(3+x+z)).rstrip()
+    txt = '\\n'.join(''.join(t[(n,m)] for n in range(3+x+z)).rstrip()
                     for m in reversed(range(3+y+z)))
     return txt
  
 def cuboid(x,y,z):
-    t = {(n,m):' ' for n in range(3+x+z) for m in range(3+y+z)}
+    t = {{(n,m):' ' for n in range(3+x+z) for m in range(3+y+z)}}
     xrow = ['+'] + ['%i' % (i % 10) for i in range(x)] + ['+']
     for i,ch in enumerate(xrow):
         t[(i,0)] = t[(i,1+y)] = t[(1+z+i,2+y+z)] = ch
@@ -24,10 +25,11 @@ def cuboid(x,y,z):
 def print(*args, **kwargs):
     pass
 
-n = 300
+n = {n}
  
 _debug = False
 if __name__ == '__main__':
     for dim in ((2*n,3*n,4*n), (3*n,4*n,2*n), (4*n,2*n,3*n)):
-        print("CUBOID%r" % (dim,), cuboid(*dim), sep='\n')
+        print("CUBOID%r" % (dim,), cuboid(*dim), sep='\\n')
 
+"""

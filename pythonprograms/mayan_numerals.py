@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Mayan_numerals#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Mayan_numerals#Python
 
 '''Mayan numerals'''
  
@@ -35,18 +36,18 @@ def mayanFramed(n):
     '''Mayan integer in the form of a
        Wiki table source string.
     '''
-    return 'Mayan ' + str(n) + ':\n\n' + (
-        wikiTable({
+    return 'Mayan ' + str(n) + ':\\n\\n' + (
+        wikiTable({{
             'class': 'wikitable',
-            'style': cssFromDict({
+            'style': cssFromDict({{
                 'text-align': 'center',
                 'background-color': '#F0EDDE',
                 'color': '#605B4B',
                 'border': '2px solid silver'
-            }),
+            }}),
             'colwidth': '3em',
             'cell': 'vertical-align: bottom;'
-        })([[
+        }})([[
             '<br>'.join(col) for col in mayanNumerals(n)
         ]])
     )
@@ -58,8 +59,8 @@ def mayanFramed(n):
 def main(n):
     '''Mayan numeral representations of various integers'''
     print(
-        main.__doc__ + ':\n\n' +
-        '\n'.join(mayanFramed(n) for n in range(n)
+        main.__doc__ + ':\\n\\n' +
+        '\\n'.join(mayanFramed(n) for n in range(n)
         )
     )
  
@@ -79,21 +80,21 @@ def wikiTable(opts):
     def cellStyle():
         return opts['cell'] if 'cell' in opts else ''
  
-    return lambda rows: '{| ' + reduce(
+    return lambda rows: '{{| ' + reduce(
         lambda a, k: (
             a + k + '="' + opts[k] + '" ' if k in opts else a
         ),
         ['class', 'style'],
         ''
-    ) + '\n' + '\n|-\n'.join(
-        '\n'.join(
+    ) + '\\n' + '\\n|-\\n'.join(
+        '\\n'.join(
             ('|' if (0 != i and ('cell' not in opts)) else (
                 '|style="' + colWidth() + cellStyle() + '"|'
             )) + (
                 str(x) or ' '
             ) for x in row
         ) for i, row in enumerate(rows)
-    ) + '\n|}\n\n'
+    ) + '\\n|}}\\n\\n'
  
  
 # GENERIC -------------------------------------------------
@@ -128,8 +129,9 @@ def showIntAtBase(base):
 def print(*args, **kwargs):
     pass
 
-n = 300000
+n = {n}
 # MAIN ---
 if __name__ == '__main__':
     main(n)
 
+"""

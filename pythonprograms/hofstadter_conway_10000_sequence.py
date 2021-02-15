@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Hofstadter-Conway_$10,000_sequence#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Hofstadter-Conway_$10,000_sequence#Python
 
 from __future__ import division
  
@@ -30,9 +31,10 @@ def maxandmallows(nmaxpower2):
 def print(*args, **kwargs):
     pass
 
-n = 24
+n = {n}
 if __name__ == '__main__':
     hc, mallows = maxandmallows(n)
     if mallows:
-        print("\nYou too might have won $1000 with the mallows number of %i" % mallows)
+        print("\\nYou too might have won $1000 with the mallows number of %i" % mallows)
 
+"""

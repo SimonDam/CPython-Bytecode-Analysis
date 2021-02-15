@@ -1,6 +1,7 @@
-# Taken from: https://www.rosettacode.org/wiki/Cantor_set#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Cantor_set#Python
 
-n = 5500
+n = {n}
 
 WIDTH = n
 HEIGHT = n
@@ -30,3 +31,4 @@ for i in range(HEIGHT):
     beg = WIDTH * i
     print(''.join(lines[beg : beg+WIDTH]))
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Determine_if_a_string_has_all_unique_characters#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Determine_if_a_string_has_all_unique_characters#Python
 
 '''Determine if a string has all unique characters'''
  
@@ -70,7 +71,7 @@ def fTable(s):
     def go(xShow, fxShow, f, xs):
         ys = [xShow(x) for x in xs]
         w = max(map(len, ys))
-        return s + '\n' + '\n'.join(map(
+        return s + '\\n' + '\\n'.join(map(
             lambda x, y: y.rjust(w, ' ') + ' -> ' + fxShow(f(x)),
             xs, ys
         ))
@@ -86,7 +87,7 @@ def Just(x):
     '''Constructor for an inhabited Maybe (option type) value.
        Wrapper containing the result of a computation.
     '''
-    return {'type': 'Maybe', 'Nothing': False, 'Just': x}
+    return {{'type': 'Maybe', 'Nothing': False, 'Just': x}}
  
  
 # Nothing :: Maybe a
@@ -94,7 +95,7 @@ def Nothing():
     '''Constructor for an empty Maybe (option type) value.
        Empty wrapper returned where a computation is not possible.
     '''
-    return {'type': 'Maybe', 'Nothing': True}
+    return {{'type': 'Maybe', 'Nothing': True}}
  
  
 # fmap :: (a -> b) -> [a] -> [b]
@@ -149,7 +150,8 @@ def swap(tpl):
  
  
 # MAIN ---
-n = 4000000
+n = {n}
 if __name__ == '__main__':
     main(n)
 
+"""

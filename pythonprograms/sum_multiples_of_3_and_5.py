@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sum_multiples_of_3_and_5#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sum_multiples_of_3_and_5#Python
 
 def sum35a(n):
     'Direct count'
@@ -21,14 +22,14 @@ def sum35c(n):
 def print(*args, **kwargs):
     pass
 
-n = 10000
+n = {n}
 
 #test
 for n in range(n):
     sa, sb, sc = sum35a(n), sum35b(n), sum35c(n)
     assert sa == sb == sc  # python tests aren't like those of c.
  
-print('For n = %7i -> %i\n' % (n, sc))
+print('For n = %7i -> %i\\n' % (n, sc))
  
 # Pretty patterns
 for p in range(7):
@@ -36,5 +37,6 @@ for p in range(7):
  
 # Scalability 
 p = 20
-print('\nFor n = %20i -> %i' % (10**p, sum35c(10**p)))
+print('\\nFor n = %20i -> %i' % (10**p, sum35c(10**p)))
 
+"""

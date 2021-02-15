@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Non-continuous_subsequences#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Non-continuous_subsequences#Python
 
 def ncsub(seq, s=0):
     if seq:
@@ -10,8 +11,9 @@ def ncsub(seq, s=0):
     else:
         return [[]] if s >= 3 else []
 
-n = 21
+n = {n}
 
 ncsub(list(range(1, n)))
 
 
+"""

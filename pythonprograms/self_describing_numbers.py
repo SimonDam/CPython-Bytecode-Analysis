@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Self-describing_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Self-describing_numbers#Python
 
 def isSelfDescribing(n):
     s = str(n)
@@ -7,8 +8,9 @@ def isSelfDescribing(n):
 def print(*args, **kwargs):
     pass
 
-n = 5000000
+n = {n}
 
 print([x for x in range(n) if isSelfDescribing(x)])
 
 
+"""

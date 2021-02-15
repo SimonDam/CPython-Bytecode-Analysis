@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Faulhaber%27s_triangle#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Faulhaber%27s_triangle#Python
 
 '''Faulhaber's triangle'''
  
@@ -37,12 +38,12 @@ def print(*args, **kwargs):
     pass
 
 # TEST ----------------------------------------------------
-n = 500
+n = {n}
 def main():
     '''Tests'''
     fs = faulhaberTriangle(n)
     print(
-        fTable(__doc__ + ':\n')(str)(
+        fTable(__doc__ + ':\\n')(str)(
             compose(concat)(
                 fmap(showRatio(3)(3))
             )
@@ -67,7 +68,7 @@ def fTable(s):
     def go(xShow, fxShow, f, xs):
         ys = [xShow(x) for x in xs]
         w = max(map(len, ys))
-        return s + '\n' + '\n'.join(map(
+        return s + '\\n' + '\\n'.join(map(
             lambda x, y: y.rjust(w, ' ') + ' -> ' + fxShow(f(x)),
             xs, ys
         ))
@@ -137,3 +138,4 @@ def showRatio(m):
 if __name__ == '__main__':
     main()
 
+"""

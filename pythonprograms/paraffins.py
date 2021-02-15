@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Paraffins#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Paraffins#Python
 
 try:
     import psyco
@@ -9,7 +10,7 @@ except ImportError:
 def print(*args, **kwargs):
     pass
 
-n = 250
+n = {n}
 
 MAX_N = n
 BRANCH = 4
@@ -58,3 +59,4 @@ def main():
  
 main()
 
+"""

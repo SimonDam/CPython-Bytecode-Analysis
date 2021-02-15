@@ -1,6 +1,7 @@
-# Taken from: https://www.rosettacode.org/wiki/Ludic_numbers#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Ludic_numbers#Python
 
-n = 250000
+n = {n}
 
 def print(*args, **kwargs):
     pass
@@ -16,14 +17,15 @@ ludics = [l for l in ludic()]
  
 print('First 25 ludic primes:')
 print(ludics[:25])
-print("\nThere are %i ludic numbers <= 1000"
+print("\\nThere are %i ludic numbers <= 1000"
       % sum(1 for l in ludics if l <= 1000)) 
-print("\n2000'th..2005'th ludic primes:")
+print("\\n2000'th..2005'th ludic primes:")
 print(ludics[2000-1: 2005])
  
 triplets = [(x, x+2, x+6)
             for x in ludics
             if x+6 < n and x+2 in ludics and x+6 in ludics]
-print('\nThere are %i triplets less than %i:\n  %r'
+print('\\nThere are %i triplets less than %i:\\n  %r'
       % (len(triplets), n, triplets))
 
+"""

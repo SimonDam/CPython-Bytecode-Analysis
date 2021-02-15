@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Jaro_distance#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Jaro_distance#Python
 
 '''Jaro distance'''
  
@@ -68,7 +69,8 @@ def main(n):
         print("jaro(%r, %r) = %.10f" % (s, t, jaro(s, t)))
  
  
-n = 20000
+n = {n}
 if __name__ == '__main__':
     main(n)
 
+"""

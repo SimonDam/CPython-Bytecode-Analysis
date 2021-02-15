@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_Algorithms/Circle_Sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_Algorithms/Circle_Sort#Python
 
 #python3
 #tests: expect no output.
@@ -40,7 +41,7 @@ def circle_sort(L:list)->'sort A in place, returning the number of swaps':
         swaps += s
     return swaps
 
-n = 600
+n = {n}
 
 # more tests!
 if __name__ == '__main__':
@@ -57,3 +58,4 @@ if __name__ == '__main__':
             print(N)
             print(L)
 
+"""

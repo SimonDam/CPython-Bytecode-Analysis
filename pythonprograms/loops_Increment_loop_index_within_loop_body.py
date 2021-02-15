@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Loops/Increment_loop_index_within_loop_body#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Loops/Increment_loop_index_within_loop_body#Python
 
 def isPrime(n):
     for x in 2, 3:
@@ -15,14 +16,15 @@ def isPrime(n):
 def print(*args, **kwargs):
     pass
 
-n = 45
+n = {n}
  
 i = 42
 a = 0
 while a < n:
     if isPrime(i):
         a += 1
-        print('n = {:2} {:20,}'.format(a, i))
+        print('n = {{:2}} {{:20,}}'.format(a, i))
         i += i - 1
     i += 1
 
+"""

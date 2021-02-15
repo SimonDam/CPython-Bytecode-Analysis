@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Parsing/Shunting-yard_algorithm#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Parsing/Shunting-yard_algorithm#Python
 
 from collections import namedtuple
 from pprint import pprint as pp
@@ -6,7 +7,7 @@ from pprint import pprint as pp
 OpInfo = namedtuple('OpInfo', 'prec assoc')
 L, R = 'Left Right'.split()
  
-ops = {
+ops = {{
  '^': OpInfo(prec=4, assoc=R),
  '*': OpInfo(prec=3, assoc=L),
  '/': OpInfo(prec=3, assoc=L),
@@ -14,7 +15,7 @@ ops = {
  '-': OpInfo(prec=2, assoc=L),
  '(': OpInfo(prec=9, assoc=L),
  ')': OpInfo(prec=0, assoc=L),
- }
+ }}
  
 NUM, LPAREN, RPAREN = 'NUMBER ( )'.split()
  
@@ -95,16 +96,17 @@ def shunting(tokenvals):
 def print(*args, **kwargs):
     pass
 
-n = 2000
+n = {n}
 if __name__ == '__main__':
     infix = '3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3'*n
-    print( 'For infix expression: %r\n' % infix )
+    print( 'For infix expression: %r\\n' % infix )
     rp = shunting(get_input(infix))
     maxcolwidths = [len(max(x, key=len)) for x in zip(*rp)]
     row = rp[0]
-    print( ' '.join('{cell:^{width}}'.format(width=width, cell=cell) for (width, cell) in zip(maxcolwidths, row)))
+    print( ' '.join('{{cell:^{{width}}}}'.format(width=width, cell=cell) for (width, cell) in zip(maxcolwidths, row)))
     for row in rp[1:]:
-        print( ' '.join('{cell:<{width}}'.format(width=width, cell=cell) for (width, cell) in zip(maxcolwidths, row)))
+        print( ' '.join('{{cell:<{{width}}}}'.format(width=width, cell=cell) for (width, cell) in zip(maxcolwidths, row)))
  
-    print('\n The final output RPN is: %r' % rp[-1][2])
+    print('\\n The final output RPN is: %r' % rp[-1][2])
 
+"""

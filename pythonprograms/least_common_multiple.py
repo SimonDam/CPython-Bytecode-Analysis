@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Least_common_multiple#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Least_common_multiple#Python
 
 '''Least common multiple'''
  
@@ -27,7 +28,7 @@ def gcd_(x):
 def print(*args, **kwargs):
     pass
 
-n = 1000000
+n = {n}
 # TEST ----------------------------------------------------
 # main :: IO ()
 def main():
@@ -44,7 +45,7 @@ def main():
     pairs = [(0, 2), (2, 0), (-6, 14), (12, 18)]
     print(
         fTable(
-            '\n\n' + __doc__ + 's of ' + repr(pairs) + ':'
+            '\\n\\n' + __doc__ + 's of ' + repr(pairs) + ':'
         )(repr)(repr)(
             uncurry(lcm)
         )(pairs)
@@ -75,7 +76,7 @@ def unlines(xs):
     '''A single string derived by the intercalation
        of a list of strings with the newline character.
     '''
-    return '\n'.join(xs)
+    return '\\n'.join(xs)
  
  
 # FORMATTING ----------------------------------------------
@@ -89,7 +90,7 @@ def fTable(s):
     def go(xShow, fxShow, f, xs):
         ys = [xShow(x) for x in xs]
         w = max(map(len, ys))
-        return s + '\n' + '\n'.join(map(
+        return s + '\\n' + '\\n'.join(map(
             lambda x, y: y.rjust(w, ' ') + ' -> ' + fxShow(f(x)),
             xs, ys
         ))
@@ -102,3 +103,4 @@ def fTable(s):
 if __name__ == '__main__':
     main()
 
+"""

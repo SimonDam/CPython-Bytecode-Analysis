@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Faulhaber%27s_formula#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Faulhaber%27s_formula#Python
 
 from fractions import Fraction
  
@@ -64,7 +65,8 @@ def polstr(a):
 def print(*args, **kwargs):
     pass
 
-n = 100
+n = {n}
 for i, p in enumerate(sumpol(n)):
     print(i, ":", polstr(p))
 
+"""

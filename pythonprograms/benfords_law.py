@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Benford%27s_law#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Benford%27s_law#Python
 
 from __future__ import division
 from itertools import islice, count
@@ -26,7 +27,7 @@ def show_dist(title, s):
     size = sum(c.values())
     res = [c[d]/size for d in range(1,10)]
  
-    print("\n%s Benfords deviation" % title)
+    print("\\n%s Benfords deviation" % title)
     for r, e in zip(res, expected):
         print("%5.1f%% %5.1f%%  %5.1f%%" % (r*100., e*100., abs(r - e)*100.))
  
@@ -36,7 +37,7 @@ def rand1000():
 def print(*args, **kwargs):
     pass 
 
-n = 15000
+n = {n}
 if __name__ == '__main__':
     show_dist("fibbed", islice(heads(fib()), n))
     show_dist("threes", islice(heads(power_of_threes()), n))
@@ -44,3 +45,4 @@ if __name__ == '__main__':
     # just to show that not all kind-of-random sets behave like that
     show_dist("random", islice(heads(rand1000()), n))
 
+"""

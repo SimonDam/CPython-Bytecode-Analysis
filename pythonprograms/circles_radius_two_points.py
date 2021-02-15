@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Circles_of_given_radius_through_two_points#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Circles_of_given_radius_through_two_points#Python
 
 from collections import namedtuple
 from math import sqrt
@@ -38,14 +39,15 @@ def print(*args, **kwargs):
 
 import random
 random.seed(84367598734259872346587924358792634875)
-n = 400000
+n = {n}
 
 if __name__ == '__main__':
     for p1, p2, r in [(Pt(random.random(), random.random()), Pt(random.random(), random.random()), random.random()) for _ in range(n)]:
-        print('Through points:\n  %r,\n  %r\n  and radius %f\nYou can construct the following circles:'
+        print('Through points:\\n  %r,\\n  %r\\n  and radius %f\\nYou can construct the following circles:'
               % (p1, p2, r))
         try:
-            print('  %r\n  %r\n' % circles_from_p1p2r(p1, p2, r))
+            print('  %r\\n  %r\\n' % circles_from_p1p2r(p1, p2, r))
         except ValueError as v:
-            print('  ERROR: %s\n' % (v.args[0],))
+            print('  ERROR: %s\\n' % (v.args[0],))
 
+"""

@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Strand_sort#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Strand_sort#Python
 
 def merge_list(a, b):
 	out = []
@@ -26,7 +27,7 @@ def strand_sort(a):
 		out = merge_list(out, strand(a))
 	return out
 
-n = 30000
+n = {n}
 
 def print(*args, **kwargs):
     pass
@@ -36,3 +37,4 @@ random.seed(354456375546447)
 
 print(strand_sort([random.randint(1, n) for _ in range(n)]))
 
+"""

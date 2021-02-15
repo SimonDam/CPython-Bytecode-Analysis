@@ -1,4 +1,5 @@
-# Taken from: https://www.rosettacode.org/wiki/Longest_common_substring#Python
+def source_code(n):	
+    return f"""# Taken from: https://www.rosettacode.org/wiki/Longest_common_substring#Python
 
 import random
 random.seed(68457292874)
@@ -6,7 +7,7 @@ random.seed(68457292874)
 def print(*args, **kwargs):
     pass
 
-n = 20000
+n = {n}
 letters = "qwertyuiopasdfghjklzxcvbnm"
 s1 = ''.join(random.choice(letters) for _ in range(n))
 s2 = ''.join(random.choice(letters) for _ in range(n))
@@ -23,3 +24,4 @@ for i1 in range(len1):
         i2 = s2.find(s1[i1], i2+1)
 print (s1[ir:jr+1])
 
+"""
