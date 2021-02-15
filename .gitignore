@@ -1,5 +1,7 @@
 .vscode/
 cache/
+
+temp/
 *.csv
 *.json
 
