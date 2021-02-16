@@ -1,3 +1,5 @@
+n = 720895
+min_n = 1
 def source_code(n):	
     return f"""#Taken from: https://www.geeksforgeeks.org/python-program-for-heap-sort/
 # This code is contributed by Mohit Kumra 

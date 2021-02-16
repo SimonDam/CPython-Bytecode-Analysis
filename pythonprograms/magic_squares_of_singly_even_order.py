@@ -1,3 +1,5 @@
+n = 2559
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Magic_squares_of_singly_even_order#Python
 

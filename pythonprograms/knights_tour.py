@@ -1,3 +1,5 @@
+n = 42
+min_n = 6
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Knight%27s_tour#Python
 

@@ -1,3 +1,5 @@
+n = 8194
+min_n = 4
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Bubble_sort#Python
 

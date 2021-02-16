@@ -1,3 +1,5 @@
+n = 641951
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Mind_boggling_card_trick#Python
 

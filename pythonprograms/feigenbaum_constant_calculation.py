@@ -1,3 +1,5 @@
+n = 21
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Feigenbaum_constant_calculation#Python
 

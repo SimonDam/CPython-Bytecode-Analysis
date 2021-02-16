@@ -1,3 +1,5 @@
+n = 20
+min_n = 8
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Resistor_mesh#Python
 

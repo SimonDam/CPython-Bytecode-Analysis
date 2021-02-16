@@ -1,3 +1,5 @@
+n = 1572863
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Radix_sort#Python
 

@@ -1,3 +1,5 @@
+n = 6143
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Roots_of_unity#Python
 
