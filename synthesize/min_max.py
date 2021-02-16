@@ -165,6 +165,7 @@ def generate_min_max(folder, target, timeout=None, error = 0.05, force = True):
                 # Otherwise 
                 if not force:
                     # Only skip if we don't want force recalculation.
+                    print("Skipping!")
                     continue
 
 
