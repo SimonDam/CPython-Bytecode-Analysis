@@ -1,3 +1,5 @@
+n = 122879
+min_n = 1
 def source_code(n):	
     return f"""#Taken from: https://www.rosettacode.org/wiki/Abbreviations,_easy#Python
 def print(*args, **kwargs):

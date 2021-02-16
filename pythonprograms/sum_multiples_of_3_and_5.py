@@ -1,3 +1,5 @@
+n = 12287
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Sum_multiples_of_3_and_5#Python
 

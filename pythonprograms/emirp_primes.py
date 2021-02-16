@@ -1,3 +1,5 @@
+n = 26623
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Emirp_primes#PL.2FI and https://www.rosettacode.org/wiki/Prime_decomposition#Python:_Using_Croft_Spiral_sieve
 

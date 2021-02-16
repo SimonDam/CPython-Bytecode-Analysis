@@ -1,3 +1,5 @@
+n = 2097152
+min_n = 2
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Perfect_shuffle#Python
 

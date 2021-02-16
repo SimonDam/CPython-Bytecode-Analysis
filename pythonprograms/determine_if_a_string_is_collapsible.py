@@ -1,3 +1,5 @@
+n = 12582911
+min_n = 1
 def source_code(n):	
     return f"""#Taken from: https://www.rosettacode.org/wiki/Determine_if_a_string_is_collapsible#Python
 

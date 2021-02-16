@@ -1,3 +1,5 @@
+n = 393215
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Next_highest_int_from_digits#Python
 

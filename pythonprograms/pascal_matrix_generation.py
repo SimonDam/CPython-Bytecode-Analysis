@@ -1,3 +1,5 @@
+n = 2943
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Pascal_matrix_generation#Python
 

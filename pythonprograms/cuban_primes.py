@@ -1,3 +1,5 @@
+n = 40959
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Cuban_primes#Python
 

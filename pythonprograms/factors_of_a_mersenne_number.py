@@ -1,3 +1,5 @@
+n = 5629499534213119
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Factors_of_an_integer#Python
 

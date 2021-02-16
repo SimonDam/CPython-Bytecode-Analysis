@@ -1,3 +1,5 @@
+n = 53578
+min_n = 10
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/K-means%2B%2B_clustering#Python
 

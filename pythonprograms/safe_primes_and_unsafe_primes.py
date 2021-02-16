@@ -1,3 +1,5 @@
+n = 114687
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Safe_primes_and_unsafe_primes#Python
 

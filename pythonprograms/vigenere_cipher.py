@@ -1,3 +1,5 @@
+n = 14680063
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Vigen%C3%A8re_cipher#Python
 
