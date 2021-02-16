@@ -122,13 +122,17 @@ def find_max(source_code_func, timeout, target_min, target_max, min_n):
             if process.returncode == 0:
                 valid_n = n
             else:
+                # TODO, this is a problem for programs, where large n's result in failure.
+                # In this case, case it continues to increase n, despite it keeps failing.
                 elapsed = float("-inf")
 
         change, prev = _change(elapsed, change, target_min, target_max, prev)
         n += change
         if n < 1:
             n = 1
-    
+        if n > 2**1000:
+            # TODO Temporary solution for the case where the programs is too large.
+            return None
     return valid_n
 
 def generate_min_max(folder, target, timeout=None, error = 0.05, force = True):
