@@ -1,3 +1,5 @@
+n = 895
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Stirling_numbers_of_the_first_kind#Python
 

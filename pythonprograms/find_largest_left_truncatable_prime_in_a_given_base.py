@@ -1,3 +1,5 @@
+n = 12
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Find_largest_left_truncatable_prime_in_a_given_base#Python
 

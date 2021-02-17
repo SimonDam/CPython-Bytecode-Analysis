@@ -1,3 +1,5 @@
+n = 851967
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/nbody-python3-1.html
 

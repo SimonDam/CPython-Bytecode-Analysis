@@ -1,3 +1,5 @@
+n = 448
+min_n = 2
 def source_code(n):	
     return f"""# Taken from: https://github.com/kostya/benchmarks/blob/master/matmul/matmul.py
 # Writen by Attractive Chaos; distributed under the MIT license

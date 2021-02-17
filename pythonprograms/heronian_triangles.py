@@ -1,4 +1,4 @@
-n = 471
+n = 495
 min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Heronian_triangles#Python

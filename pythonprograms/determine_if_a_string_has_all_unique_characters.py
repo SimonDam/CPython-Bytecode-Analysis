@@ -1,3 +1,5 @@
+n = 5767167
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Determine_if_a_string_has_all_unique_characters#Python
 

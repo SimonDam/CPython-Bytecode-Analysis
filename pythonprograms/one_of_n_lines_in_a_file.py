@@ -1,4 +1,4 @@
-n = 1376255
+n = 1441791
 min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/One_of_n_lines_in_a_file#Python

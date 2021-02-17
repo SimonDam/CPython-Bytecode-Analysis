@@ -1,3 +1,5 @@
+n = 2883583
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Pseudo-random_numbers/Combined_recursive_generator_MRG32k3a#Python
 

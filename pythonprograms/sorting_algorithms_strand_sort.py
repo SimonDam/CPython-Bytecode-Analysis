@@ -1,4 +1,4 @@
-n = 25599
+n = 26623
 min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Sorting_algorithms/Strand_sort#Python

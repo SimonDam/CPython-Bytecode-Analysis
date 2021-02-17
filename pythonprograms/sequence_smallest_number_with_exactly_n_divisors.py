@@ -1,3 +1,5 @@
+n = 22
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Sequence:_smallest_number_with_exactly_n_divisors#Python
 

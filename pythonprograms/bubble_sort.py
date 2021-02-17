@@ -1,3 +1,5 @@
+n = 10239
+min_n = 1
 def source_code(n):	
     return f"""# Written by Simon Dam Nielsen
 

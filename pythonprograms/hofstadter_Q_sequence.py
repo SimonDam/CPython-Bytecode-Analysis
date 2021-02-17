@@ -1,4 +1,4 @@
-n = 4718594
+n = 4456450
 min_n = 4
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Hofstadter_Q_sequence#Python

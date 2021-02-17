@@ -1,3 +1,5 @@
+n = 3670015
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.python.org/ftp/python/parrotbench/
 # Updated to work on Python3. I have no idea if it is semantically correct.

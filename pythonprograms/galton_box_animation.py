@@ -1,5 +1,5 @@
 n = None
-min_n = 1
+min_n = 2
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Galton_box_animation#Python
 

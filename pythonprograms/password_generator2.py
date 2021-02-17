@@ -1,4 +1,4 @@
-n = 15728639
+n = 16777215
 min_n = 1
 def source_code(n):	
     return f"""# Written by Simonm Dam Nielsen

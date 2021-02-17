@@ -1,3 +1,5 @@
+n = 927
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Faulhaber%27s_triangle#Python
 

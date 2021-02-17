@@ -1,3 +1,5 @@
+n = 799
+min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/spectralnorm-python3-6.html
 
