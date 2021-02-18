@@ -6,6 +6,7 @@ import tempfile
 import argparse
 import inspect
 import subprocess
+import json
 
 def import_module_by_path(path):
     name = os.path.splitext(os.path.basename(path))[0]
@@ -135,7 +136,7 @@ def find_max(source_code_func, timeout, target_min, target_max, min_n):
             return None
     return valid_n
 
-def generate_min_max(folder, target, timeout=None, error = 0.05, force = True):
+def generate_min_max(folder, target, timeout=None, error = 0.05):
     _verify_args(target, timeout, error)
     if timeout is None:
         timeout = (target * 2) + 1
@@ -146,6 +147,15 @@ def generate_min_max(folder, target, timeout=None, error = 0.05, force = True):
     temp_folder = Path("./temp")
     if not os.path.exists(temp_folder):
         os.makedirs(temp_folder)
+    
+    json_path = Path(f"{folder}/timing_statistics.json")
+    if not os.path.exists(json_path):
+        with open(json_path, 'w') as json_file:
+            json_dict = {}
+            json_file.write("")
+    else:
+        with open(json_path, 'r') as json_file:
+            json_dict = json.load(json_file)
 
     for program in os.listdir(folder):
         if program.endswith(".py"):
@@ -153,21 +163,6 @@ def generate_min_max(folder, target, timeout=None, error = 0.05, force = True):
             program_path = Path(f"{folder}/{program}")
             module = import_module_by_path(program_path)
             source_code_func = module.source_code
-
-            try:
-                # Check if they have been calculated
-                module.n
-                module.min_n
-            except AttributeError:
-                # If we get an error, that just means we want to calculate the n and min_n.
-                pass
-            else:
-                # Otherwise 
-                if not force:
-                    # Only skip if we don't want force recalculation.
-                    print("Skipping!")
-                    continue
-
 
             num_of_params = len(inspect.getfullargspec(source_code_func).args)
             if num_of_params == 0:
@@ -178,26 +173,25 @@ def generate_min_max(folder, target, timeout=None, error = 0.05, force = True):
             
             min_n = find_min(source_code_func, timeout)
             n = find_max(source_code_func, timeout, target_min, target_max, min_n)
+
+            stats_dict = {
+                        "n": n,
+                        "min_n": min_n,
+                        "target_time":target,
+                        "timeout":timeout
+                    }
+
+            if program in json_dict:
+                json_dict[program] = json_dict[program].append(stats_dict)
+            else:
+                json_dict[program] = {[stats_dict]}
+            
+            with open(json_path, 'w') as json_file:
+                json.dump(json_dict, json_file)
             
             print(f"Found {n} and min {min_n}", flush=True)
-            new_text = ""
-            try:
-                after_ns = False
-                with open(program_path, 'r', encoding="utf8") as file:
-                    text = file.read()
-                    # We read the file and if the min_n and/or n is already set, we need to update them.
-                    # Due to this, we simply find the beginning of the function and then only use the text after that.
-                    for line in text.splitlines(keepends = True):
-                        if "def source_code(n):" in line:
-                            after_ns = True
-                        if after_ns:
-                            new_text += line
-            except Exception as e:
-                print(f"Ecountered exception {e}, did not update file.")
-            else:
-                with open(program_path, 'w', encoding="utf8") as file:
-                    file.write(f"n = {n}\nmin_n = {min_n}\n" + new_text)
         _temp_folder_cleanup(temp_folder)
+    
     
 
 if __name__ == "__main__":
@@ -210,8 +204,6 @@ if __name__ == "__main__":
                         help="the maximum run-time in seconds before timing out the program.")
     parser.add_argument("--error", type=float, default=0.05,
                         help=f"the error from the target run-time that is considered acceptable. Default is 0.05.")
-    parser.add_argument("-f", "--force", action="store_false",
-                        help="Whether to force recalculate n and min_n for files that are already run. Set True by default.")
     
     args = parser.parse_args()
     
