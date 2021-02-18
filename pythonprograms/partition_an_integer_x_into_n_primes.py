@@ -1,5 +1,3 @@
-n = 1
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Partition_an_integer_x_into_n_primes#Python
 

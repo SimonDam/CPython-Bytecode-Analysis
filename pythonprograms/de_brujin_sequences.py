@@ -1,5 +1,3 @@
-n = 33
-min_n = 2
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/De_Bruijn_sequences#Python
 # from https://en.wikipedia.org/wiki/De_Bruijn_sequence

@@ -1,5 +1,3 @@
-n = 25601
-min_n = 3
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Permutations/Rank_of_a_permutation#Python
 

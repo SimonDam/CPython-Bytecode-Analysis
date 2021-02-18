@@ -1,5 +1,3 @@
-n = 2883583
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/fasta-python3-1.html
 

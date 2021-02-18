@@ -1,5 +1,3 @@
-n = 7340031
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Greatest_subsequential_sum#Python
 

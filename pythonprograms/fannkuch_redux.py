@@ -1,5 +1,3 @@
-n = 10
-min_n = 3
 def source_code(n):	
     return f"""# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/fannkuchredux-python3-6.html
 

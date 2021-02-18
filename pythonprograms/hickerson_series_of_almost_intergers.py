@@ -1,5 +1,3 @@
-n = 3135
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Hickerson_series_of_almost_integers#Python
 

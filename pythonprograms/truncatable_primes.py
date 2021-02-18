@@ -1,5 +1,3 @@
-n = 13631488
-min_n = 2
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Truncatable_primes#Python
 

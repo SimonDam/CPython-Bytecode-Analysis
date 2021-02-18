@@ -1,5 +1,3 @@
-n = 917512
-min_n = 10
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Hash_join
 

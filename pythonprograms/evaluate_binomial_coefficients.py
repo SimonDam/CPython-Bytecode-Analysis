@@ -1,5 +1,3 @@
-n = 67108863
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Evaluate_binomial_coefficients#Python
 

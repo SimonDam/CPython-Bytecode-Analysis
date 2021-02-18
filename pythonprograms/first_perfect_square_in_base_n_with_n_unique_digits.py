@@ -1,5 +1,3 @@
-n = 16
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/First_perfect_square_in_base_n_with_n_unique_digits#Python
 

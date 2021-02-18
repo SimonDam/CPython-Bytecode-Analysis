@@ -1,5 +1,3 @@
-n = 1835007
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Palindrome_dates#Python
 

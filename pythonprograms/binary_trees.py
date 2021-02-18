@@ -1,5 +1,3 @@
-n = 17
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/binarytrees-python3-2.html
 

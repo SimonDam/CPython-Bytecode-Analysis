@@ -1,5 +1,3 @@
-n = 359
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Gaussian_elimination#Python
 

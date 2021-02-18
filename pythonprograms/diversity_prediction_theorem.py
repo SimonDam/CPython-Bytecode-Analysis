@@ -1,5 +1,3 @@
-n = 55295
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Diversity_prediction_theorem#Python
 

@@ -1,5 +1,3 @@
-n = 22527
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Jaro_distance#Python
 

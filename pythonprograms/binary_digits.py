@@ -1,5 +1,3 @@
-n = 294911
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Binary_digits#Python
 '''Decomposition of an integer to a string of booleans.'''

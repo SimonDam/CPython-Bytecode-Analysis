@@ -1,5 +1,3 @@
-n = 131
-min_n = 5
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Verify_distribution_uniformity/Chi-squared_test#Python
 

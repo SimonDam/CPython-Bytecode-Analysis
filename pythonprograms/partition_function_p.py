@@ -1,5 +1,3 @@
-n = 1791
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Partition_function_P#Python
 

@@ -1,5 +1,3 @@
-n = 51199
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Van_Eck_sequence#Python
 

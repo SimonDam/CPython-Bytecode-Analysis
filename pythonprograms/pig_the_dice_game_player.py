@@ -1,5 +1,3 @@
-n = 57343
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Pig_the_dice_game/Player#Python
 

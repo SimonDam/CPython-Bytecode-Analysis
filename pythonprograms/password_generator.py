@@ -1,5 +1,3 @@
-n = 5631
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Password_generator#Python
 

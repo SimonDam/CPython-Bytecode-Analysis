@@ -1,5 +1,3 @@
-n = 156
-min_n = 4
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Primes_-_allocate_descendants_to_their_ancestors#Python
 

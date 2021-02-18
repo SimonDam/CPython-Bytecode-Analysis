@@ -1,5 +1,3 @@
-n = 524287
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Fairshare_between_two_and_more#Python
 

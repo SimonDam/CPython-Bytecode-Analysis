@@ -1,5 +1,3 @@
-n = 7679
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Matrix-exponentiation_operator#Python
 

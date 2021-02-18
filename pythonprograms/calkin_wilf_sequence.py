@@ -1,5 +1,3 @@
-n = 1441791
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Calkin-Wilf_sequence#Python
 

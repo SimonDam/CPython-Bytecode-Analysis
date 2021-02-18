@@ -1,5 +1,3 @@
-n = 3670015
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Doubly-linked_list/Traversal#Python
 

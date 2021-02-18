@@ -1,5 +1,3 @@
-n = 2147483647
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Tree_traversal#Python
 

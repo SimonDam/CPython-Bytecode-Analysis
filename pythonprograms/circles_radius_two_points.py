@@ -1,5 +1,3 @@
-n = 622591
-min_n = 1
 def source_code(n):	
     return f"""# Taken from: https://www.rosettacode.org/wiki/Circles_of_given_radius_through_two_points#Python
 
