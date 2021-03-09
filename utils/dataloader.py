@@ -11,6 +11,9 @@ def read_jsons(path):
             with open(Path(f"{path}/{filename}")) as file:
                 data_dict = json.load(file)
                 print(data_dict, filename)
+                if not os.path.exists(data_dict["bct_path"]):
+                    raise FileNotFoundError(f"{data_dict['bct_path']} specified in {path}/{filename} does exist at that location.")
+
                 # TODO use the measurement_to_dict function instead.
                 duration = data_dict["duration"]
                 pkg = data_dict["pkg"]

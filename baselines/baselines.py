@@ -34,7 +34,7 @@ def _update_baselines_json(RDTSC_baseline = None, duration = None, pkg = None, d
 
 def calculate_RDTSC():
     warn("RDTSC baseline is not implemented. Using precomputed value.")
-    RDTSC_baseline = 25.88024884 # TODO add actual benchmark code.
+    RDTSC_baseline = 24.09245564 # TODO add actual benchmark code.
     _update_baselines_json(RDTSC_baseline=RDTSC_baseline)
     return RDTSC_baseline
 
