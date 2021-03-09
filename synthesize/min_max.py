@@ -148,7 +148,7 @@ def generate_min_max(folder, target, timeout=None, error = 0.05):
     if not os.path.exists(temp_folder):
         os.makedirs(temp_folder)
     
-    json_path = Path(f"{folder}/timing_statistics.json")
+    json_path = Path(f"{folder}/min_max.json")
     if not os.path.exists(json_path):
         with open(json_path, 'w') as json_file:
             json_dict = {}
@@ -181,13 +181,13 @@ def generate_min_max(folder, target, timeout=None, error = 0.05):
                         "timeout":timeout
                     }
 
-            if program in json_dict:
+            if program in json_dict and json_dict[program] is not None:
                 json_dict[program] = json_dict[program].append(stats_dict)
             else:
-                json_dict[program] = {[stats_dict]}
+                json_dict[program] = [stats_dict]
             
             with open(json_path, 'w') as json_file:
-                json.dump(json_dict, json_file)
+                json.dump(json_dict, json_file, indent = 4)
             
             print(f"Found {n} and min {min_n}", flush=True)
         _temp_folder_cleanup(temp_folder)

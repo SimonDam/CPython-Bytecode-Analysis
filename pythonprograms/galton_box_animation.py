@@ -76,6 +76,8 @@ def print(*args, **kwargs):
 sys.stdout.write = print
 sys.stdout.flush = print
 
+random.seed(98732498689769876872136589723456)
+
 n = {n}
 def main():
     board = Board(width = n, well_depth = 5, N = 10)

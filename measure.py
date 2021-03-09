@@ -71,7 +71,7 @@ def measure_programs(programs_dir, vanilla_path, bc_path, BCT_path, force = Fals
             json_path = f"{BCT_path}{filename}.json"
         
             if force or not file_already_run(json_path):
-                measurement = measure_program(filepath, vanilla_path, bc_path, iterations = 100, verbose = verbose, time_limit=10)
+                measurement = measure_program(filepath, vanilla_path, bc_path, iterations = 100, verbose = verbose, time_limit=120)
                 with open(json_path, 'r') as BCT_file:
                     results_dict = json.load(BCT_file)
                     results_dict['duration'] = measurement.duration

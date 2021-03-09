@@ -52,7 +52,7 @@ def get_RDTSC(use_cached = True):
             raise e("The RDTSC overhead calculation has not been saved. Run calculate_RDTSC function to create it.")
 
 def calculate_empty(python_path):
-    measurement = get_time_and_power(python_path, os.path.abspath("./baselines/empty.py"))
+    measurement = get_time_and_power(python_path, os.path.abspath("./baselines/empty.py"), iterations = 1000)
     _update_baselines_json(duration=measurement.duration, pkg=measurement.pkg, dram=measurement.dram)
     return measurement
 
