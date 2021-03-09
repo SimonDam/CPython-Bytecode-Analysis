@@ -10,7 +10,6 @@ def read_jsons(path):
         if filename.endswith(".json"):
             with open(Path(f"{path}/{filename}")) as file:
                 data_dict = json.load(file)
-                print(data_dict, filename)
                 if not os.path.exists(data_dict["bct_path"]):
                     raise FileNotFoundError(f"{data_dict['bct_path']} specified in {path}/{filename} does exist at that location.")
 
