@@ -6,8 +6,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import json
 import os
+import sys
 import baselines.baselines as baselines
 from utils.setup import getPython_Paths
+import multiprocessing as mp
 class Bytecode_stat:
     __valid_bytecodes = {1,2,3,4,5,6,9,10,11,12,15,16,17,19,20,22,23,24,25,26,27,28,29,50,51,52,53,54,55,56,57,59,60,61,62,63,64,
                          65,66,67,68,69,70,71,72,73,75,76,77,78,79,81,82,83,84,85,86,87,88,89,90,90,91,92,93,94,95,96,97,98,100,101,
@@ -140,53 +142,82 @@ def calculate_energy_consumption_by_avg_bytecode(bytecode_stat_lst, avg_dict, RD
 
     return result_lst
 
-def get_count_and_sums_for_files_h(file):
+def get_count_and_sums_for_files_h(path):
     res_dict = {}
-    for line in file:
-        bytecode, value = csv_get_values(line)
-        if bytecode == 'bytecode' and value == 'duration':
-            continue # skip the header
-        value = int(value)
-        bytecode = int(bytecode)
-        if bytecode in res_dict:
-            res_dict[bytecode]['count'] += 1
-            res_dict[bytecode]['sum'] += value
-        else:
-            # create the entry first time we encounter that bytecode
-            res_dict[bytecode] = {'count': 1,'sum': value}
+    with open(path) as file:
+        for line in file:
+            bytecode, value = csv_get_values(line)
+            if bytecode == 'bytecode' and value == 'duration':
+                continue # skip the header
+            value = int(value)
+            bytecode = int(bytecode)
+            if bytecode in res_dict:
+                res_dict[bytecode]['count'] += 1
+                res_dict[bytecode]['sum'] += value
+            else:
+                # create the entry first time we encounter that bytecode
+                res_dict[bytecode] = {'count': 1,'sum': value}
     return res_dict
 
-def get_count_and_sums_for_files(measurement_lst, verbose = False):
+
+def mp_helper(queue, func, measurement, *args, **kwargs):
+    queue.put((measurement, func(*args, **kwargs)))
+
+def get_count_and_sums_for_files(measurement_lst, verbose = False, nr_of_processes = 1):
+    if nr_of_processes < 1:
+        raise ValueError(f"nr_of_processes must be 1 or above ({nr_of_processes} given).")
+    
     bytecode_stat_lst = []
-    file_nr = 1
-    for measurement in measurement_lst:
-        path = measurement.path_to_data
-        if verbose: print(file_nr, "/", len(measurement_lst), path)
-        file_nr += 1
-        with open(path) as file:
-            count_sum_dict = get_count_and_sums_for_files_h(file)
-            bytecode_stat_lst.append((measurement, count_sum_dict))
+    processes = []
+    count = 1
+
+    try:
+        queue = mp.Queue()
+        while count < len(measurement_lst):
+            if len(processes) < nr_of_processes:
+                measurement = measurement_lst[count]
+                path = measurement.path_to_data
+                if verbose: print(f"{len(bytecode_stat_lst)} / {count} / {len(measurement_lst)} : {path}")
+                count += 1
+
+                p = mp.Process(target=mp_helper, args=(queue, get_count_and_sums_for_files_h, measurement,  path))
+                p.start()
+                processes.append(p)
+            else:
+                for process in processes:
+                    if not process.is_alive():
+                        processes.remove(process)
+                        process.close()
+
+            while not queue.empty():
+                bytecode_stat_lst.append(queue.get())
+    except KeyboardInterrupt:
+        for process in processes:
+            process.kill()
+            sys.exit()
+
     return bytecode_stat_lst
 
 def dump_count_sum_lst_to_json(bytecode_stat_lst, dest):
     for measurement, d in bytecode_stat_lst:
         filename = measurement.path_to_data.split(os.sep)[-1]
-        with open(Path(f"{dest}/{filename}"), 'w') as file:
-            json.dump(d, file)
+        with open(Path(f"{dest}/{filename}.json"), 'w') as file:
+            json.dump(d, file, indent = 4)
 
 def main():
     vanilla_path, _ = getPython_Paths()
 
-    measurement_lst = dataloader.read_jsons("G:\\bcc")
+    measurement_lst = dataloader.read_jsons("F:\\BCC data\\small")
 
-    bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, verbose = True)
-    dump_count_sum_lst_to_json(bytecode_stat_lst, os.path.abspath("./count_sum"))
+    bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, verbose = True, nr_of_processes = 8)
+    dump_count_sum_lst_to_json(bytecode_stat_lst, os.path.abspath("./cache/count_sum"))
     avg_dict = total_average_of_every_bytecode(bytecode_stat_lst)
 
     RDTSC_baseline = baselines.get_RDTSC()
-    empty_baseline = baselines.empty(vanilla_path)
+    empty_baseline = baselines.get_empty(vanilla_path)
+    empty_energy = sum(empty_baseline.pkg) + sum(empty_baseline.dram)
 
-    result_lst = calculate_energy_consumption_by_avg_bytecode(bytecode_stat_lst, avg_dict, RDTSC_overhead = RDTSC_baseline, energy_overhead=empty_baseline)
+    result_lst = calculate_energy_consumption_by_avg_bytecode(bytecode_stat_lst, avg_dict, RDTSC_overhead = RDTSC_baseline, energy_overhead=empty_energy)
     
     with open("result.csv", 'w') as file:
         file.write("path,estimated_energy,actual_energy\n")
