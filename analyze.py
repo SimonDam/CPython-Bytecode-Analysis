@@ -169,7 +169,7 @@ def get_count_and_sums_for_files(measurement_lst, verbose = False, nr_of_process
     
     bytecode_stat_lst = []
     processes = []
-    count = 1
+    count = 0
 
     try:
         queue = mp.Queue()
@@ -177,10 +177,15 @@ def get_count_and_sums_for_files(measurement_lst, verbose = False, nr_of_process
             if len(processes) < nr_of_processes:
                 measurement = measurement_lst[count]
                 path = measurement.path_to_data
-                if verbose: print(f"{len(bytecode_stat_lst)} / {count} / {len(measurement_lst)} : {path}")
+                if verbose: print(f"{len(bytecode_stat_lst)} / {count} / {len(measurement_lst)-1} : {path}")
                 count += 1
+                cache_path = Path(f"./cache/count_sum/{measurement.path_to_data.split(os.sep)[-1]}.json")
+                if os.path.exists(cache_path):
+                    print(" skipping")
+                    queue.put((measurement, load_count_sum_lst_from_json(cache_path)))
+                    continue
 
-                p = mp.Process(target=mp_helper, args=(queue, get_count_and_sums_for_files_h, measurement,  path))
+                p = mp.Process(target=mp_helper, args=(queue, get_count_and_sums_for_files_h, measurement, path))
                 p.start()
                 processes.append(p)
             else:
@@ -190,6 +195,14 @@ def get_count_and_sums_for_files(measurement_lst, verbose = False, nr_of_process
                         process.close()
 
             while not queue.empty():
+                bytecode_stat_lst.append(queue.get())
+        for process in processes:
+            if not process.is_alive():
+                processes.remove(process)
+                process.close()
+            else:
+                process.join()
+        while not queue.empty():
                 bytecode_stat_lst.append(queue.get())
     except KeyboardInterrupt:
         for process in processes:
@@ -204,12 +217,15 @@ def dump_count_sum_lst_to_json(bytecode_stat_lst, dest):
         with open(Path(f"{dest}/{filename}.json"), 'w') as file:
             json.dump(d, file, indent = 4)
 
+def load_count_sum_lst_from_json(path):
+    with open(path) as file:
+        return json.load(file)
+
 def main():
     vanilla_path, _ = getPython_Paths()
 
     measurement_lst = dataloader.read_jsons("F:\\BCC data\\small")
-
-    bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, verbose = True, nr_of_processes = 8)
+    bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, verbose = True, nr_of_processes = 6)
     dump_count_sum_lst_to_json(bytecode_stat_lst, os.path.abspath("./cache/count_sum"))
     avg_dict = total_average_of_every_bytecode(bytecode_stat_lst)
 
