@@ -3,56 +3,7 @@ import pyRAPL
 import time
 from utils.printer import ow_print
 import json
-
-class Measurement:
-    def __init__(self, duration, pkg, dram, name = None):
-        if duration < 0:
-            raise ValueError(f"Duration must be positive. {duration}")
-        for cpu_energy in pkg:
-            if cpu_energy < 0:
-                raise ValueError(f"All elements of pkg must be positive. {pkg}")
-        for ram_energy in dram:
-            if ram_energy < 0:
-                raise ValueError(f"All elements of pkg must be positive. {dram}")
-        if name is not None:
-            if not isinstance(name, str):
-                raise TypeError(f"name must be of type string.")
-        
-        self.duration = duration
-        self.pkg = pkg
-        self.dram = dram
-        self.name = name
-
-    def __add__(self, other):
-        name = None
-        if self.name is not None: 
-            name = self.name
-        if other.name is not None:
-            name = other.name
-
-        self.__validate_other(other)
-        duration = self.duration + other.duration
-        pkg = [x + y for x, y in zip(self.pkg, other.pkg)]
-        dram = [x + y for x, y in zip(self.dram, other.dram)]
-        return Measurement(duration, pkg, dram, name)
-
-    def __truediv__(self, dividend):
-        duration = self.duration / dividend
-        pkg = [x / dividend for x in self.pkg]
-        dram = [x / dividend for x in self.dram]
-        return Measurement(duration, pkg, dram, self.name)
-
-    def __validate_other(self, other):
-        if len(self.pkg) != len(other.pkg):
-            raise ValueError(f"pkg lists must be same length.")
-        if len(self.dram) != len(other.dram):
-            raise ValueError(f"dram lists must be same length.")
-
-    def __str__(self):
-        if self.name is not None:
-            return f"Name: {self.name} Duration: {self.duration} pkg: {self.pkg} dram: {self.dram}"
-        else:
-            return f"Duration: {self.duration} pkg: {self.pkg} dram: {self.dram}"
+from utils.measurement import Measurement
 
 def run_BCTs(python_path, filepath, verbose = False):
     if verbose:
@@ -60,7 +11,7 @@ def run_BCTs(python_path, filepath, verbose = False):
         print(f"Timing bytecodes of {filename}...", end = ' ', flush = True)
     os.chdir(os.path.abspath("./Python-BCT"))
     # Run the modified Python interpreter.
-    os.system(f"{python_path} {filepath}")
+    os.system(f"{python_path} {filepath}") # TODO Add CPU affinity for this benchmark.
     # This has generated the bytecode files.
     os.chdir(os.path.abspath(".."))
     if verbose:
@@ -75,7 +26,7 @@ def get_time_and_power(python_path, filepath, iterations = 1, time_limit = float
     for i in range(iterations):
         dividend = i + 1
         pyRAPL_measurement.begin()
-        os.system(f"{python_path} {filepath}")
+        os.system(f"{python_path} {filepath}") # TODO Add CPU affinity for this benchmark.
         pyRAPL_measurement.end()
         measurement += Measurement(pyRAPL_measurement.result.duration,
                                    pyRAPL_measurement.result.pkg,
@@ -120,7 +71,7 @@ def measure_programs(programs_dir, vanilla_path, bc_path, BCT_path, force = Fals
             json_path = f"{BCT_path}{filename}.json"
         
             if force or not file_already_run(json_path):
-                measurement = measure_program(filepath, vanilla_path, bc_path, iterations = 100, verbose = verbose, time_limit=10)
+                measurement = measure_program(filepath, vanilla_path, bc_path, iterations = 100, verbose = verbose, time_limit=120)
                 with open(json_path, 'r') as BCT_file:
                     results_dict = json.load(BCT_file)
                     results_dict['duration'] = measurement.duration

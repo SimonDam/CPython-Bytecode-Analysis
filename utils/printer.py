@@ -1,7 +1,7 @@
 import sys
 
 def ow_print(*args, sep=' ', file = sys.stdout, flush = False):
-    # TODO if the line goes beyond the size of the terminal size, the cariage return causes is only to go back to the beginning on the line, not the beginning of the previous string.
+    # TODO if the line goes beyond the width of the terminal, the cariage return causes is only to go back to the beginning on the line, not the beginning of the previous string.
     print_str = ""
     for arg in args[:-1]:
         print_str += str(arg) + sep
