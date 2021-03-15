@@ -1,15 +1,15 @@
-from Python.Lib.pathlib import Path
-import utils.dataloader as dataloader
-from utils.csv_parser import csv_get_values
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-import pandas as pd
+import argparse
 import json
+import multiprocessing as mp
 import os
 import sys
-import baselines.baselines as baselines
-from utils.setup import getPython_Paths
-import multiprocessing as mp
+
+import utils.dataloader as dataloader
+from data import processing
+from Python.Lib.pathlib import Path
+from utils.csv_parser import csv_get_values
+
+
 class Bytecode_stat:
     __valid_bytecodes = {1,2,3,4,5,6,9,10,11,12,15,16,17,19,20,22,23,24,25,26,27,28,29,50,51,52,53,54,55,56,57,59,60,61,62,63,64,
                          65,66,67,68,69,70,71,72,73,75,76,77,78,79,81,82,83,84,85,86,87,88,89,90,90,91,92,93,94,95,96,97,98,100,101,
@@ -39,109 +39,6 @@ class Bytecode_stat:
     def __str__(self):
         return f"bytecode = {self.bytecode}, timing = {self.timing}, count = {self.count}"
 
-def analysis(measurement_lst, BCT_path, results_lst):
-    duration_lst = [x.duration for x in measurement_lst]
-    pkg_lst = [sum(x.pkg) for x in measurement_lst]
-    dram_lst = [sum(x.dram) for x in measurement_lst]
-    
-    pkg_fig, pkg_ax = plt.subplots()
-    pkg_ax.set_title("Run-time vs. CPU energy consumption.")
-    pkg_ax.set_xlabel("Time [µs]")
-    pkg_ax.set_ylabel("Energy [µJ]")
-    pkg_ax.scatter(duration_lst, pkg_lst)
-    pkg_fig.savefig(f"{BCT_path}cpu.pdf")
-    pkg_fig.show()
-
-    dram_fig, dram_ax = plt.subplots()
-    dram_ax.set_title("Run-time vs. RAM energy consumption.")
-    dram_ax.set_xlabel("Time [µs]")
-    dram_ax.set_ylabel("Energy [µJ]")
-    dram_ax.scatter(duration_lst, dram_lst)
-    dram_fig.savefig(f"{BCT_path}ram.pdf")
-    dram_fig.show()
-
-    sum_results = {}
-    for results in results_lst:
-        for key in results['bc_stats']:
-            if key in sum_results:
-                sum_results[key] += results['bc_stats'][key]
-            else:
-                sum_results[key] = results['bc_stats'][key]
-
-    # Calculate duration from the average timing of a bytecode, multiplied by the amount of times it has been seen.
-    #duration_lst = []
-    #for results in results_lst:
-    #    duration = 0
-    #    for key in results['bc_stats']:
-    #        avg = sum_results[key].get_avg()
-    #        count = results['bc_stats'][key].count
-    #        duration +=  avg * count
-    #    duration_lst.append((results['bct_path'], duration, results['duration'], duration / results['duration']))
-
-    sum_dur = 0
-    for key in sum_results:
-        sum_dur += sum_results[key].timing
-
-    percentage_dict = {}
-    for key in sum_results:
-        percentage_dict[key] = sum_results[key].timing / sum_dur
-
-    #TODO Calculate the average energy consumption of each bytecode based on the amount of time it takes to execute it, compared to the total time.
-    #     Use this to calculate the total energy consumption by simply multiplying the energy consumption of each bytecode with the amount of times it has been executed.
-
-def total_average_of_every_bytecode(bytecode_stat_lst):
-    total_dict = {}
-    for _, count_sum_dict in bytecode_stat_lst:
-        for bytecode in count_sum_dict:
-            if bytecode in total_dict:
-                total_dict[bytecode]['count'] += count_sum_dict[bytecode]['count']
-                total_dict[bytecode]['sum'] += count_sum_dict[bytecode]['sum']
-            else:
-                total_dict[bytecode] = {'count': count_sum_dict[bytecode]['count'],
-                                        'sum': count_sum_dict[bytecode]['sum']}
-    
-    avg_bytecodes_dict = {}
-    for bytecode in total_dict:
-        avg_bytecodes_dict[bytecode] = total_dict[bytecode]['sum'] / total_dict[bytecode]['count']
-
-    return avg_bytecodes_dict
-
-def total_count_and_RDTSC_of_bytecodes(count_sum_dict):
-    count = 0
-    RDTSC = 0
-    for bytecode in count_sum_dict:
-        count += count_sum_dict[bytecode]['count']
-        RDTSC += count_sum_dict[bytecode]['sum']
-    return count, RDTSC
-
-def total_energy_and_bytecode_count(bytecode_stat_lst):
-    total_energy = 0
-    total_count = 0
-    total_RDTSC = 0
-    for measurement, count_sum_dict in bytecode_stat_lst:
-        total_energy += sum(measurement.pkg) + sum(measurement.dram)
-        count, RDTSC = total_count_and_RDTSC_of_bytecodes(count_sum_dict)
-        total_count += count
-        total_RDTSC += RDTSC
-        
-    return total_energy, total_count, total_RDTSC
-
-def calculate_energy_consumption_by_avg_bytecode(bytecode_stat_lst, avg_dict, RDTSC_overhead = 0, energy_overhead = 0):
-    result_lst = []
-    total_energy, total_count, total_RDTSC = total_energy_and_bytecode_count(bytecode_stat_lst)
-    for measurement, count_sum_dict in bytecode_stat_lst:
-        estimated_RDTSC = 0
-        for bytecode in count_sum_dict:
-            count = count_sum_dict[bytecode]['count']
-            avg_bytecode_RDTSC = avg_dict[bytecode] - RDTSC_overhead
-            estimated_RDTSC += avg_bytecode_RDTSC * count
-        
-        estimated_energy = (total_energy * (estimated_RDTSC / total_RDTSC)) - energy_overhead
-        actual_energy = sum(measurement.pkg) + sum(measurement.dram)
-        result_lst.append((measurement.path_to_data, estimated_energy, actual_energy))
-
-    return result_lst
-
 def get_count_and_sums_for_files_h(path):
     res_dict = {}
     with open(path) as file:
@@ -163,7 +60,7 @@ def get_count_and_sums_for_files_h(path):
 def mp_helper(queue, func, measurement, *args, **kwargs):
     queue.put((measurement, func(*args, **kwargs)))
 
-def get_count_and_sums_for_files(measurement_lst, verbose = False, nr_of_processes = 1):
+def get_count_and_sums_for_files(measurement_lst, folder, verbose = False, nr_of_processes = 1, force = False):
     if nr_of_processes < 1:
         raise ValueError(f"nr_of_processes must be 1 or above ({nr_of_processes} given).")
     
@@ -175,15 +72,15 @@ def get_count_and_sums_for_files(measurement_lst, verbose = False, nr_of_process
         queue = mp.Queue()
         while count < len(measurement_lst):
             if len(processes) < nr_of_processes:
-                measurement = measurement_lst[count]
+                measurement_dict, measurement = measurement_lst[count]
                 path = measurement.path_to_data
                 if verbose: print(f"{len(bytecode_stat_lst)} / {count} / {len(measurement_lst)-1} : {path}")
                 count += 1
-                cache_path = Path(f"./cache/count_sum/{measurement.path_to_data.split(os.sep)[-1]}.json")
-                if os.path.exists(cache_path):
-                    print(" skipping")
-                    queue.put((measurement, load_count_sum_lst_from_json(cache_path)))
-                    continue
+                if not force:
+                    if "cache" in measurement_dict:
+                        print(" skipping")
+                        queue.put((measurement, measurement_dict["cache"]))
+                        continue
 
                 p = mp.Process(target=mp_helper, args=(queue, get_count_and_sums_for_files_h, measurement, path))
                 p.start()
@@ -213,32 +110,35 @@ def get_count_and_sums_for_files(measurement_lst, verbose = False, nr_of_process
 
 def dump_count_sum_lst_to_json(bytecode_stat_lst, dest):
     for measurement, d in bytecode_stat_lst:
-        filename = measurement.path_to_data.split(os.sep)[-1]
-        with open(Path(f"{dest}/{filename}.json"), 'w') as file:
-            json.dump(d, file, indent = 4)
+        filename = measurement.path_to_data.split(os.sep)[-1].replace(".csv", ".json")
+        with open(Path(f"{dest}/{filename}"), 'r') as file:
+            json_dict = json.load(file)
+        json_dict["cache"] = d
+        with open(Path(f"{dest}/{filename}"), 'w') as file:
+            json.dump(json_dict, file, indent = 4)
 
-def load_count_sum_lst_from_json(path):
-    with open(path) as file:
-        return json.load(file)
+if __name__ == "__main__":
+    # Parse commandline args.
+    parser = argparse.ArgumentParser()
+    parser.add_argument("folder",
+                        help="path to the directory of the .json files with paths to the .csv files.")
+    parser.add_argument("-v", "--verbose", action="store_true",
+                        help="print running statistics to the console.")
+    parser.add_argument("-f", "--force", action="store_true", 
+                        help="recalculate and override existing caches.")
+    parser.add_argument("-p", "--processes", action="store", default=1, type=int,
+                        help="amount of processes to run simutaniously. Useful for speeding up the calculation the cache statistics for each .csv file. Default is 1.")
+    args = parser.parse_args()
 
-def main():
-    vanilla_path, _ = getPython_Paths()
+    # Load data
+    measurement_lst = dataloader.read_jsons(args.folder)
+    bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, args.folder, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
+    dump_count_sum_lst_to_json(bytecode_stat_lst, args.folder)
 
-    measurement_lst = dataloader.read_jsons("F:\\BCC data\\small")
-    bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, verbose = True, nr_of_processes = 6)
-    dump_count_sum_lst_to_json(bytecode_stat_lst, os.path.abspath("./cache/count_sum"))
-    avg_dict = total_average_of_every_bytecode(bytecode_stat_lst)
-
-    RDTSC_baseline = baselines.get_RDTSC()
-    empty_baseline = baselines.get_empty(vanilla_path)
-    empty_energy = sum(empty_baseline.pkg) + sum(empty_baseline.dram)
-
-    result_lst = calculate_energy_consumption_by_avg_bytecode(bytecode_stat_lst, avg_dict, RDTSC_overhead = RDTSC_baseline, energy_overhead=empty_energy)
+    # Analyze data
+    result_lst = processing.fraction_of_totals(bytecode_stat_lst, use_baselines = (not args.force))
     
     with open("result.csv", 'w') as file:
         file.write("path,estimated_energy,actual_energy\n")
         for path, estimated_energy, actual_energy in result_lst:
             file.write(f"\"{path}\",{estimated_energy},{actual_energy}\n")
-
-if __name__ == "__main__":
-    main()

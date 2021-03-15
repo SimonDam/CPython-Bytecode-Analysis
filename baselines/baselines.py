@@ -1,8 +1,10 @@
-from utils.measurement import Measurement, measurement_from_dict
-from measure import get_time_and_power
+import json
 import os
 from warnings import warn
-import json
+
+from measure import get_time_and_power
+from utils.measurement import Measurement, measurement_from_dict
+
 
 def _update_baselines_dict(baseline_dict, RDTSC_baseline = None, duration = None, pkg = None, dram = None):
     if RDTSC_baseline is not None:
