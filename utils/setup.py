@@ -1,8 +1,10 @@
-import pyRAPL
-import os
 import argparse
-from warnings import warn
+import os
 import platform
+from warnings import warn
+
+import pyRAPL
+
 
 def ensure_BCT_dir(BCT_path):
     while True:
