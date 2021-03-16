@@ -6,7 +6,6 @@ import pandas as pd
 
 from utils.measurement import Measurement
 
-
 def read_jsons(path):
     measurement_lst = []
     for filename in os.listdir(path):
@@ -21,5 +20,5 @@ def read_jsons(path):
                 pkg = data_dict["pkg"]
                 dram = data_dict["dram"]
                 path_to_data = data_dict["bct_path"]
-                measurement_lst.append((data_dict, Measurement(duration, pkg, dram, path_to_data = path_to_data)))
+                measurement_lst.append((Measurement(duration, pkg, dram, path_to_data = path_to_data), data_dict))
     return measurement_lst
