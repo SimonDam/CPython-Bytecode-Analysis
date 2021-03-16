@@ -59,7 +59,7 @@ def get_count_and_sums_for_files_h(path):
 def mp_helper(queue, func, measurement, *args, **kwargs):
     queue.put((measurement, func(*args, **kwargs)))
 
-def get_count_and_sums_for_files(measurement_lst, folder, verbose = False, nr_of_processes = 1, force = False):
+def get_count_and_sums_for_files(measurement_lst, verbose = False, nr_of_processes = 1, force = False):
     if nr_of_processes < 1:
         raise ValueError(f"nr_of_processes must be 1 or above ({nr_of_processes} given).")
     
@@ -132,7 +132,7 @@ if __name__ == "__main__":
 
     # Load data
     measurement_lst = dataloader.read_jsons(args.folder)
-    bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, args.folder, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
+    bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
 
     # Analyze data
     result_lst = processing.fraction_of_totals(bytecode_stat_lst, use_baselines = (not args.force))
