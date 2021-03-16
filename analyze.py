@@ -100,7 +100,9 @@ def get_count_and_sums_for_files(measurement_lst, folder, verbose = False, nr_of
             else:
                 process.join()
         while not queue.empty():
-                bytecode_stat_lst.append(queue.get())
+            measurement, cache_dict = queue.get()
+            bytecode_stat_lst.append((measurement, cache_dict))
+            dump_cache(measurement, cache_dict)
     except KeyboardInterrupt:
         for process in processes:
             process.kill()
@@ -108,14 +110,13 @@ def get_count_and_sums_for_files(measurement_lst, folder, verbose = False, nr_of
 
     return bytecode_stat_lst
 
-def dump_count_sum_lst_to_json(bytecode_stat_lst, dest):
-    for measurement, d in bytecode_stat_lst:
-        filename = measurement.path_to_data.split(os.sep)[-1].replace(".csv", ".json")
-        with open(Path(f"{dest}/{filename}"), 'r') as file:
-            json_dict = json.load(file)
-        json_dict["cache"] = d
-        with open(Path(f"{dest}/{filename}"), 'w') as file:
-            json.dump(json_dict, file, indent = 4)
+def dump_cache(measurement, cache_dict):
+    json_path = measurement.path_to_data.replace(".csv", ".json")
+    with open(Path(f"{json_path}"), 'r') as file:
+        json_dict = json.load(file)
+    json_dict["cache"] = cache_dict
+    with open(Path(f"{json_path}"), 'w') as file:
+        json.dump(json_dict, file, indent = 4)
 
 if __name__ == "__main__":
     # Parse commandline args.
@@ -127,13 +128,12 @@ if __name__ == "__main__":
     parser.add_argument("-f", "--force", action="store_true", 
                         help="recalculate and override existing caches.")
     parser.add_argument("-p", "--processes", action="store", default=1, type=int,
-                        help="amount of processes to run simutaniously. Useful for speeding up the calculation the cache statistics for each .csv file. Default is 1.")
+                        help="amount of processes to run simultaniously. Useful for speeding up the calculation the cache statistics for each .csv file. Default is 1.")
     args = parser.parse_args()
 
     # Load data
     measurement_lst = dataloader.read_jsons(args.folder)
     bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, args.folder, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
-    dump_count_sum_lst_to_json(bytecode_stat_lst, args.folder)
 
     # Analyze data
     result_lst = processing.fraction_of_totals(bytecode_stat_lst, use_baselines = (not args.force))

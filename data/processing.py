@@ -3,7 +3,6 @@ import utils.setup
 
 import data.fraction_of_total.helpers as fot
 
-
 def fraction_of_totals(bytecode_stat_lst, use_baselines = True):
     avg_dict = fot.averages(bytecode_stat_lst)
 
@@ -16,7 +15,3 @@ def fraction_of_totals(bytecode_stat_lst, use_baselines = True):
         empty_baseline = 0
     empty_energy = sum(empty_baseline.pkg) + sum(empty_baseline.dram)
     return fot.results(bytecode_stat_lst, avg_dict, RDTSC_overhead=RDTSC_baseline, energy_overhead=empty_energy)
-
-
-
-
