@@ -39,9 +39,13 @@ class Bytecode_stat:
     def __str__(self):
         return f"bytecode = {self.bytecode}, timing = {self.timing}, count = {self.count}"
 
-def get_count_and_sums_for_files_h(path):
+def get_count_and_sums_for_files_h(measurement, verbose):
+    json_path = measurement.path_to_data.replace(".csv", ".json")
+    csv_path = measurement.path_to_data
     res_dict = {}
-    with open(path) as file:
+    if verbose: print(f"Analyzing {csv_path}", flush=True)
+
+    with open(csv_path) as file:
         for line in file:
             bytecode, value = csv_get_values(line)
             if bytecode == 'bytecode' and value == 'duration':
@@ -54,67 +58,45 @@ def get_count_and_sums_for_files_h(path):
             else:
                 # create the entry first time we encounter that bytecode
                 res_dict[bytecode] = {'count': 1,'sum': value}
-    return res_dict
+    dump_cache(json_path, res_dict)
+    return (measurement, res_dict)
 
-def mp_helper(queue, func, measurement, *args, **kwargs):
-    queue.put((measurement, func(*args, **kwargs)))
+def load_existing_caches(measurement_lst):
+    todo_lst = []
+    done_lst = []
+    
+    for measurement, measurement_dict in measurement_lst:
+        if "cache" in measurement_dict:
+            done_lst.append((measurement, measurement_dict["cache"]))
+        else:
+            todo_lst.append(measurement)
+    return todo_lst, done_lst
 
 def get_count_and_sums_for_files(measurement_lst, verbose = False, nr_of_processes = 1, force = False):
     if nr_of_processes < 1:
         raise ValueError(f"nr_of_processes must be 1 or above ({nr_of_processes} given).")
+
+    if not force:
+        measurement_lst, bytecode_stat_lst = load_existing_caches(measurement_lst)
+        if measurement_lst == []:
+            if verbose: print("Found caches for every .csv files. Set force flag not use caches.")
+            return bytecode_stat_lst
+        elif bytecode_stat_lst != []:
+            if verbose: print("Found some caches. Set force flag not use caches.")
+
+    args = []
+    for measurement in measurement_lst:
+        args.append((measurement, verbose))
     
-    bytecode_stat_lst = []
-    processes = []
-    count = 0
+    with mp.Pool(processes=nr_of_processes) as pool:
+        results = pool.starmap(get_count_and_sums_for_files_h, args)
+    return bytecode_stat_lst + results
 
-    try:
-        queue = mp.Queue()
-        while count < len(measurement_lst):
-            if len(processes) < nr_of_processes:
-                measurement_dict, measurement = measurement_lst[count]
-                path = measurement.path_to_data
-                if verbose: print(f"{len(bytecode_stat_lst)} / {count} / {len(measurement_lst)-1} : {path}")
-                count += 1
-                if not force:
-                    if "cache" in measurement_dict:
-                        print(" skipping")
-                        queue.put((measurement, measurement_dict["cache"]))
-                        continue
-
-                p = mp.Process(target=mp_helper, args=(queue, get_count_and_sums_for_files_h, measurement, path))
-                p.start()
-                processes.append(p)
-            else:
-                for process in processes:
-                    if not process.is_alive():
-                        processes.remove(process)
-                        process.close()
-
-            while not queue.empty():
-                bytecode_stat_lst.append(queue.get())
-        for process in processes:
-            if not process.is_alive():
-                processes.remove(process)
-                process.close()
-            else:
-                process.join()
-        while not queue.empty():
-            measurement, cache_dict = queue.get()
-            bytecode_stat_lst.append((measurement, cache_dict))
-            dump_cache(measurement, cache_dict)
-    except KeyboardInterrupt:
-        for process in processes:
-            process.kill()
-            sys.exit()
-
-    return bytecode_stat_lst
-
-def dump_cache(measurement, cache_dict):
-    json_path = measurement.path_to_data.replace(".csv", ".json")
-    with open(Path(f"{json_path}"), 'r') as file:
+def dump_cache(path, cache_dict):
+    with open(Path(f"{path}"), 'r') as file:
         json_dict = json.load(file)
     json_dict["cache"] = cache_dict
-    with open(Path(f"{json_path}"), 'w') as file:
+    with open(Path(f"{path}"), 'w') as file:
         json.dump(json_dict, file, indent = 4)
 
 if __name__ == "__main__":
