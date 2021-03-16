@@ -56,7 +56,6 @@ def get_count_and_sums_for_files_h(path):
                 res_dict[bytecode] = {'count': 1,'sum': value}
     return res_dict
 
-
 def mp_helper(queue, func, measurement, *args, **kwargs):
     queue.put((measurement, func(*args, **kwargs)))
 
