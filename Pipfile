@@ -9,6 +9,7 @@ verify_ssl = true
 pyrapl = "*"
 pandas = "*"
 matplotlib = "*"
+scikit-learn = "*"
 
 [requires]
 python_version = "3.8"
