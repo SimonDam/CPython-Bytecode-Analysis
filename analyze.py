@@ -4,10 +4,17 @@ import multiprocessing as mp
 import os
 import sys
 
+from numpy.lib.function_base import average
+
 import utils.dataloader as dataloader
 import data.processing as processing
+import data.preparation as preparation
 from Python.Lib.pathlib import Path
 from utils.csv_parser import csv_get_values
+
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import numpy as np
 
 def get_count_and_sums_for_files_h(measurement, verbose):
     json_path = measurement.path_to_data.replace(".csv", ".json")
@@ -83,13 +90,31 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Load data
-    measurement_lst = dataloader.read_jsons(args.folder)
-    bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
+    train, _, test = dataloader.read_from_folders(args.folder, train_split=0.7, samples_per_folder=(None, None, None), shuffle=True)
+    train = get_count_and_sums_for_files(train, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
+    test = get_count_and_sums_for_files(test, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
 
     # Analyze data
     #result_lst = processing.fraction_of_totals.get_results(bytecode_stat_lst, use_baselines = (not args.force))
-    result_lst = processing.regression.get_results(bytecode_stat_lst)
+    result_lst = processing.neural_network.get_results(train, test)
+    xs = []
+    ys = []
+    errors = []
     with open("regression.csv", 'w') as file:
         file.write("path,estimated_energy,actual_energy\n")
         for path, estimated_energy, actual_energy in result_lst:
+            xs.append(actual_energy)
+            ys.append(estimated_energy)
+            error = abs(actual_energy-estimated_energy)/actual_energy
+            errors.append(error)
             file.write(f"\"{path}\",{estimated_energy},{actual_energy}\n")
+    print("Score, ", average(errors))
+    
+    #z = np.polyfit(xs, ys, 1)
+    #p = np.poly1d(z)
+    fig, (ax1, ax2) = plt.subplots(2)
+    ax1.plot(xs, ys, '.')
+    ax1.plot(xs, xs)
+    #ax1.plot(xs,p(xs),"r--")
+    ax2.plot(xs, errors, '.')
+    plt.show()
