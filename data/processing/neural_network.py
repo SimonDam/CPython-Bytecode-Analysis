@@ -18,12 +18,12 @@ def get_results(train, test):
     output = layers.Dense(1, activation="relu")(dense)
 
     model = keras.Model(inputs=[input], outputs=[output])
-    model.compile(optimizer="adam", loss=keras.losses.MeanSquaredError())
+    model.compile(optimizer="adam", loss=keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error"))
 
     train_xs = np.array(train_xs)
     train_ys = np.array(train_ys)
     test_xs = np.array(test_xs)
     test_ys = np.array(test_ys)
-    model.fit(train_xs, train_ys, validation_data=(test_xs, test_ys), epochs=500, batch_size=8)
+    model.fit(train_xs, train_ys, validation_data=(test_xs, test_ys), epochs=25, batch_size=16)
     result_arr = np.array(model.predict(test_xs))
     return list(zip(test_measurement_paths, list(result_arr), list(test_ys)))
