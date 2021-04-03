@@ -15,7 +15,7 @@ class Analysis():
         return self.run_func(*args, **kwargs)
 
 def regression(additional_name = ""):
-    if not additional_name:
+    if additional_name:
         additional_name = f"- {additional_name}"
 
     with_func = lambda train, test : processing.regression.get_results(train, test, use_baseline = True)
