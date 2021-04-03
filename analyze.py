@@ -1,20 +1,13 @@
+import analysis
 import argparse
 import json
 import multiprocessing as mp
-import os
-import sys
-
-from numpy.lib.function_base import average
 
 import utils.dataloader as dataloader
 import data.processing as processing
-import data.preparation as preparation
 from Python.Lib.pathlib import Path
 from utils.csv_parser import csv_get_values
-
-import matplotlib.pyplot as plt
-import matplotlib as mpl
-import numpy as np
+from utils.visualise import create_graphs
 
 def get_count_and_sums_for_files_h(measurement, verbose):
     json_path = measurement.path_to_data.replace(".csv", ".json")
@@ -81,6 +74,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("folder",
                         help="path to the directory of the .json files with paths to the .csv files.")
+    parser.add_argument("-d", "--dest", default=None,
+                        help="path to the results of the analysis/analyses.")
     parser.add_argument("-v", "--verbose", action="store_true",
                         help="print running statistics to the console.")
     parser.add_argument("-f", "--force", action="store_true", 
@@ -94,51 +89,14 @@ if __name__ == "__main__":
     train = get_count_and_sums_for_files(train, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
     test = get_count_and_sums_for_files(test, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
 
+    sample_name = "All samples"
+
+    # Get experiments
+    analyses = []
+    analyses += analysis.regression(sample_name)
+    analyses += analysis.fraction_of_totals(sample_name)
+
     # Analyze data
-    result_lst = processing.fraction_of_totals.get_results(train, test)
-    #result_lst = processing.regression.get_results(train, test, use_baseline = False)
-    xs = []
-    ys = []
-    errors = []
-    with open("regression.csv", 'w') as file:
-        file.write("path,estimated_energy,actual_energy\n")
-        for path, estimated_energy, actual_energy in result_lst:
-            xs.append(actual_energy)
-            ys.append(estimated_energy)
-            error = abs(actual_energy-estimated_energy)/actual_energy
-            errors.append(error*100)
-            file.write(f"\"{path}\",{estimated_energy},{actual_energy}\n")
-    
-    avg_error = average(errors)
-    print("Score", avg_error)
-    correlation_matrix = np.corrcoef(xs, ys)
-    correlation_xy = correlation_matrix[0,1]
-    r_squared = correlation_xy ** 2
-    print("R^2", r_squared)
-    
-    # Fit a linear line to data.
-    z = np.polyfit(xs, ys, 1)
-    p = np.poly1d(z)
-    
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(20,6))
-    fig.suptitle(f"Fraction of totals (no baselines) - All samples - Average error: {avg_error:.1f}%")
-    x_lims = [0, 4.5*10**7]
-
-    ax1.plot(xs, ys, '.', label="Predictions")
-    ax1.plot(xs, xs, label="Perfect predictions")
-    ax1.plot(xs,p(xs),"r--", label=f"Trendline, R^2 = {r_squared:.3f}")
-    ax1.set_title("Estimated energy consumption vs.\nActual energy consumption")
-    ax1.legend(loc='upper left')
-    ax1.set(xlabel='Actual energy [µJ]', ylabel='Estimated energy [µJ]')
-    ax1.set_xlim(x_lims)
-
-    ax2.plot(xs, errors, '.')
-    ax2.set_title("Error over actual energy consumption")
-    ax2.set(xlabel='Actual energy [µJ]', ylabel='Error [%]')
-    ax2.set_xlim(x_lims)
-
-    ax3.hist(xs, bins=50)
-    ax3.set_title("Distribution of samples")
-    ax3.set(xlabel='Actual energy [µJ]', ylabel='# of sampels')
-    ax3.set_xlim(x_lims)
-    plt.show()
+    for a in analyses:
+        data = a.run(train, test)
+        create_graphs(data, a.name, dest = args.dest, show=args.verbose)
