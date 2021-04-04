@@ -21,6 +21,9 @@ class Measurement:
         self.name = name
         self.path_to_data = path_to_data
     
+    def get_total_energy(self):
+        return sum(self.pkg) + sum(self.dram)
+    
     def __add__(self, other):
         add_func = lambda x, y: x+y
         return self.__binary_operator(other, add_func)

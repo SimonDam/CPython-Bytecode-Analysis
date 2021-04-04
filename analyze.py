@@ -1,13 +1,13 @@
+import analysis
 import argparse
 import json
 import multiprocessing as mp
-import os
-import sys
 
 import utils.dataloader as dataloader
 import data.processing as processing
 from Python.Lib.pathlib import Path
 from utils.csv_parser import csv_get_values
+from utils.visualise import create_graphs
 
 def get_count_and_sums_for_files_h(measurement, verbose):
     json_path = measurement.path_to_data.replace(".csv", ".json")
@@ -74,6 +74,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("folder",
                         help="path to the directory of the .json files with paths to the .csv files.")
+    parser.add_argument("-d", "--dest", default=None,
+                        help="path to the results of the analysis/analyses.")
     parser.add_argument("-v", "--verbose", action="store_true",
                         help="print running statistics to the console.")
     parser.add_argument("-f", "--force", action="store_true", 
@@ -83,13 +85,18 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Load data
-    measurement_lst = dataloader.read_jsons(args.folder)
-    bytecode_stat_lst = get_count_and_sums_for_files(measurement_lst, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
+    train, _, test = dataloader.read_from_folders(args.folder, train_split=0.7, samples_per_folder=(None, None, None), shuffle=True)
+    train = get_count_and_sums_for_files(train, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
+    test = get_count_and_sums_for_files(test, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
+
+    sample_name = "All samples"
+
+    # Get experiments
+    analyses = []
+    analyses += analysis.regression(sample_name)
+    analyses += analysis.fraction_of_totals(sample_name)
 
     # Analyze data
-    #result_lst = processing.fraction_of_totals.get_results(bytecode_stat_lst, use_baselines = (not args.force))
-    result_lst = processing.regression.get_results(bytecode_stat_lst)
-    with open("regression.csv", 'w') as file:
-        file.write("path,estimated_energy,actual_energy\n")
-        for path, estimated_energy, actual_energy in result_lst:
-            file.write(f"\"{path}\",{estimated_energy},{actual_energy}\n")
+    for a in analyses:
+        data = a.run(train, test)
+        create_graphs(data, a.name, dest = args.dest, show=args.verbose)

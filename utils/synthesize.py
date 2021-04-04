@@ -49,7 +49,7 @@ def create(source_folder, target_folder, amount, target_time = None):
                 path, ext = os.path.splitext(filepath)
                 name = os.path.basename(path)
 
-                new_filename = Path(f"{name}{target_n}{ext}")
+                new_filename = Path(f"{name}_{target_n}{ext}")
                 file_target_folder = Path(f"{target_folder}/{name}/")
                 if not os.path.exists(file_target_folder):
                     os.mkdir(file_target_folder)

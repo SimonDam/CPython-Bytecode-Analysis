@@ -1,1 +1,1 @@
-from data.processing import regression, fraction_of_totals
+from data.processing import regression, fraction_of_totals, neural_network

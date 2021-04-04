@@ -1,18 +1,19 @@
 import baselines.baselines as baselines
 import utils.setup
+from utils.measurement import Measurement
 
-def get_results(bytecode_stat_lst, use_baselines = True):
-    avg_dict = _averages(bytecode_stat_lst)
+def get_results(train, test, use_baselines = True, force = False):
+    avg_dict = _averages(train)
 
     vanilla_path, _ = utils.setup.getPython_Paths()
     if use_baselines:
-        RDTSC_baseline = baselines.get_RDTSC()
-        empty_baseline = baselines.get_empty(vanilla_path)
+        RDTSC_baseline = baselines.get_RDTSC(use_cached = not force)
+        empty_baseline = baselines.get_empty(vanilla_path, use_cached = not force)
     else:
         RDTSC_baseline = 0
-        empty_baseline = 0
+        empty_baseline = Measurement(0, [0], [0])
     empty_energy = sum(empty_baseline.pkg) + sum(empty_baseline.dram)
-    return _results(bytecode_stat_lst, avg_dict, RDTSC_overhead=RDTSC_baseline, energy_overhead=empty_energy)
+    return _results(test, avg_dict, RDTSC_overhead=RDTSC_baseline, energy_overhead=empty_energy)
 
 def _results(bytecode_stat_lst, avg_dict, RDTSC_overhead = 0, energy_overhead = 0):
     result_lst = []
@@ -22,8 +23,10 @@ def _results(bytecode_stat_lst, avg_dict, RDTSC_overhead = 0, energy_overhead = 
         estimated_RDTSC = 0
         for bytecode in count_sum_dict:
             count = count_sum_dict[bytecode]['count']
-            avg_bytecode_RDTSC = avg_dict[bytecode] - RDTSC_overhead
-            estimated_RDTSC += avg_bytecode_RDTSC * count
+            # Ignore bytecodes not accounted for in the training data.
+            if bytecode in avg_dict:
+                avg_bytecode_RDTSC = avg_dict[bytecode] - RDTSC_overhead
+                estimated_RDTSC += avg_bytecode_RDTSC * count
         
         estimated_energy = (total_energy * (estimated_RDTSC / total_RDTSC)) - energy_overhead
         actual_energy = sum(measurement.pkg) + sum(measurement.dram)
@@ -45,7 +48,6 @@ def _averages(bytecode_stat_lst):
     avg_bytecodes_dict = {}
     for bytecode in total_dict:
         avg_bytecodes_dict[bytecode] = total_dict[bytecode]['sum'] / total_dict[bytecode]['count']
-
     return avg_bytecodes_dict
 
 def _totals(bytecode_stat_lst):

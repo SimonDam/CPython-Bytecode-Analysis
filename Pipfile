@@ -10,6 +10,7 @@ pyrapl = "*"
 pandas = "*"
 matplotlib = "*"
 scikit-learn = "*"
+tensorflow = "*"
 
 [requires]
 python_version = "3.8"
