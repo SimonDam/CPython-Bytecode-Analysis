@@ -21,7 +21,7 @@ def read_jsons(path, max_number = None, shuffle = True, seed = None):
                     raise FileNotFoundError(f"{data_dict['bct_path']} specified in {path}/{filename} does exist at that location.")
 
                 if max_number is not None:
-                    if len(measurement_lst) > max_number:
+                    if len(measurement_lst) >= max_number:
                         return measurement_lst
 
                 # TODO use the measurement_to_dict function instead.
