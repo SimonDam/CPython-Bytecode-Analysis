@@ -1,5 +1,11 @@
+# vscode
 .vscode/
+
+# cache
 cache/
+
+# liveshare
+.vsls.json
 
 temp/
 *.csv

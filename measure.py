@@ -50,7 +50,7 @@ def measure_program(filepath, vanilla_path, bc_path, iterations = 1, verbose = F
     run_BCTs(bc_path, filepath, verbose = verbose)
     return measurement
 
-def file_already_run(json_path):
+def _file_already_run(json_path):
     try: # Catch if file does not exist, or if the json is invalid.
         with open(json_path) as json_file:
             metadata_dict = json.load(json_file)
@@ -70,7 +70,7 @@ def measure_programs(programs_dir, vanilla_path, bc_path, BCT_path, force = Fals
             filepath = f"{programs_dir}{filename}"
             json_path = f"{BCT_path}{filename}.json"
         
-            if force or not file_already_run(json_path):
+            if force or not _file_already_run(json_path):
                 measurement = measure_program(filepath, vanilla_path, bc_path, iterations = 100, verbose = verbose, time_limit=120)
                 with open(json_path, 'r') as BCT_file:
                     results_dict = json.load(BCT_file)

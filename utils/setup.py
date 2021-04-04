@@ -31,9 +31,9 @@ def get_args():
                         help="measure all programs regardless if they have already been measured.")
     return parser.parse_args()
 
-def ensure_compiled():
+def _ensure_compiled():
     # TODO implement this
-    warn("ensure_compiled is not implemented.")
+    warn("_ensure_compiled is not implemented.")
 
 def get_BCT_path():
     os.chdir(os.path.abspath("./Python-BCT"))
@@ -58,7 +58,7 @@ def getPython_Paths():
 def setup():
     pyRAPL.setup()
     vanilla_path, bc_path = getPython_Paths()
-    ensure_compiled()
+    _ensure_compiled()
     BCT_path = get_BCT_path()
     
     # We handle the case there the user did or did not add the path seperator to their input.

@@ -1,4 +1,4 @@
-import baselines.baselines as baselines
+import baselines
 import utils.setup
 from utils.measurement import Measurement
 

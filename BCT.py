@@ -1,6 +1,6 @@
 from utils.setup import setup
 from measure import measure_programs
-import baselines.baselines as baselines
+import baselines
 
 
 def main():

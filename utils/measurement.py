@@ -77,4 +77,4 @@ def measurement_from_dict(measurement_dict):
     if "duration" in measurement_dict and "pkg" in measurement_dict and "dram" in measurement_dict:
         return Measurement(**measurement_dict)
     else:
-        raise KeyError(f"""measurement_dict must at least "duration", "pkg" and "dram" keys.""")
+        raise KeyError(f"""measurement_dict must at least contain "duration", "pkg" and "dram" keys.""")

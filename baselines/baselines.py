@@ -3,37 +3,9 @@ import os
 from warnings import warn
 
 from measure import get_time_and_power
-from utils.measurement import Measurement, measurement_from_dict
+from utils.measurement import measurement_from_dict
 
-
-def _update_baselines_dict(baseline_dict, RDTSC_baseline = None, duration = None, pkg = None, dram = None):
-    if RDTSC_baseline is not None:
-        baseline_dict["RDTSC_baseline"] = RDTSC_baseline
-    
-    if duration is not None or pkg is not None and dram is not None:
-        empty_dict = {}
-        if duration is not None:
-            empty_dict["duration"] = duration
-        if pkg is not None:
-            empty_dict["pkg"] = pkg
-        if dram is not None:
-            empty_dict["dram"] = dram
-        baseline_dict["empty_baseline"] = empty_dict
-    return baseline_dict
-
-def _update_baselines_json(RDTSC_baseline = None, duration = None, pkg = None, dram = None):
-    if(os.path.exists(os.path.abspath("./cache/baselines.json"))):
-        with open("cache/baselines.json", 'r') as json_file:
-            baseline_dict = json.load(json_file)
-            baseline_dict = _update_baselines_dict(baseline_dict, RDTSC_baseline=RDTSC_baseline, duration=duration, pkg=pkg, dram=dram)
-        with open("cache/baselines.json", 'w') as json_file:
-            json.dump(baseline_dict, json_file)
-            
-    else:
-        with open("cache/baselines.json", 'w') as json_file:
-            baseline_dict = _update_baselines_dict({}, RDTSC_baseline=RDTSC_baseline, duration=duration, pkg=pkg, dram=dram)
-            json.dump(baseline_dict, json_file)
-
+# PUBLIC API
 def calculate_RDTSC():
     warn("RDTSC baseline is not implemented. Using precomputed value.")
     RDTSC_baseline = 24.09245564 # TODO add actual benchmark code.
@@ -72,4 +44,33 @@ def get_empty(python_path = None, use_cached = True):
             raise e("baselines.json not found. Run calculate_empty function to create it.")
         except KeyError as e:
             raise e("The empty file overhead calculation has not been saved. Run calculate_empty function to create it.")
+
+# PRIVATE
+def _update_baselines_dict(baseline_dict, RDTSC_baseline = None, duration = None, pkg = None, dram = None):
+    if RDTSC_baseline is not None:
+        baseline_dict["RDTSC_baseline"] = RDTSC_baseline
+    
+    if duration is not None or pkg is not None and dram is not None:
+        empty_dict = {}
+        if duration is not None:
+            empty_dict["duration"] = duration
+        if pkg is not None:
+            empty_dict["pkg"] = pkg
+        if dram is not None:
+            empty_dict["dram"] = dram
+        baseline_dict["empty_baseline"] = empty_dict
+    return baseline_dict
+
+def _update_baselines_json(RDTSC_baseline = None, duration = None, pkg = None, dram = None):
+    if(os.path.exists(os.path.abspath("./cache/baselines.json"))):
+        with open("cache/baselines.json", 'r') as json_file:
+            baseline_dict = json.load(json_file)
+            baseline_dict = _update_baselines_dict(baseline_dict, RDTSC_baseline=RDTSC_baseline, duration=duration, pkg=pkg, dram=dram)
+        with open("cache/baselines.json", 'w') as json_file:
+            json.dump(baseline_dict, json_file)
+            
+    else:
+        with open("cache/baselines.json", 'w') as json_file:
+            baseline_dict = _update_baselines_dict({}, RDTSC_baseline=RDTSC_baseline, duration=duration, pkg=pkg, dram=dram)
+            json.dump(baseline_dict, json_file)
 
