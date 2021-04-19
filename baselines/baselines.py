@@ -2,8 +2,8 @@ import json
 import os
 from warnings import warn
 
-from measure import get_time_and_power
-from utils.measurement import measurement_from_dict
+import measure
+from utils.measurement import Measurement
 
 # PUBLIC API
 def calculate_RDTSC():
@@ -26,7 +26,7 @@ def get_RDTSC(use_cached = True):
             raise e("The RDTSC overhead calculation has not been saved. Run calculate_RDTSC function to create it.")
 
 def calculate_empty(python_path):
-    measurement = get_time_and_power(python_path, os.path.abspath("./baselines/empty.py"), iterations = 1000)
+    measurement = measure.time_and_power(python_path, os.path.abspath("./baselines/empty.py"), iterations = 1000)
     _update_baselines_json(duration=measurement.duration, pkg=measurement.pkg, dram=measurement.dram)
     return measurement
 
@@ -39,7 +39,7 @@ def get_empty(python_path = None, use_cached = True):
         try:
             with open("cache/baselines.json", 'r') as json_file:
                 baseline_dict = json.load(json_file)
-                return measurement_from_dict(baseline_dict["empty_baseline"])
+                return Measurement.from_dict(baseline_dict["empty_baseline"])
         except FileNotFoundError as e:
             raise e("baselines.json not found. Run calculate_empty function to create it.")
         except KeyError as e:

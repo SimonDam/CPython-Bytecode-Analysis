@@ -23,7 +23,29 @@ class Measurement:
     
     def get_total_energy(self):
         return sum(self.pkg) + sum(self.dram)
+
+    def as_dict(self):
+        result_dict = {
+            "duration":self.duration,
+            "pkg":self.pkg,
+            "dram":self.dram   
+        }
+        if self.name is not None:
+            result_dict["name"] = self.name
+        if self.path_to_data is not None:
+            result_dict["path_to_data"] = self.path_to_data
+        return result_dict
+
+    @classmethod
+    def from_dict(cls, measurement_dict):
+        if type(measurement_dict) != dict:
+            raise TypeError(f"measurement_dict must be of type dict not: ({type(measurement_dict)})")
+        if "duration" in measurement_dict and "pkg" in measurement_dict and "dram" in measurement_dict:
+            return cls(**measurement_dict)
+        else:
+            raise KeyError(f"""measurement_dict must at least contain "duration", "pkg" and "dram" keys.""")
     
+
     def __add__(self, other):
         add_func = lambda x, y: x+y
         return self.__binary_operator(other, add_func)
@@ -70,11 +92,3 @@ class Measurement:
         if self.path_to_data is not None:
             as_str += f" path to data: {self.path_to_data}"
         return as_str
-
-def measurement_from_dict(measurement_dict):
-    if type(measurement_dict) != dict:
-        raise TypeError(f"measurement_dict must be of type dict not: ({type(measurement_dict)})")
-    if "duration" in measurement_dict and "pkg" in measurement_dict and "dram" in measurement_dict:
-        return Measurement(**measurement_dict)
-    else:
-        raise KeyError(f"""measurement_dict must at least contain "duration", "pkg" and "dram" keys.""")

@@ -29,6 +29,10 @@ def get_args():
                         help="print running statistics to the console.")
     parser.add_argument("-f", "--force", action="store_true", 
                         help="measure all programs regardless if they have already been measured.")
+    parser.add_argument("-i, --iterations", type=int, default=1,
+                        help="the amount of times to measure a programs energy consumption when calculating the the average energy consumption. Default is 1.")
+    parser.add_argument("-t, --time_limit", type=float, default=float("+inf"),
+                        help="stops the measurement of energy consumption the following iteration, when this time limit is exceeded. Only has an effect when iterations is > 1. Default is ∞.")
     return parser.parse_args()
 
 def _ensure_compiled():
@@ -63,6 +67,4 @@ def setup():
     
     # We handle the case there the user did or did not add the path seperator to their input.
     args = get_args()
-    if not args.source_dir.endswith(os.sep):
-        args.source_dir += os.sep
     return vanilla_path, bc_path, args, BCT_path
