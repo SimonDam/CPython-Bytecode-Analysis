@@ -64,7 +64,6 @@ def setup():
     vanilla_path, bc_path = getPython_Paths()
     _ensure_compiled()
     BCT_path = get_BCT_path()
-    
-    # We handle the case there the user did or did not add the path seperator to their input.
+
     args = get_args()
     return vanilla_path, bc_path, args, BCT_path
