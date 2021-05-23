@@ -1,15 +1,14 @@
-import analysis
+import analysis.analysis
 import argparse
 import json
 import multiprocessing as mp
 
-import utils.dataloader as dataloader
-import data.processing as processing
+import utils.loader as loader
 from Python.Lib.pathlib import Path
 from utils.csv_parser import csv_get_values
-from utils.visualise import create_graphs
+from analysis.visualise import create_graphs
 
-def get_count_and_sums_for_files_h(measurement, verbose):
+def _get_count_and_sums_for_files_h(measurement, verbose):
     json_path = measurement.path_to_data.replace(".csv", ".json")
     csv_path = measurement.path_to_data
     res_dict = {}
@@ -28,10 +27,10 @@ def get_count_and_sums_for_files_h(measurement, verbose):
             else:
                 # create the entry first time we encounter that bytecode
                 res_dict[bytecode] = {'count': 1,'sum': value}
-    dump_cache(json_path, res_dict)
+    _dump_cache(json_path, res_dict)
     return (measurement, res_dict)
 
-def load_existing_caches(measurement_lst):
+def _load_existing_caches(measurement_lst):
     todo_lst = []
     done_lst = []
     
@@ -47,7 +46,7 @@ def get_count_and_sums_for_files(measurement_lst, verbose = False, nr_of_process
         raise ValueError(f"nr_of_processes must be 1 or above ({nr_of_processes} given).")
 
     if not force:
-        measurement_lst, bytecode_stat_lst = load_existing_caches(measurement_lst)
+        measurement_lst, bytecode_stat_lst = _load_existing_caches(measurement_lst)
         if measurement_lst == []:
             if verbose: print("Found caches for every .csv files. Set force flag not use caches.")
             return bytecode_stat_lst
@@ -59,10 +58,10 @@ def get_count_and_sums_for_files(measurement_lst, verbose = False, nr_of_process
         args.append((measurement, verbose))
     
     with mp.Pool(processes=nr_of_processes) as pool:
-        results = pool.starmap(get_count_and_sums_for_files_h, args)
+        results = pool.starmap(_get_count_and_sums_for_files_h, args)
     return bytecode_stat_lst + results
 
-def dump_cache(path, cache_dict):
+def _dump_cache(path, cache_dict):
     with open(Path(f"{path}"), 'r') as file:
         json_dict = json.load(file)
     json_dict["cache"] = cache_dict
@@ -82,10 +81,12 @@ if __name__ == "__main__":
                         help="recalculate and override existing caches.")
     parser.add_argument("-p", "--processes", action="store", default=1, type=int,
                         help="amount of processes to run simultaniously. Useful for speeding up the calculation the cache statistics for each .csv file. Default is 1.")
+    parser.add_argument("--train_split", action="store", default=1.0, type=float,
+                    help="how much data should be used as training data. Should be > 0.0 and <= 1.0 Default is 1.0.")
     args = parser.parse_args()
 
     # Load data
-    train, _, test = dataloader.read_from_folders(args.folder, train_split=0.7, samples_per_folder=(None, None, None), shuffle=True)
+    train, _, test = loader.read_from_folders(args.folder, args.train_split, samples_per_folder=(None, None, None), shuffle=True)
     train = get_count_and_sums_for_files(train, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
     test = get_count_and_sums_for_files(test, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
 
