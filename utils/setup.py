@@ -3,9 +3,6 @@ import os
 import platform
 from warnings import warn
 
-import pyRAPL
-
-
 def ensure_BCT_dir(BCT_path):
     while True:
         if not os.path.isdir(BCT_path):
@@ -60,10 +57,8 @@ def getPython_Paths():
         return os.path.abspath("./Python/python"), os.path.abspath("./Python-BCT/python")
 
 def setup():
-    pyRAPL.setup()
     vanilla_path, bc_path = getPython_Paths()
     _ensure_compiled()
     BCT_path = get_BCT_path()
-
     args = get_args()
     return vanilla_path, bc_path, args, BCT_path

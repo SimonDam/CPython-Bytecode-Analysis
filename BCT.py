@@ -1,9 +1,10 @@
 from utils.setup import setup
 from measure import measure_programs
 import baselines
-
+import pyRAPL
 
 def main():
+    pyRAPL.setup()
     vanilla_path, bc_path, args, BCT_path = setup()
     measure_programs(args.source_dir,
                      vanilla_path,

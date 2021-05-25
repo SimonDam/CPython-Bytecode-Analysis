@@ -5,7 +5,7 @@ import multiprocessing as mp
 
 import utils.loader as loader
 from Python.Lib.pathlib import Path
-from utils.csv_parser import csv_get_values
+from data.csv_parser import csv_get_values
 from analysis.visualise import create_graphs
 
 def _get_count_and_sums_for_files_h(measurement, verbose):
