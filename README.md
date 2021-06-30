@@ -3,6 +3,11 @@ This is a fork of CPython 3.8.2 to analyze CPython bytecodes.
 
 Source taken from [here](https://www.python.org/downloads/release/python-382/).
 
+
+## Overview
+This solution can analyze Python programs by creating ```.csv``` files containing each bytecode that was executed and how long that took.
+It also measures how much energy was used to run the same program on an unmodified CPython intepreter.
+
 ## The modified CPython Interpreter
 In ```/Python-BCT``` is the modified Python interpreter.
 In order to compile it, see https://devguide.python.org/setup/.
@@ -17,7 +22,7 @@ This should be the only thing in that file.
 ```measure.py``` has functions for getting the bytecode counts/timings and power consumption.
 ```measure_programs``` measures every file in a folder.
 The results are dumped in the folder.
-
+Since this uses pyRAPL, this must be run on a Linux machine.
 ## Analyze
 ```/analysis/analyze.py``` has a command line interface for analyzing the bytecode files saved in the folder.
 This will create caches, since this parsing can take quite a long time.
