@@ -12,7 +12,8 @@ It also measures how much energy was used to run the same program on an unmodifi
 In ```/Python-BCT``` is the modified Python interpreter.
 In order to compile it, see https://devguide.python.org/setup/.
 This should also be done for the interpreter in ```/Python```.
-It should be run on a Linux machine, as the implementation uses a clock that is too low resolution.
+It should be run on a Linux machine, as the implementation uses a high resolution clock.
+If it is run on Windows, the resolution of the clock will go to a more inaccurate clock, which can not really capture the short run-times of the bytecodes.
 The machine's CPU should also support RDTSC, as this is the unit the bytecodes are measured in.
 After all the requirements are installed, (as the setup guide states), just running ```make``` should work in order to recompile it.
 Before running the modified intepreter, the first line in ```BCC.txt``` must be set to a path where the intepreter can dump the bytecode files.
@@ -23,6 +24,7 @@ This should be the only thing in that file.
 ```measure_programs``` measures every file in a folder.
 The results are dumped in the folder.
 Since this uses pyRAPL, this must be run on a Linux machine.
+
 ## Analyze
 ```/analyze.py``` has a command line interface for analyzing the bytecode files saved in the folder.
 This will create caches, since this parsing can take quite a long time.
