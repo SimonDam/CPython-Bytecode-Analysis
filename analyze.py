@@ -1,9 +1,9 @@
-import analysis.analysis
+import analysis.analysis as analysis
 import argparse
 import json
 import multiprocessing as mp
 
-import utils.loader as loader
+import data.loader as loader
 from Python.Lib.pathlib import Path
 from data.csv_parser import csv_get_values
 from analysis.visualise import create_graphs
@@ -82,11 +82,11 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--processes", action="store", default=1, type=int,
                         help="amount of processes to run simultaniously. Useful for speeding up the calculation the cache statistics for each .csv file. Default is 1.")
     parser.add_argument("--train_split", action="store", default=1.0, type=float,
-                    help="how much data should be used as training data. Should be > 0.0 and <= 1.0 Default is 1.0.")
+                        help="how much data should be used as training data. Should be > 0.0 and <= 1.0 Default is 1.0.")
     args = parser.parse_args()
 
     # Load data
-    train, _, test = loader.read_from_folders(args.folder, args.train_split, samples_per_folder=(None, None, None), shuffle=True)
+    train, _, test = loader.read_from_folders(args.folder, samples_per_folder=(None, None, None), train_split = args.train_split, shuffle=True)
     train = get_count_and_sums_for_files(train, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
     test = get_count_and_sums_for_files(test, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
 
@@ -96,6 +96,7 @@ if __name__ == "__main__":
     analyses = []
     analyses += analysis.regression(sample_name)
     analyses += analysis.fraction_of_totals(sample_name)
+    analyses += analysis.svm(sample_name)
 
     # Analyze data
     for a in analyses:
