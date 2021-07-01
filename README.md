@@ -24,7 +24,7 @@ This should be the only thing in that file.
 The results are dumped in the folder.
 Since this uses pyRAPL, this must be run on a Linux machine.
 ## Analyze
-```/analysis/analyze.py``` has a command line interface for analyzing the bytecode files saved in the folder.
+```/analyze.py``` has a command line interface for analyzing the bytecode files saved in the folder.
 This will create caches, since this parsing can take quite a long time.
 
 ## synthesize/

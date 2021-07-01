@@ -36,3 +36,14 @@ def fraction_of_totals(additional_name = "", force = False):
         Analysis(f"Fraction of totals (with baselines) {additional_name}", with_func),
         Analysis(f"Fraction of totals (no baselines) {additional_name}", without_func)
     ]
+
+def svm(additional_name = ""):
+    if additional_name:
+        additional_name = f"- {additional_name}"
+    
+    with_func = lambda train, test : processing.svm.get_results(train, test, use_baseline = True)
+    without_func = lambda train, test : processing.svm.get_results(train, test, use_baseline = False)
+    return [
+        Analysis(f"SVM (with baselines) {additional_name}", with_func),
+        Analysis(f"SVM (no baselines) {additional_name}", without_func)
+    ]
