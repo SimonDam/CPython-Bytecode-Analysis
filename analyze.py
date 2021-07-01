@@ -86,7 +86,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Load data
-    train, _, test = loader.read_from_folders(args.folder, samples_per_folder=(None, None, None), train_split = 0.7, shuffle=True)
+    train, _, test = loader.read_from_folders(args.folder, samples_per_folder=(None, None, None), train_split = args.train_split, shuffle=True)
     train = get_count_and_sums_for_files(train, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
     test = get_count_and_sums_for_files(test, verbose = args.verbose, nr_of_processes = args.processes, force = args.force)
 
